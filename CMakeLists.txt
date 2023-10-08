@@ -1,5 +1,5 @@
 ﻿# CMakeList.txt, main CMake config for Cursed
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.21)
 
 if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     set(CMAKE_TOOLCHAIN_FILE
@@ -10,8 +10,8 @@ endif()
 project("cursed-game"
     LANGUAGES CXX
 )
-
 find_package(SDL2 CONFIG REQUIRED)
+find_package(SDL2_image CONFIG REQUIRED)
 find_package(libtcod CONFIG REQUIRED)
 
 file(GLOB SOURCES "src/*.cpp")
@@ -31,8 +31,9 @@ endif()
 target_link_libraries(${PROJECT_NAME}
     SDL2::SDL2
     SDL2::SDL2main
+    SDL2_image::SDL2_image
     libtcod::libtcod
 )
 
-install(TARGETS ${PROJECT_NAME} DESTINATION "install/")
-install(DIRECTORY "data/" DESTINATION "install/")
+install(TARGETS ${PROJECT_NAME} DESTINATION ".")
+install(DIRECTORY "data/" DESTINATION "data/")
