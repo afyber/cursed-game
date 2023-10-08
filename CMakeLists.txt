@@ -22,11 +22,10 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 
 if(MSVC)
-    target_compile_options(${PROJECT_NAME} PRIVATE "/W4")
-    target_compile_options(${PROJECT_NAME} PRIVATE "/utf-8")
+    target_compile_options(${PROJECT_NAME} PRIVATE "/W4" "/utf-8")
     target_link_options(${PROJECT_NAME} PRIVATE "/SUBSYSTEM:WINDOWS")
 else()
-    target_compile_options(${PROJECT_NAME} PRIVATE "-Wall -Wextra")
+    target_compile_options(${PROJECT_NAME} PRIVATE "-Wall" "-Wextra")
 endif()
 
 target_link_libraries(${PROJECT_NAME}
