@@ -28,6 +28,12 @@ int main(int argc, char* argv[]) {
 
 	tcod::ContextPtr context = tcod::new_context(params);
 
+	if (IMG_Init(IMG_InitFlags::IMG_INIT_PNG) == 0) {
+		return -1;
+	}
+
+	SDL_SetWindowIcon(context->get_sdl_window(), IMG_Load("data/icon.png"));
+
 	int scale_multiplier = 2;
 	SDL_SetWindowSize(context->get_sdl_window(), TILESET_CHAR_SIZE * CONSOLE_WIDTH * scale_multiplier, TILESET_CHAR_SIZE * CONSOLE_HEIGHT * scale_multiplier);
 
@@ -68,6 +74,8 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
+
+	IMG_Quit();
 
 	return 0;
 }
