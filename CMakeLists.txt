@@ -8,9 +8,11 @@ if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
 endif()
 
 project("cursed-game"
+    VERSION 0.1.0.0
     LANGUAGES CXX
 )
 
+# Don't continue unless all dependencies are present
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
 find_package(libtcod CONFIG REQUIRED)
@@ -20,7 +22,7 @@ file(GLOB SOURCES "src/*.cpp")
 add_executable(${PROJECT_NAME} ${SOURCES})
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 
-# Copy the resources into the binary folder after every build
+# Copy the resources into the binary folder after every build to ensure they're up-to-date
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
     "${PROJECT_SOURCE_DIR}/data"
@@ -34,7 +36,6 @@ else()
     target_compile_options(${PROJECT_NAME} PRIVATE "-Wall" "-Wextra")
 endif()
 
-# currently SDL2_image is broken on linux :(
 target_link_libraries(${PROJECT_NAME}
     $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
     $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
@@ -45,6 +46,8 @@ target_link_libraries(${PROJECT_NAME}
 install(TARGETS ${PROJECT_NAME} DESTINATION ".")
 install(DIRECTORY "data/" DESTINATION "data/")
 
-# needed for the windows build to copy the .dll files into the install directory
-install(CODE "file(GLOB DLLS ${PROJECT_BINARY_DIR}/*.dll)
-file(INSTALL \${DLLS} DESTINATION ${CMAKE_INSTALL_PREFIX}/)")
+# Needed for the windows build to copy the .dll files into the install directory
+if (WIN32) 
+    install(CODE "file(GLOB DLLS ${PROJECT_BINARY_DIR}/*.dll)
+    file(INSTALL \${DLLS} DESTINATION ${CMAKE_INSTALL_PREFIX}/)")
+endif()
