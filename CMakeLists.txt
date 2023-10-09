@@ -36,9 +36,9 @@ endif()
 
 # currently SDL2_image is broken on linux :(
 target_link_libraries(${PROJECT_NAME}
-    SDL2::SDL2
-    SDL2::SDL2main
-    SDL2_image::SDL2_image
+    $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
+    $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
+    $<IF:$<TARGET_EXISTS:SDL2_image::SDL2_image>,SDL2_image::SDL2_image,SDL2_image::SDL2_image-static>
     libtcod::libtcod
 )
 
