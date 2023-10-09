@@ -10,16 +10,22 @@ endif()
 project("cursed-game"
     LANGUAGES CXX
 )
+
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
 find_package(libtcod CONFIG REQUIRED)
 
 file(GLOB SOURCES "src/*.cpp")
 
-# Add source to this project's executable.
 add_executable(${PROJECT_NAME} ${SOURCES})
-
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
+
+# Copy the resources into the binary folder after every build
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${PROJECT_SOURCE_DIR}/data"
+    "${PROJECT_BINARY_DIR}/data"
+)
 
 if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE "/W4" "/utf-8")
@@ -37,3 +43,7 @@ target_link_libraries(${PROJECT_NAME}
 
 install(TARGETS ${PROJECT_NAME} DESTINATION ".")
 install(DIRECTORY "data/" DESTINATION "data/")
+
+file(GLOB DLLS ${PROJECT_BINARY_DIR}/*.dll)
+# needed for the windows build to copy the .dll files into the install directory
+install(CODE "file(INSTALL ${DLLS} DESTINATION ${CMAKE_INSTALL_PREFIX}/)")
