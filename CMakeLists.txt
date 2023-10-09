@@ -34,24 +34,17 @@ else()
     target_compile_options(${PROJECT_NAME} PRIVATE "-Wall" "-Wextra")
 endif()
 
-# For some insane reason SDL2_image (not SDL2) doesn't have an SDL2_image::SDL2_image style definition, but only on linux, so we need to do this
-if(UNIX)
-    target_include_directories(${PROJECT_NAME} PRIVATE ${SDL2_image_INCLUDE_DIRS})
-    target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_image_LIBRARIES})
-else()
-    target_link_libraries(${PROJECT_NAME} SDL2_image::SDL2_image)
-endif()
-
+# currently SDL2_image is broken on linux :(
 target_link_libraries(${PROJECT_NAME}
     SDL2::SDL2
     SDL2::SDL2main
+    SDL2_image::SDL2_image
     libtcod::libtcod
 )
 
 install(TARGETS ${PROJECT_NAME} DESTINATION ".")
 install(DIRECTORY "data/" DESTINATION "data/")
 
-# TODO: Actually fix
-file(GLOB DLLS ${PROJECT_BINARY_DIR}/*.dll)
 # needed for the windows build to copy the .dll files into the install directory
-install(CODE "file(INSTALL ${DLLS} DESTINATION ${CMAKE_INSTALL_PREFIX}/)")
+install(CODE "file(GLOB DLLS ${PROJECT_BINARY_DIR}/*.dll)
+file(INSTALL \${DLLS} DESTINATION ${CMAKE_INSTALL_PREFIX}/)")
