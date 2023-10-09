@@ -38,4 +38,4 @@ Requires: `cmake` and a build system of your choice
 1. To setup vcpkg run `./vcpkg/bootstrap-vcpkg.sh`
 2. Create a new folder with `mkdir build`, then run `cmake ..` in the `build/` directory to generate the build configuration.
 3. Build the project using the build system of your choice (e.g. run `make`), which will compile the executable `cursed-game`.
-4. (Optional) Run the install configuration, you will want to specify where these files go with the DESTDIR variable (e.g. `make DESTDIR=install/ install` will install to `build/install/usr/local/`)
+4. (Optional) Run the install configuration, which will put everything the game needs to run in `build/usr/local/`.

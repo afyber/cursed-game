@@ -48,6 +48,8 @@ install(DIRECTORY "data/" DESTINATION "data/")
 
 # Needed for the windows build to copy the .dll files into the install directory
 if (WIN32) 
-    install(CODE "file(GLOB DLLS ${PROJECT_BINARY_DIR}/*.dll)
-    file(INSTALL \${DLLS} DESTINATION ${CMAKE_INSTALL_PREFIX}/)")
+    install(CODE "
+    file(GLOB DLLS ${PROJECT_BINARY_DIR}/*.dll)
+    file(INSTALL \${DLLS} DESTINATION ${CMAKE_INSTALL_PREFIX}/)
+    ")
 endif()
