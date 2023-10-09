@@ -34,10 +34,11 @@ else()
     target_compile_options(${PROJECT_NAME} PRIVATE "-Wall" "-Wextra")
 endif()
 
+target_include_directories(${PROJECT_NAME} PRIVATE ${SDL2_image_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME}
     SDL2::SDL2
     SDL2::SDL2main
-    SDL2_image::SDL2_image
+    ${SDL2_image_LIBRARIES}
     libtcod::libtcod
 )
 
