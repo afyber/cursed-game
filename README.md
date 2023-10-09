@@ -24,7 +24,7 @@ cd cursed-game
 
 Requires: `Visual Studio` (recommended), or `CMake` and a build system
 
-1. To setup vcpkg run `.\vcpkg\bootstrap-vcpkg.bat`, and then to install the dependencies run `.\vcpkg\vcpkg.exe install`.
+1. To setup vcpkg run `.\vcpkg\bootstrap-vcpkg.bat`
 Alternatively, to use your own installation of vcpkg you can specify it with the `-DCMAKE_TOOLCHAIN_FILE=path/to/vcpkg/scripts/buildsystems/vcpkg.cmake` option on your CMake command in the next step or setting the `CMAKE_TOOLCHAIN_FILE` variable.
 2. Use CMake to generate the build configuration either by opening `cursed-game` in Visual Studio or by creating a new directory and running `cmake ..` in the subdirectory.
 Unless you specified a different installation this command will attempt to use the vcpkg submodule to find the dependencies.
@@ -35,7 +35,7 @@ Unless you specified a different installation this command will attempt to use t
 
 Requires: `cmake` and a build system of your choice
 
-1. To setup vcpkg run `./vcpkg/bootstrap-vcpkg.sh`, and then to install the dependencies run `./vcpkg/vcpkg install`.
+1. To setup vcpkg run `./vcpkg/bootstrap-vcpkg.sh`
 2. Create a new folder with `mkdir build`, then run `cmake ..` in the `build/` directory to generate the build configuration.
 3. Build the project using the build system of your choice (e.g. run `make`), which will compile the executable `cursed-game`.
-4. (Optional) Run the install configuration, you will want to specify where these files go with the DESTDIR variable (e.g. `make DESTDIR=/games/cursed install` will install to `/usr/local/games/cursed`)
+4. (Optional) Run the install configuration, you will want to specify where these files go with the DESTDIR variable (e.g. `make DESTDIR=install/ install` will install to `build/install/usr/local/`)
