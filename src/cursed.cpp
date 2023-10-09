@@ -15,6 +15,8 @@ const int CONSOLE_HEIGHT = 30;
 
 int main(int argc, char* argv[]) {
 	auto params = TCOD_ContextParams();
+	params.argc = argc;
+	params.argv = argv;
 	params.tcod_version = TCOD_COMPILEDVERSION;
 	params.renderer_type = TCOD_RENDERER_SDL2;
 	params.vsync = 1;
@@ -26,16 +28,16 @@ int main(int argc, char* argv[]) {
 	tcod::Console con = tcod::Console(CONSOLE_WIDTH, CONSOLE_HEIGHT);
 	params.console = con.get();
 
-	tcod::ContextPtr context = tcod::new_context(params);
+	auto context = tcod::Context(params);
 
 	if (IMG_Init(IMG_InitFlags::IMG_INIT_PNG) == 0) {
 		return -1;
 	}
 
-	SDL_SetWindowIcon(context->get_sdl_window(), IMG_Load("data/icon.png"));
+	SDL_SetWindowIcon(context.get_sdl_window(), IMG_Load("data/icon.png"));
 
 	int scale_multiplier = 2;
-	SDL_SetWindowSize(context->get_sdl_window(), TILESET_CHAR_SIZE * CONSOLE_WIDTH * scale_multiplier, TILESET_CHAR_SIZE * CONSOLE_HEIGHT * scale_multiplier);
+	SDL_SetWindowSize(context.get_sdl_window(), TILESET_CHAR_SIZE * CONSOLE_WIDTH * scale_multiplier, TILESET_CHAR_SIZE * CONSOLE_HEIGHT * scale_multiplier);
 
 	bool running = true;
 	std::string test = "";
@@ -43,12 +45,12 @@ int main(int argc, char* argv[]) {
 
 		con.clear();
 
-		tcod::print(con, { 0, 0 }, "A", TCOD_red, TCOD_white);
-		tcod::print(con, { 2, 3 }, "Hello world!", TCOD_red, std::nullopt);
-		tcod::print(con, { 19, 29 }, "G", TCOD_white, TCOD_blue);
-		tcod::print(con, { 2, 4 }, test, TCOD_white, std::nullopt);
+		tcod::print(con, { 0, 0 }, "A", TCOD_ColorRGB{ 255, 0, 0 }, TCOD_ColorRGB{ 255, 255, 255 });
+		tcod::print(con, { 2, 3 }, "Hello world!", TCOD_ColorRGB{ 255, 0, 0 }, std::nullopt);
+		tcod::print(con, { 19, 29 }, "G", TCOD_ColorRGB{ 255, 255, 255 }, TCOD_ColorRGB{ 0, 0, 255 });
+		tcod::print(con, { 2, 4 }, test, TCOD_ColorRGB{ 255, 255, 255 }, std::nullopt);
 
-		context->present(con);
+		context.present(con);
 
 		SDL_Event event;
 		while (SDL_PollEvent(&event) != NULL) {
@@ -63,11 +65,11 @@ int main(int argc, char* argv[]) {
 				if (event.key.keysym.sym == SDLK_RETURN) {
 					if (test == "inc") {
 						scale_multiplier++;
-						SDL_SetWindowSize(context->get_sdl_window(), TILESET_CHAR_SIZE * CONSOLE_WIDTH * scale_multiplier, TILESET_CHAR_SIZE * CONSOLE_HEIGHT * scale_multiplier);
+						SDL_SetWindowSize(context.get_sdl_window(), TILESET_CHAR_SIZE * CONSOLE_WIDTH * scale_multiplier, TILESET_CHAR_SIZE * CONSOLE_HEIGHT * scale_multiplier);
 					}
 					else if (test == "dec") {
 						scale_multiplier--;
-						SDL_SetWindowSize(context->get_sdl_window(), TILESET_CHAR_SIZE * CONSOLE_WIDTH * scale_multiplier, TILESET_CHAR_SIZE * CONSOLE_HEIGHT * scale_multiplier);
+						SDL_SetWindowSize(context.get_sdl_window(), TILESET_CHAR_SIZE * CONSOLE_WIDTH * scale_multiplier, TILESET_CHAR_SIZE * CONSOLE_HEIGHT * scale_multiplier);
 					}
 					test = "";
 				}
