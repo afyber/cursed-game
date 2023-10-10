@@ -8,7 +8,7 @@ Just a personal project of mine, the basic idea being: what if you could never g
 
 ## Contributing
 
-Please fork and make a pull request with a clear description of what you are adding/changing.
+Take a look at [CONTRIBUTING.md](https://github.com/afyber/cursed-game/blob/master/CONTRIBUTING.md) for some contribution guidelines and (if you care) code style.
 
 ## Building
 
