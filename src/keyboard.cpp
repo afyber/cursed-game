@@ -3,11 +3,11 @@
 #include <SDL.h>
 
 /* The possible states of a key. All values greater than zero indicate the key is being held down, all values less than or equal to zero indicate it is not.
- * -1: The key was released since the last update
- * 0: The key is not being held down
- * 1: The key has been pressed since the last update
- * 2: The key has been typed again, but is still being held down (because holding down a key types it again repeatedly)
- * 3: The key is being held down
+ * JUST_RELEASED: The key was released since the last update
+ * KEY_UP: The key is not being held down
+ * JUST_PRESSED: The key has been pressed since the last update
+ * RE_TYPED: The key has been typed again, but is still being held down (because holding down a key types it again repeatedly)
+ * KEY_DOWN: The key is being held down
  */
 enum KEY_STATE {
 	JUST_RELEASED = -1,

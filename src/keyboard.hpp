@@ -1,6 +1,6 @@
 // keyboard.hpp
-#ifndef CURSED_KEYBOARD_H_
-#define CURSED_KEYBOARD_H_
+#ifndef CURSED_KEYBOARD_HPP_
+#define CURSED_KEYBOARD_HPP_
 #include <SDL.h>
 
 bool key_down(SDL_Scancode scancode);
