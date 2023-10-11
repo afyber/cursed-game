@@ -41,6 +41,10 @@ int setup_sdl(tcod::Context& context) {
 	return 0;
 }
 
+void sdl_set_window_size(tcod::Context& context, int multiplier) {
+	SDL_SetWindowSize(context.get_sdl_window(), TILESET_CHAR_SIZE * CONSOLE_WIDTH * multiplier, TILESET_CHAR_SIZE * CONSOLE_HEIGHT * multiplier);
+}
+
 void quit_sdl() {
 	IMG_Quit();
 }
@@ -53,9 +57,6 @@ int main(int argc, char* argv[]) {
 	if (setup_sdl(context) != 0) {
 		return -1;
 	}
-
-	int scale_multiplier = 2;
-	SDL_SetWindowSize(context.get_sdl_window(), TILESET_CHAR_SIZE * CONSOLE_WIDTH * scale_multiplier, TILESET_CHAR_SIZE * CONSOLE_HEIGHT * scale_multiplier);
 
 	bool running = true;
 	std::string test = "";

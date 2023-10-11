@@ -22,6 +22,8 @@ Some basic rules of code styling, they're not super important or anything, it's 
 // filename.ext, description
 ```
 
+* Files should end with a single blank line.
+
 * Try to write code that "documents itself" by using clear function and variable names.
 
 * Local variables, functions, classes, and most other names should use snake-case, e.g. `int thing_one;` and `void do_action();`.
