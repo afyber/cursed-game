@@ -9,6 +9,7 @@
 #include "libtcod.hpp"
 
 #include "keyboard.hpp"
+#include "world.hpp"
 
 const int TILESET_CHAR_SIZE = 8;
 const int TILESET_COLUMNS = 16;
@@ -58,6 +59,8 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
+	Level floor(20, 10);
+
 	bool running = true;
 	std::string test = "";
 	int code = 0;
@@ -79,6 +82,13 @@ int main(int argc, char* argv[]) {
 		}
 
 		con.clear();
+
+		for (int x = 0; x < floor.get_width(); ++x) {
+			for (int y = 0; y < floor.get_height(); ++y) {
+				con.at({ x, y }) = floor.get_tile(x, y)->get_tile();
+			}
+
+		}
 
 		tcod::print(con, { x, y }, "A", TCOD_ColorRGB{ 255, 0, 0 }, TCOD_ColorRGB{ 255, 255, 255 });
 		tcod::print(con, { 2, 3 }, "Hello world!", TCOD_ColorRGB{ 255, 0, 0 }, std::nullopt);
