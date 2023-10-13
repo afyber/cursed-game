@@ -26,9 +26,11 @@ Some basic rules of code styling, they're not super important or anything, it's 
 
 * Try to write code that "documents itself" by using clear function and variable names.
 
-* Local variables, functions, classes, and most other names should use snake-case, e.g. `int thing_one;` and `void do_action();`.
+* Local variables, functions, and most other names should use snake-case, e.g. `int thing_one;` and `void do_action();`.
 
-* Global variables, including enum values, should be named using capital snake-case, e.g. `const int SCREEN_WIDTH = 100;`.
+* Classes should be named using capitalized snake-case, e.g. `Thing_One`.
+
+* Global variables, including enum values, should be named using all-capital snake-case, e.g. `const int SCREEN_WIDTH = 100;`.
 
 * Indentation should be four spaces per indent level.
 
