@@ -10,12 +10,13 @@
 
 #include "keyboard.hpp"
 #include "world.hpp"
+#include "player.hpp"
 
 const int TILESET_CHAR_SIZE = 8;
 const int TILESET_COLUMNS = 16;
 const int TILESET_ROWS = 16;
-const int CONSOLE_WIDTH = 20;
-const int CONSOLE_HEIGHT = 30;
+const int CONSOLE_WIDTH = 80;
+const int CONSOLE_HEIGHT = 45;
 
 void setup_tcod(tcod::Console& console_out, tcod::Context& context_out) {
 	auto params = TCOD_ContextParams();
@@ -59,42 +60,18 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
-	Level floor(20, 10);
+	sdl_set_window_size(context, 2);
+
+	Level floor(45, 45);
+	floor.add_entity(new Player());
 
 	bool running = true;
-	std::string test = "";
-	int code = 0;
-	int x = 0;
-	int y = 0;
 	while (running) {
-
-		if (key_pressed(SDL_SCANCODE_RIGHT)) {
-			x++;
-		}
-		if (key_pressed(SDL_SCANCODE_LEFT)) {
-			x--;
-		}
-		if (key_pressed(SDL_SCANCODE_UP)) {
-			y--;
-		}
-		if (key_pressed(SDL_SCANCODE_DOWN)) {
-			y++;
-		}
-
 		con.clear();
 
-		for (int x = 0; x < floor.get_width(); ++x) {
-			for (int y = 0; y < floor.get_height(); ++y) {
-				con.at({ x, y }) = floor.get_tile(x, y)->get_tile();
-			}
+		floor.update();
 
-		}
-
-		tcod::print(con, { x, y }, "A", TCOD_ColorRGB{ 255, 0, 0 }, TCOD_ColorRGB{ 255, 255, 255 });
-		tcod::print(con, { 2, 3 }, "Hello world!", TCOD_ColorRGB{ 255, 0, 0 }, std::nullopt);
-		tcod::print(con, { 19, 29 }, "G", TCOD_ColorRGB{ 255, 255, 255 }, TCOD_ColorRGB{ 0, 0, 255 });
-		tcod::print(con, { 2, 4 }, test, TCOD_ColorRGB{ 255, 255, 255 }, std::nullopt);
-		tcod::print(con, { 2, 5 }, std::to_string(code), TCOD_ColorRGB{ 255, 255, 255 }, std::nullopt);
+		floor.draw(con);
 
 		context.present(con);
 
