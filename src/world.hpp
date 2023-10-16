@@ -5,8 +5,44 @@
 
 #include "tile.hpp"
 
-class Level;
+class Object;
+class Tile;
 class Entity;
+class Level;
+
+class Object {
+public:
+	virtual void update(Level* level) = 0;
+
+	// TODO: draw function
+
+	virtual bool is_solid() = 0;
+};
+
+class Tile : public Object {
+public:
+	void update(Level* level);
+
+	bool is_solid();
+
+	virtual void interact(Entity* ent) = 0;
+};
+
+class Entity : public Object {
+protected:
+	int x, y;
+
+public:
+	void update(Level* level);
+
+	//draw();
+
+	bool is_solid();
+
+	int get_x();
+
+	int get_y();
+};
 
 class Level {
 private:
@@ -33,22 +69,6 @@ public:
 	int get_width();
 
 	int get_height();
-};
-
-class Entity {
-protected:
-	int x, y;
-
-public:
-	virtual void update(Level* level) = 0;
-
-	virtual void draw(tcod::Console& con) = 0;
-
-	virtual bool is_passable();
-
-	int get_x();
-
-	int get_y();
 };
 
 #endif

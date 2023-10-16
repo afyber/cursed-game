@@ -3,16 +3,7 @@
 #define CURSED_TILE_HPP_
 #include <optional>
 #include "libtcod.hpp"
-
-class Tile {
-public:
-	virtual bool is_passable() = 0;
-
-	// TODO: should include a reference to the inventory of the player/creature attempting to interact with it
-	virtual void interact() = 0;
-
-	virtual TCOD_ConsoleTile get_tile() = 0;
-};
+#include "world.hpp"
 
 class Const_Tile : public Tile {
 private:
