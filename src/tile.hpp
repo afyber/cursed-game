@@ -7,19 +7,19 @@
 
 class Const_Tile : public Tile {
 private:
-	bool passable;
+	bool solid;
 	TCOD_ConsoleTile tile;
 
 public:
-	Const_Tile(TCOD_ConsoleTile tile, bool passable);
+	Const_Tile(TCOD_ConsoleTile tile, bool solid);
 
-	Const_Tile(int ch, TCOD_ColorRGB fg, std::optional<TCOD_ColorRGB> bg, bool passable);
+	Const_Tile(int ch, TCOD_ColorRGB fg, std::optional<TCOD_ColorRGB> bg, bool solid);
 
-	bool is_passable();
+	void update(Level* level);
 
-	void interact();
+	bool is_solid();
 
-	TCOD_ConsoleTile get_tile();
+	void interact(Entity* ent);
 };
 
 class Door_Tile : public Tile {
@@ -31,11 +31,11 @@ private:
 public:
 	Door_Tile(TCOD_ConsoleTile open_tile, TCOD_ConsoleTile closed_tile);
 
-	bool is_passable();
+	void update(Level* level);
 
-	void interact();
+	bool is_solid();
 
-	TCOD_ConsoleTile get_tile();
+	void interact(Entity* ent);
 };
 
 #endif

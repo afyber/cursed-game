@@ -10,6 +10,8 @@ private:
 public:
 	void update(Level* level);
 
+	bool is_solid();
+
 	void draw(tcod::Console& con);
 };
 

@@ -2,8 +2,7 @@
 #ifndef CURSED_WORLD_HPP_
 #define CURSED_WORLD_HPP_
 #include <vector>
-
-#include "tile.hpp"
+#include "libtcod.hpp"
 
 class Object;
 class Tile;
@@ -21,9 +20,9 @@ public:
 
 class Tile : public Object {
 public:
-	void update(Level* level);
+	virtual void update(Level* level) = 0;
 
-	bool is_solid();
+	virtual bool is_solid() = 0;
 
 	virtual void interact(Entity* ent) = 0;
 };
@@ -33,11 +32,11 @@ protected:
 	int x, y;
 
 public:
-	void update(Level* level);
+	virtual void update(Level* level) = 0;
 
 	//draw();
 
-	bool is_solid();
+	virtual bool is_solid() = 0;
 
 	int get_x();
 

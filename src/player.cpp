@@ -11,7 +11,7 @@ void Player::move(Level* level, int x, int y) {
 
 	Tile* tile = level->get_tile(x, y);
 	if (tile) {
-		tile->interact();
+		tile->interact(this);
 	}
 }
 
@@ -28,6 +28,10 @@ void Player::update(Level* level) {
 	else if (key_pressed(SDL_SCANCODE_DOWN)) {
 		move(level, x, y + 1);
 	}
+}
+
+bool Player::is_solid() {
+	return true;
 }
 
 void Player::draw(tcod::Console& con) {
