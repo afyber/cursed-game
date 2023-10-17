@@ -7,7 +7,7 @@ Level::Level(int width, int height) {
 	this->width = width;
 	this->height = height;
 	for (int i = 0; i < width * height; ++i) {
-		tiles.push_back(new Const_Tile('.', TCOD_ColorRGB{ 127, 127, 127 }, std::nullopt, false));
+		tiles.push_back(new Const_Tile('.', Color{ 1, 127, 127, 127 }, Color{0, 0, 0, 0}, false));
 	}
 }
 

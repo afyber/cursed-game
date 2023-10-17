@@ -5,15 +5,28 @@
 #include "libtcod.hpp"
 #include "world.hpp"
 
+struct Color {
+	bool alpha;
+	uint8_t r;
+	uint8_t g;
+	uint8_t b;
+};
+
+struct Console_Tile {
+	int unicode;
+	Color fg;
+	Color bg;
+};
+
 class Const_Tile : public Tile {
 private:
 	bool solid;
-	TCOD_ConsoleTile tile;
+	Console_Tile tile;
 
 public:
-	Const_Tile(TCOD_ConsoleTile tile, bool solid);
+	Const_Tile(Console_Tile tile, bool solid);
 
-	Const_Tile(int ch, TCOD_ColorRGB fg, std::optional<TCOD_ColorRGB> bg, bool solid);
+	Const_Tile(int ch, Color fg, Color bg, bool solid);
 
 	void update(Level* level);
 
@@ -25,11 +38,11 @@ public:
 class Door_Tile : public Tile {
 private:
 	bool open;
-	TCOD_ConsoleTile open_tile;
-	TCOD_ConsoleTile closed_tile;
+	Console_Tile open_tile;
+	Console_Tile closed_tile;
 
 public:
-	Door_Tile(TCOD_ConsoleTile open_tile, TCOD_ConsoleTile closed_tile);
+	Door_Tile(Console_Tile open_tile, Console_Tile closed_tile);
 
 	void update(Level* level);
 
