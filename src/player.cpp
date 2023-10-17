@@ -15,6 +15,11 @@ void Player::move(Level* level, int x, int y) {
 	}
 }
 
+Player::Player(int x, int y) {
+	this->x = x;
+	this->y = y;
+}
+
 void Player::update(Level* level) {
 	if (key_pressed(SDL_SCANCODE_LEFT)) {
 		move(level, x - 1, y);
@@ -34,7 +39,10 @@ bool Player::is_solid() {
 	return true;
 }
 
-void Player::draw(tcod::Console& con) {
-	con.at({ x, y }).ch = (int)'@';
-	con.at({ x, y }).fg = TCOD_ColorRGB{ 255, 255, 255 };
+void Player::hurt(Cursed_Attack attack) {
+	health -= attack.normal_damage + attack.magic_damage + attack.fire_damage;
+}
+
+bool Player::is_alive() {
+	return health > 0;
 }

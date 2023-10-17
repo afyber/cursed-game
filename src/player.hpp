@@ -5,14 +5,20 @@
 
 class Player : public Entity {
 private:
+	int health;
+
 	void move(Level* level, int x, int y);
 
 public:
+	Player(int x, int y);
+
 	void update(Level* level);
 
 	bool is_solid();
 
-	void draw(tcod::Console& con);
+	void hurt(Cursed_Attack attack);
+
+	bool is_alive();
 };
 
 #endif

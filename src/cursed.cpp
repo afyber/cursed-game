@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
 	sdl_set_window_size(context, 2);
 
 	Level floor(45, 45);
-	floor.add_entity(new Player());
+	floor.add_entity(new Player(5, 5));
 
 	bool running = true;
 	while (running) {
