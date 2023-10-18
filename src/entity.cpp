@@ -18,9 +18,12 @@ Living_Entity::Living_Entity(int x, int y, int max_health) {
 	this->y = y;
 	this->max_health = max_health;
 	health = max_health;
+	resistances = Resistances{ 0, 0, 0 };
 }
 
-void Living_Entity::update(Level* level) {}
+void Living_Entity::update(Level* level) {
+	// TODO: trigger enemy AI from here
+}
 
 bool Living_Entity::is_solid() {
 	return true;
