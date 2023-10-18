@@ -6,8 +6,9 @@
 Level::Level(int width, int height) {
 	this->width = width;
 	this->height = height;
+	tiles.resize(width * height);
 	for (int i = 0; i < width * height; ++i) {
-		tiles.push_back(new Const_Tile('.', Color{ 1, 127, 127, 127 }, Color{0, 0, 0, 0}, false));
+		tiles[i] = new Const_Tile('.', Color{ 1, 127, 127, 127 }, Color{ 0, 0, 0, 0 }, false);
 	}
 }
 
