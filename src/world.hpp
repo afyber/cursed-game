@@ -9,7 +9,7 @@ class Tile;
 class Entity;
 class Level;
 
-struct Cursed_Attack {
+struct Attack {
 	int normal_damage;
 	int magic_damage;
 	int fire_damage;
@@ -28,6 +28,8 @@ class Tile : public Object {
 public:
 	virtual void update(Level* level) = 0;
 
+	// draw();
+
 	virtual bool is_solid() = 0;
 
 	virtual void interact(Entity* ent) = 0;
@@ -44,7 +46,7 @@ public:
 
 	virtual bool is_solid() = 0;
 
-	virtual void hurt(Cursed_Attack attack) = 0;
+	virtual void hurt(Attack attack) = 0;
 
 	virtual bool is_alive() = 0;
 
