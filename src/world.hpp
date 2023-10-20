@@ -62,6 +62,7 @@ protected:
 	Resistances resistances;
 
 	Item_List inventory;
+	std::vector<int> equipped_uids;
 
 	void move(Level* level, int x, int y);
 
