@@ -20,7 +20,7 @@ private:
 public:
 	void add_item(Item* item);
 
-	bool remove_item(int uid);
+	Item* pop_item(int uid);
 
 	Item* get_item(int uid);
 };
