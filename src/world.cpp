@@ -3,6 +3,18 @@
 #include "tile.hpp"
 #include <optional>
 
+// class Entity
+
+int Entity::get_x() {
+	return x;
+}
+
+int Entity::get_y() {
+	return y;
+}
+
+// class Living_Entity
+
 void Living_Entity::move(Level* level, int new_x, int new_y) {
 	if (level->can_walk(new_x, new_y)) {
 		x = new_x;
@@ -54,6 +66,8 @@ bool Living_Entity::is_alive() {
 void Living_Entity::give_item(Item* item) {
 	inventory.add_item(item);
 }
+
+// class Level
 
 Level::Level(int width, int height) {
 	this->width = width;
@@ -142,12 +156,4 @@ int Level::get_width() {
 
 int Level::get_height() {
 	return height;
-}
-
-int Entity::get_x() {
-	return x;
-}
-
-int Entity::get_y() {
-	return y;
 }

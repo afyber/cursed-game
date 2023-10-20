@@ -4,6 +4,8 @@
 #include "libtcod.hpp"
 #include "world.hpp"
 
+// class Const_Tile
+
 Const_Tile::Const_Tile(Console_Tile tile, bool solid) {
 	this->solid = solid;
 	this->tile = tile;
@@ -25,6 +27,8 @@ void Const_Tile::interact(Living_Entity* ent) {}
 bool Const_Tile::is_solid() {
 	return this->solid;
 }
+
+// class Door_Tile
 
 Door_Tile::Door_Tile(Console_Tile open_tile, Console_Tile closed_tile) {
 	this->open = false;

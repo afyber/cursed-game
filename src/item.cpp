@@ -1,11 +1,15 @@
 // item.cpp
 #include "item.hpp"
 
+// class Item
+
 Item::Item(int uid) : uid(uid) {}
 
 int Item::get_uid() {
 	return uid;
 }
+
+// class Item_List
 
 void Item_List::add_item(Item* item) {
 	items.push_back(item);

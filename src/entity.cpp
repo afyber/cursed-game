@@ -1,6 +1,8 @@
 // entity.cpp
 #include "entity.hpp"
 
+// class Item_Entity
+
 Item_Entity::Item_Entity(int x, int y, Item* item_ref) {
 	this->x = x;
 	this->y = y;
