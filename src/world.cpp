@@ -3,6 +3,72 @@
 #include "tile.hpp"
 #include <optional>
 
+// class Entity
+
+int Entity::get_x() {
+	return x;
+}
+
+int Entity::get_y() {
+	return y;
+}
+
+// class Living_Entity
+
+void Living_Entity::move(Level* level, int new_x, int new_y) {
+	Tile* tile = level->get_tile(new_x, new_y);
+	if (tile) {
+		tile->interact(this);
+	}
+
+	std::vector<Entity*> entities = level->entities_at(new_x, new_y);
+	for (int i = 0; i < entities.size(); ++i) {
+		entities[i]->interact(this);
+	}
+
+	if (level->can_walk(new_x, new_y)) {
+		x = new_x;
+		y = new_y;
+	}
+}
+
+Living_Entity::Living_Entity(int x, int y, int max_health) {
+	this->x = x;
+	this->y = y;
+	this->max_health = max_health;
+	health = max_health;
+	resistances = Resistances{ 0, 0, 0 };
+}
+
+void Living_Entity::update(Level* level) {
+	// TODO: trigger enemy AI from here
+}
+
+void Living_Entity::interact(Living_Entity* ent) {
+	// TODO: Calculate attacking entity's damage
+	this->hurt(Attack{ 1, 0, 0 });
+}
+
+bool Living_Entity::is_solid() {
+	return true;
+}
+
+void Living_Entity::hurt(Attack attack) {
+	health -= (int)(attack.normal_damage * (1 - resistances.normal_resistance))
+		+ (int)(attack.magic_damage * (1 - resistances.magic_resistance))
+		+ (int)(attack.fire_damage * (1 - resistances.fire_resistance));
+}
+
+bool Living_Entity::is_alive() {
+	return health > 0;
+}
+
+void Living_Entity::give_item(Item* item) {
+	inventory.add_item(item);
+}
+
+// class Level
+
 Level::Level(int width, int height) {
 	this->width = width;
 	this->height = height;
@@ -90,12 +156,4 @@ int Level::get_width() {
 
 int Level::get_height() {
 	return height;
-}
-
-int Entity::get_x() {
-	return x;
-}
-
-int Entity::get_y() {
-	return y;
 }

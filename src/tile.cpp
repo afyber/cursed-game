@@ -4,6 +4,8 @@
 #include "libtcod.hpp"
 #include "world.hpp"
 
+// class Const_Tile
+
 Const_Tile::Const_Tile(Console_Tile tile, bool solid) {
 	this->solid = solid;
 	this->tile = tile;
@@ -11,20 +13,22 @@ Const_Tile::Const_Tile(Console_Tile tile, bool solid) {
 
 Const_Tile::Const_Tile(int ch, Color fg, Color bg, bool solid) {
 	this->solid = solid;
-	Console_Tile tile{};
-	tile.unicode = ch;
-	tile.fg = fg;
-	tile.bg = bg;
-	this->tile = tile;
+	Console_Tile new_tile{};
+	new_tile.unicode = ch;
+	new_tile.fg = fg;
+	new_tile.bg = bg;
+	tile = new_tile;
 }
 
 void Const_Tile::update(Level* level) {}
+
+void Const_Tile::interact(Living_Entity* ent) {}
 
 bool Const_Tile::is_solid() {
 	return this->solid;
 }
 
-void Const_Tile::interact(Entity* ent) {}
+// class Door_Tile
 
 Door_Tile::Door_Tile(Console_Tile open_tile, Console_Tile closed_tile) {
 	this->open = false;
@@ -34,12 +38,12 @@ Door_Tile::Door_Tile(Console_Tile open_tile, Console_Tile closed_tile) {
 
 void Door_Tile::update(Level* level) {}
 
-bool Door_Tile::is_solid() {
-	return !this->open;
-}
-
-void Door_Tile::interact(Entity* ent) {
+void Door_Tile::interact(Living_Entity* ent) {
 	if (!open) {
 		open = true;
 	}
+}
+
+bool Door_Tile::is_solid() {
+	return !this->open;
 }
