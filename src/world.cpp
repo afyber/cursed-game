@@ -16,11 +16,6 @@ int Entity::get_y() {
 // class Living_Entity
 
 void Living_Entity::move(Level* level, int new_x, int new_y) {
-	if (level->can_walk(new_x, new_y)) {
-		x = new_x;
-		y = new_y;
-	}
-
 	Tile* tile = level->get_tile(new_x, new_y);
 	if (tile) {
 		tile->interact(this);
@@ -29,6 +24,11 @@ void Living_Entity::move(Level* level, int new_x, int new_y) {
 	std::vector<Entity*> entities = level->entities_at(new_x, new_y);
 	for (int i = 0; i < entities.size(); ++i) {
 		entities[i]->interact(this);
+	}
+
+	if (level->can_walk(new_x, new_y)) {
+		x = new_x;
+		y = new_y;
 	}
 }
 

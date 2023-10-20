@@ -46,10 +46,6 @@ protected:
 public:
 	// TODO
 
-	virtual void hurt(Attack attack) = 0;
-
-	virtual bool is_alive() = 0;
-
 	int get_x();
 
 	int get_y();
@@ -75,9 +71,9 @@ public:
 
 	bool is_solid();
 
-	void hurt(Attack attack);
+	virtual void hurt(Attack attack);
 
-	bool is_alive();
+	virtual bool is_alive();
 
 	void give_item(Item* item);
 };
