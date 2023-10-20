@@ -30,9 +30,9 @@ public:
 
 	void update(Level* level);
 
-	bool is_solid();
+	void interact(Living_Entity* ent);
 
-	void interact(Entity* ent);
+	bool is_solid();
 };
 
 class Door_Tile : public Tile {
@@ -46,9 +46,9 @@ public:
 
 	void update(Level* level);
 
-	bool is_solid();
+	void interact(Living_Entity* ent);
 
-	void interact(Entity* ent);
+	bool is_solid();
 };
 
 #endif
