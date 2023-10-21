@@ -1,9 +1,10 @@
 // tile.hpp
 #ifndef CURSED_TILE_HPP_
 #define CURSED_TILE_HPP_
-#include <optional>
-#include "draw.hpp"
 #include "libtcod.hpp"
+#include <optional>
+
+#include "draw.hpp"
 #include "world.hpp"
 
 class Const_Tile : public Tile {
@@ -16,7 +17,7 @@ public:
 
 	Const_Tile(char ch, Color fg, Color bg, bool solid);
 
-	void update(Level* level);
+	void update(Level& level);
 
 	void draw(tcod::Console& con, int x, int y);
 
@@ -34,7 +35,7 @@ private:
 public:
 	Door_Tile(Console_Tile open_tile, Console_Tile closed_tile);
 
-	void update(Level* level);
+	void update(Level& level);
 
 	void draw(tcod::Console& con, int x, int y);
 

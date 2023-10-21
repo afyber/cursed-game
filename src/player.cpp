@@ -1,12 +1,14 @@
 // Player.cpp
 #include "player.hpp"
+
 #include "draw.hpp"
+#include "entity.hpp"
 #include "keyboard.hpp"
 #include "world.hpp"
 
 Player::Player(int x, int y) : Living_Entity(x, y, 1) {}
 
-void Player::update(Level* level) {
+void Player::update(Level& level) {
 	if (key_pressed(SDL_SCANCODE_LEFT)) {
 		move(level, x - 1, y);
 	}

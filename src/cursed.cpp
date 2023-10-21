@@ -1,16 +1,14 @@
 // cursed.cpp, entry point for the game
 #include <array>
 #include <iostream>
-#include <string>
-
+#include "libtcod.hpp"
 #include <SDL.h>
 #include <SDL2/SDL_image.h>
-
-#include "libtcod.hpp"
+#include <string>
 
 #include "keyboard.hpp"
-#include "world.hpp"
 #include "player.hpp"
+#include "world.hpp"
 
 const int TILESET_CHAR_SIZE = 8;
 const int TILESET_COLUMNS = 16;

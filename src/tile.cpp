@@ -1,8 +1,10 @@
 // tile.cpp, Holds tile definitions for all tiles
 #include "tile.hpp"
-#include <optional>
-#include "draw.hpp"
+
 #include "libtcod.hpp"
+#include <optional>
+
+#include "draw.hpp"
 #include "world.hpp"
 
 // class Const_Tile
@@ -21,7 +23,7 @@ Const_Tile::Const_Tile(char ch, Color fg, Color bg, bool solid) {
 	tile = new_tile;
 }
 
-void Const_Tile::update(Level* level) {}
+void Const_Tile::update(Level& level) {}
 
 void Const_Tile::draw(tcod::Console& con, int x, int y) {
 	print_console_tile(con, tile, x, y);
@@ -41,7 +43,7 @@ Door_Tile::Door_Tile(Console_Tile open_tile, Console_Tile closed_tile) {
 	this->closed_tile = closed_tile;
 }
 
-void Door_Tile::update(Level* level) {}
+void Door_Tile::update(Level& level) {}
 
 void Door_Tile::draw(tcod::Console& con, int x, int y) {
 	if (open) {
