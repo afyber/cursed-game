@@ -9,6 +9,8 @@ public:
 	Player(int x, int y);
 
 	void update(Level* level);
+
+	void draw(tcod::Console& con);
 };
 
 #endif

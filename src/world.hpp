@@ -33,6 +33,7 @@ public:
 };
 
 class Tile : public Object {
+public:
 	virtual void draw(tcod::Console& con, int x, int y) = 0;
 };
 

@@ -13,6 +13,8 @@ public:
 
 	void update(Level* level);
 
+	void draw(tcod::Console& con);
+
 	void interact(Living_Entity* ent);
 
 	bool is_solid();
