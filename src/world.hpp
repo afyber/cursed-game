@@ -25,7 +25,7 @@ struct Resistances {
 
 class Object {
 public:
-	virtual void update(Level* level) = 0;
+	virtual void update(Level& level) = 0;
 
 	virtual void interact(Living_Entity* ent) = 0;
 
@@ -58,12 +58,12 @@ protected:
 	Item_List inventory;
 	std::vector<int> equipped_uids;
 
-	void move(Level* level, int x, int y);
+	void move(Level& level, int x, int y);
 
 public:
 	Living_Entity(int x, int y, int max_health);
 
-	void update(Level* level);
+	void update(Level& level);
 
 	void interact(Living_Entity* ent);
 

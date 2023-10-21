@@ -15,18 +15,18 @@ int Entity::get_y() {
 
 // class Living_Entity
 
-void Living_Entity::move(Level* level, int new_x, int new_y) {
+void Living_Entity::move(Level& level, int new_x, int new_y) {
 	bool can_move = false;
-	if (level->can_walk(new_x, new_y)) {
+	if (level.can_walk(new_x, new_y)) {
 		can_move = true;
 	}
 
-	Tile* tile = level->get_tile(new_x, new_y);
+	Tile* tile = level.get_tile(new_x, new_y);
 	if (tile) {
 		tile->interact(this);
 	}
 
-	std::vector<Entity*> entities = level->entities_at(new_x, new_y);
+	std::vector<Entity*> entities = level.entities_at(new_x, new_y);
 	for (int i = 0; i < entities.size(); ++i) {
 		entities[i]->interact(this);
 	}
@@ -45,7 +45,7 @@ Living_Entity::Living_Entity(int x, int y, int max_health) {
 	resistances = Resistances{ 0, 0, 0 };
 }
 
-void Living_Entity::update(Level* level) {
+void Living_Entity::update(Level& level) {
 	// TODO: trigger enemy AI from here
 }
 
@@ -85,11 +85,11 @@ Level::Level(int width, int height) {
 
 void Level::update() {
 	for (int i = 0; i < width * height; ++i) {
-		tiles[i]->update(this);
+		tiles[i]->update(*this);
 	}
 
 	for (int i = 0; i < entities.size(); ++i) {
-		entities[i]->update(this);
+		entities[i]->update(*this);
 	}
 }
 
