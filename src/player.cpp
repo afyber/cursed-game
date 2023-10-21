@@ -1,5 +1,6 @@
 // Player.cpp
 #include "player.hpp"
+#include "draw.hpp"
 #include "keyboard.hpp"
 #include "world.hpp"
 
@@ -18,4 +19,8 @@ void Player::update(Level* level) {
 	else if (key_pressed(SDL_SCANCODE_DOWN)) {
 		move(level, x, y + 1);
 	}
+}
+
+void Player::draw(tcod::Console& con) {
+	print_console_tile(con, Console_Tile{ '@', Color{ 1, 255, 255, 255 }, Color{ 0, 0, 0, 0 } }, x, y);
 }

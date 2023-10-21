@@ -27,16 +27,14 @@ class Object {
 public:
 	virtual void update(Level* level) = 0;
 
-	// TODO: draw function
-
-	// make interact take a Living_Entity*
 	virtual void interact(Living_Entity* ent) = 0;
 
 	virtual bool is_solid() = 0;
 };
 
 class Tile : public Object {
-	// TODO
+public:
+	virtual void draw(tcod::Console& con, int x, int y) = 0;
 };
 
 class Entity : public Object {
@@ -44,7 +42,7 @@ protected:
 	int x, y;
 
 public:
-	// TODO
+	virtual void draw(tcod::Console& con) = 0;
 
 	int get_x();
 

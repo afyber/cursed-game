@@ -16,6 +16,11 @@ int Entity::get_y() {
 // class Living_Entity
 
 void Living_Entity::move(Level* level, int new_x, int new_y) {
+	bool can_move = false;
+	if (level->can_walk(new_x, new_y)) {
+		can_move = true;
+	}
+
 	Tile* tile = level->get_tile(new_x, new_y);
 	if (tile) {
 		tile->interact(this);
@@ -26,7 +31,7 @@ void Living_Entity::move(Level* level, int new_x, int new_y) {
 		entities[i]->interact(this);
 	}
 
-	if (level->can_walk(new_x, new_y)) {
+	if (can_move) {
 		x = new_x;
 		y = new_y;
 	}
@@ -91,14 +96,12 @@ void Level::update() {
 void Level::draw(tcod::Console& con) {
 	for (int y = 0; y < height; ++y) {
 		for (int x = 0; x < width; ++x) {
-			con.at({ x, y }).ch = (int)'.';
-			con.at({ x, y }).fg = TCOD_ColorRGB{ 127, 127, 127 };
+			tiles[y * width + x]->draw(con, x, y);
 		}
 	}
 
 	for (int i = 0; i < entities.size(); ++i) {
-		Entity* ent = entities[i];
-		tcod::print(con, { ent->get_x(), ent->get_y() }, "E", TCOD_ColorRGB{ 255, 255, 255 }, std::nullopt);
+		entities[i]->draw(con);
 	}
 }
 

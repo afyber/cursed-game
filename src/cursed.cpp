@@ -35,7 +35,7 @@ void setup_tcod(tcod::Console& console_out, tcod::Context& context_out) {
 }
 
 int setup_sdl(tcod::Context& context) {
-	if (IMG_Init(IMG_InitFlags::IMG_INIT_PNG) == 0) {
+	if ((IMG_Init(IMG_InitFlags::IMG_INIT_PNG) & IMG_INIT_PNG) == 0) {
 		return -1;
 	}
 
