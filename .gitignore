@@ -2,9 +2,6 @@
 .vs/
 CMakeSettings.json
 
-# vcpkg
-vcpkg_installed/
-
 # General
 out/
 build/
