@@ -1,5 +1,6 @@
 // draw.cpp, contains utility functions to draw to the TCOD console
 #include "draw.hpp"
+
 #include "libtcod.hpp"
 
 inline std::optional<TCOD_ColorRGB> color_to_tcod(Color c) {

@@ -1,9 +1,10 @@
 // tile.hpp
 #ifndef CURSED_TILE_HPP_
 #define CURSED_TILE_HPP_
-#include <optional>
-#include "draw.hpp"
 #include "libtcod.hpp"
+#include <optional>
+
+#include "draw.hpp"
 #include "world.hpp"
 
 class Const_Tile : public Tile {

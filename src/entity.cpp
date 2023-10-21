@@ -1,6 +1,9 @@
 // entity.cpp
 #include "entity.hpp"
+
 #include "draw.hpp"
+#include "item.hpp"
+#include "world.hpp"
 
 // class Item_Entity
 

@@ -1,7 +1,12 @@
 // world.cpp, holds the state of the level and all its entities
 #include "world.hpp"
-#include "tile.hpp"
+
+#include "libtcod.hpp"
 #include <optional>
+#include <vector>
+
+#include "item.hpp"
+#include "tile.hpp"
 
 // class Entity
 

@@ -1,5 +1,6 @@
 // keyboard.cpp, handles SDL_KeyboardEvent's and stores the state of the keys
 #include "keyboard.hpp"
+
 #include <SDL.h>
 
 /* The possible states of a key. All values greater than zero indicate the key is being held down, all values less than or equal to zero indicate it is not.

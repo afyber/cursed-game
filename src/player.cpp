@@ -1,6 +1,8 @@
 // Player.cpp
 #include "player.hpp"
+
 #include "draw.hpp"
+#include "entity.hpp"
 #include "keyboard.hpp"
 #include "world.hpp"
 

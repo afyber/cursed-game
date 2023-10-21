@@ -1,6 +1,8 @@
 // item.cpp
 #include "item.hpp"
 
+#include <vector>
+
 // class Item
 
 Item::Item(int uid) : uid(uid) {}

@@ -1,8 +1,9 @@
 // world.hpp
 #ifndef CURSED_WORLD_HPP_
 #define CURSED_WORLD_HPP_
-#include <vector>
 #include "libtcod.hpp"
+#include <vector>
+
 #include "item.hpp"
 
 class Object;

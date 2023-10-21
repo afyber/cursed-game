@@ -1,8 +1,10 @@
 // tile.cpp, Holds tile definitions for all tiles
 #include "tile.hpp"
-#include <optional>
-#include "draw.hpp"
+
 #include "libtcod.hpp"
+#include <optional>
+
+#include "draw.hpp"
 #include "world.hpp"
 
 // class Const_Tile
