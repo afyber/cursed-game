@@ -65,6 +65,10 @@ bool Level::can_walk(int x, int y) {
 		}
 	}
 
+	if (player->get_x() == x && player->get_y() == y) {
+		return false;
+	}
+
 	return true;
 }
 
@@ -75,6 +79,10 @@ std::vector<Entity*> Level::entities_at(int x, int y) {
 		if (ent->get_x() == x && ent->get_y() == y) {
 			ents.push_back(ent);
 		}
+	}
+
+	if (player->get_x() == x && player->get_y() == y) {
+		ents.push_back(player);
 	}
 
 	return ents;
