@@ -3,11 +3,13 @@
 
 #include <vector>
 
+using std::size_t;
+
 // class Item
 
-Item::Item(int uid) : uid(uid) {}
+Item::Item(unsigned int uid) : uid(uid) {}
 
-int Item::get_uid() {
+unsigned int Item::get_uid() {
 	return uid;
 }
 
@@ -17,10 +19,10 @@ void Item_List::add_item(Item* item) {
 	items.push_back(item);
 }
 
-Item* Item_List::pop_item(int uid) {
+Item* Item_List::pop_item(unsigned int uid) {
 	Item* item = nullptr;
 
-	for (int i = 0; i < items.size(); ++i) {
+	for (size_t i = 0; i < items.size(); ++i) {
 		if (items[i]->get_uid() == uid) {
 			item = items[i];
 			items.erase(items.begin() + i);
@@ -30,8 +32,8 @@ Item* Item_List::pop_item(int uid) {
 	return item;
 }
 
-Item* Item_List::get_item(int uid) {
-	for (int i = 0; i < items.size(); ++i) {
+Item* Item_List::get_item(unsigned int uid) {
+	for (size_t i = 0; i < items.size(); ++i) {
 		if (items[i]->get_uid() == uid) {
 			return items[i];
 		}

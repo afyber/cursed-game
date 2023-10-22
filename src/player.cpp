@@ -24,5 +24,5 @@ void Player::update(Level& level) {
 }
 
 void Player::draw(tcod::Console& con) {
-	print_console_tile(con, Console_Tile{ '@', Color{ 1, 255, 255, 255 }, Color{ 0, 0, 0, 0 } }, x, y);
+	print_console_tile(con, { '@', COLOR_WHITE, COLOR_BLANK }, x, y);
 }
