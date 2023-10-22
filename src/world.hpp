@@ -53,11 +53,11 @@ public:
 class Living_Entity : public Entity {
 protected:
 	int health;
-	int max_health;
+	unsigned int max_health;
 	Resistances resistances;
 
 	Item_List inventory;
-	std::vector<int> equipped_uids;
+	std::vector<unsigned int> equipped_uids;
 
 	void move(Level& level, int x, int y);
 
@@ -79,7 +79,7 @@ public:
 
 class Level {
 private:
-	int width, height;
+	unsigned int width, height;
 	std::vector<Tile*> tiles;
 	std::vector<Entity*> entities;
 public:

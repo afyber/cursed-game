@@ -7,9 +7,9 @@ using std::size_t;
 
 // class Item
 
-Item::Item(int uid) : uid(uid) {}
+Item::Item(unsigned int uid) : uid(uid) {}
 
-int Item::get_uid() {
+unsigned int Item::get_uid() {
 	return uid;
 }
 

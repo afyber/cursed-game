@@ -29,7 +29,7 @@ void Living_Entity::move(Level& level, int new_x, int new_y) {
 	}
 
 	std::vector<Entity*> entities = level.entities_at(new_x, new_y);
-	for (int i = 0; i < entities.size(); ++i) {
+	for (size_t i = 0; i < entities.size(); ++i) {
 		entities[i]->interact(this);
 	}
 

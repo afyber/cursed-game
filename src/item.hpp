@@ -5,12 +5,12 @@
 
 class Item {
 private:
-	const int uid;
+	const unsigned int uid;
 
 public:
-	Item(int uid);
+	Item(unsigned int uid);
 
-	int get_uid();
+	unsigned int get_uid();
 };
 
 class Item_List {
