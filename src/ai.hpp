@@ -11,7 +11,7 @@ private:
 	int player_x, player_y;
 
 public:
-	void move_random(Level& level, Living_Entity* ent);
+	static void move_random(Level& level, Living_Entity* ent);
 };
 
 #endif

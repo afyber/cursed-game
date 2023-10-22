@@ -44,12 +44,11 @@ Living_Entity::Living_Entity(int x, int y, int max_health) {
 	this->max_health = max_health;
 	health = max_health;
 	resistances = { 0, 0, 0 };
-	ai = AI();
 }
 
 void Living_Entity::update(Level& level, bool turn) {
 	if (turn) {
-		ai.move_random(level, this);
+		AI::move_random(level, this);
 	}
 }
 

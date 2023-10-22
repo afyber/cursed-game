@@ -41,8 +41,6 @@ protected:
 	Item_List inventory;
 	std::vector<unsigned int> equipped_uids;
 
-	AI ai;
-
 	void move(Level& level, int x, int y);
 
 public:
