@@ -27,6 +27,10 @@ bool Player::update(Level& level) {
 		move(level, x, y + 1);
 		took_turn = true;
 	}
+	else if (key_pressed(SDL_SCANCODE_PERIOD)) {
+		move(level, x, y);
+		took_turn = true;
+	}
 
 	return took_turn;
 }

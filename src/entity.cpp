@@ -20,6 +20,10 @@ int Entity::get_y() {
 // class Living_Entity
 
 void Living_Entity::move(Level& level, int new_x, int new_y) {
+	if (x == new_x && y == new_y) {
+		return;
+	}
+
 	bool can_move = level.can_walk(new_x, new_y);
 
 	Tile* tile = level.get_tile(new_x, new_y);
