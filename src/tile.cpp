@@ -19,13 +19,13 @@ Const_Tile::Const_Tile(char ch, Color fg, Color bg, bool solid) {
 	tile = { ch, fg, bg };
 }
 
-void Const_Tile::update(Level& level) {}
+void Const_Tile::update(Level&) {}
 
 void Const_Tile::draw(tcod::Console& con, int x, int y) {
 	print_console_tile(con, tile, x, y);
 }
 
-void Const_Tile::interact(Living_Entity* ent) {}
+void Const_Tile::interact(Living_Entity*) {}
 
 bool Const_Tile::is_solid() {
 	return this->solid;
@@ -39,7 +39,7 @@ Door_Tile::Door_Tile(Console_Tile open_tile, Console_Tile closed_tile) {
 	this->closed_tile = closed_tile;
 }
 
-void Door_Tile::update(Level& level) {}
+void Door_Tile::update(Level&) {}
 
 void Door_Tile::draw(tcod::Console& con, int x, int y) {
 	if (open) {
@@ -50,7 +50,7 @@ void Door_Tile::draw(tcod::Console& con, int x, int y) {
 	}
 }
 
-void Door_Tile::interact(Living_Entity* ent) {
+void Door_Tile::interact(Living_Entity*) {
 	if (!open) {
 		open = true;
 	}

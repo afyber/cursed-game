@@ -49,10 +49,12 @@ Living_Entity::Living_Entity(int x, int y, int max_health) {
 
 void Living_Entity::update(Level& level) {
 	// TODO: trigger enemy AI from here
+	(void)level;
 }
 
 void Living_Entity::interact(Living_Entity* ent) {
 	// TODO: Calculate attacking entity's damage
+	(void)ent;
 	this->hurt({ 1, 0, 0 });
 }
 

@@ -50,6 +50,10 @@ void quit_sdl() {
 }
 
 int main(int argc, char* argv[]) {
+	// TODO: parse these
+	(void)argc;
+	(void)argv;
+
 	tcod::Console con;
 	tcod::Context context;
 	setup_tcod(con, context);

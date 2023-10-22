@@ -11,7 +11,7 @@ private:
 public:
 	Item_Entity(int x, int y, Item* item_ref);
 
-	void update(Level& level);
+	void update(Level&);
 
 	void draw(tcod::Console& con);
 

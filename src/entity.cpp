@@ -13,7 +13,7 @@ Item_Entity::Item_Entity(int x, int y, Item* item_ref) {
 	this->item_ref = item_ref;
 }
 
-void Item_Entity::update(Level& level) {}
+void Item_Entity::update(Level&) {}
 
 void Item_Entity::draw(tcod::Console& con) {
 	print_console_tile(con, { 'i', COLOR_WHITE, COLOR_BLANK }, x, y);
