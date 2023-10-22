@@ -47,7 +47,7 @@ Living_Entity::Living_Entity(int x, int y, int max_health) {
 	this->y = y;
 	this->max_health = max_health;
 	health = max_health;
-	resistances = Resistances{ 0, 0, 0 };
+	resistances = { 0, 0, 0 };
 }
 
 void Living_Entity::update(Level& level) {
@@ -56,7 +56,7 @@ void Living_Entity::update(Level& level) {
 
 void Living_Entity::interact(Living_Entity* ent) {
 	// TODO: Calculate attacking entity's damage
-	this->hurt(Attack{ 1, 0, 0 });
+	this->hurt({ 1, 0, 0 });
 }
 
 bool Living_Entity::is_solid() {
@@ -84,7 +84,7 @@ Level::Level(int width, int height) {
 	this->height = height;
 	tiles.resize(width * height);
 	for (int i = 0; i < width * height; ++i) {
-		tiles[i] = new Const_Tile('.', Color{ 1, 127, 127, 127 }, Color{ 0, 0, 0, 0 }, false);
+		tiles[i] = new Const_Tile('.', COLOR_GREY, COLOR_BLANK, false);
 	}
 }
 

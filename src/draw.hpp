@@ -10,6 +10,11 @@ struct Color {
 	uint8_t b;
 };
 
+const Color COLOR_WHITE = { 1, 255, 255, 255 };
+const Color COLOR_GREY = { 1, 127, 127, 127 };
+const Color COLOR_BLACK = { 1, 0, 0, 0 };
+const Color COLOR_BLANK = { 0, 0, 0, 0 };
+
 struct Console_Tile {
 	char ch;
 	Color fg;

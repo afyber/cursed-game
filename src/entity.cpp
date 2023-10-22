@@ -16,7 +16,7 @@ Item_Entity::Item_Entity(int x, int y, Item* item_ref) {
 void Item_Entity::update(Level& level) {}
 
 void Item_Entity::draw(tcod::Console& con) {
-	print_console_tile(con, Console_Tile{ 'i', Color{ 1, 255, 255, 255 }, Color{ 0, 0, 0, 0 } }, x, y);
+	print_console_tile(con, { 'i', COLOR_WHITE, COLOR_BLANK }, x, y);
 }
 
 bool Item_Entity::is_solid() {
