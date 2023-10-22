@@ -21,10 +21,7 @@ int Entity::get_y() {
 // class Living_Entity
 
 void Living_Entity::move(Level& level, int new_x, int new_y) {
-	bool can_move = false;
-	if (level.can_walk(new_x, new_y)) {
-		can_move = true;
-	}
+	bool can_move = level.can_walk(new_x, new_y);
 
 	Tile* tile = level.get_tile(new_x, new_y);
 	if (tile) {
@@ -82,30 +79,30 @@ void Living_Entity::give_item(Item* item) {
 Level::Level(int width, int height) {
 	this->width = width;
 	this->height = height;
-	tiles.resize(width * height);
-	for (int i = 0; i < width * height; ++i) {
+	tiles.resize((size_t)width * height);
+	for (size_t i = 0; i < (size_t)width * height; ++i) {
 		tiles[i] = new Const_Tile('.', COLOR_GREY, COLOR_BLANK, false);
 	}
 }
 
 void Level::update() {
-	for (int i = 0; i < width * height; ++i) {
+	for (size_t i = 0; i < width * height; ++i) {
 		tiles[i]->update(*this);
 	}
 
-	for (int i = 0; i < entities.size(); ++i) {
+	for (size_t i = 0; i < entities.size(); ++i) {
 		entities[i]->update(*this);
 	}
 }
 
 void Level::draw(tcod::Console& con) {
-	for (int y = 0; y < height; ++y) {
-		for (int x = 0; x < width; ++x) {
+	for (size_t y = 0; y < height; ++y) {
+		for (size_t x = 0; x < width; ++x) {
 			tiles[y * width + x]->draw(con, x, y);
 		}
 	}
 
-	for (int i = 0; i < entities.size(); ++i) {
+	for (size_t i = 0; i < entities.size(); ++i) {
 		entities[i]->draw(con);
 	}
 }
@@ -121,7 +118,7 @@ bool Level::can_walk(int x, int y) {
 	}
 
 	auto ents = entities_at(x, y);
-	for (int i = 0; i < ents.size(); ++i) {
+	for (size_t i = 0; i < ents.size(); ++i) {
 		if (ents[i]->is_solid()) {
 			return false;
 		}
@@ -132,7 +129,7 @@ bool Level::can_walk(int x, int y) {
 
 std::vector<Entity*> Level::entities_at(int x, int y) {
 	std::vector<Entity*> ents = {};
-	for (int i = 0; i < entities.size(); ++i) {
+	for (size_t i = 0; i < entities.size(); ++i) {
 		Entity* ent = entities[i];
 		if (ent->get_x() == x && ent->get_y() == y) {
 			ents.push_back(ent);
@@ -148,14 +145,14 @@ void Level::add_entity(Entity* entity) {
 
 Tile* Level::get_tile(int x, int y) {
 	if (x < width && y < height && x >= 0 && y >= 0) {
-		return tiles[y * width + x];
+		return tiles[(size_t)y * width + x];
 	}
 
 	return nullptr;
 }
 
 void Level::set_tile(Tile* tile, int x, int y) {
-	tiles[y * width + x] = tile;
+	tiles[(size_t)y * width + x] = tile;
 }
 
 int Level::get_width() {

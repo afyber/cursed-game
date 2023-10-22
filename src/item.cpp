@@ -20,7 +20,7 @@ void Item_List::add_item(Item* item) {
 Item* Item_List::pop_item(int uid) {
 	Item* item = nullptr;
 
-	for (int i = 0; i < items.size(); ++i) {
+	for (size_t i = 0; i < items.size(); ++i) {
 		if (items[i]->get_uid() == uid) {
 			item = items[i];
 			items.erase(items.begin() + i);
@@ -31,7 +31,7 @@ Item* Item_List::pop_item(int uid) {
 }
 
 Item* Item_List::get_item(int uid) {
-	for (int i = 0; i < items.size(); ++i) {
+	for (size_t i = 0; i < items.size(); ++i) {
 		if (items[i]->get_uid() == uid) {
 			return items[i];
 		}

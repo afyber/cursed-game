@@ -16,11 +16,7 @@ Const_Tile::Const_Tile(Console_Tile tile, bool solid) {
 
 Const_Tile::Const_Tile(char ch, Color fg, Color bg, bool solid) {
 	this->solid = solid;
-	Console_Tile new_tile{};
-	new_tile.ch = ch;
-	new_tile.fg = fg;
-	new_tile.bg = bg;
-	tile = new_tile;
+	tile = { ch, fg, bg };
 }
 
 void Const_Tile::update(Level& level) {}
