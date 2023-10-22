@@ -27,11 +27,11 @@ void Level::update() {
 		tiles[i]->update(*this);
 	}
 
-	for (size_t i = 0; i < entities.size(); ++i) {
-		entities[i]->update(*this, false);
-	}
+	bool turn = player->update(*this);
 
-	player->update(*this);
+	for (size_t i = 0; i < entities.size(); ++i) {
+		entities[i]->update(*this, turn);
+	}
 }
 
 void Level::draw(tcod::Console& con) {
