@@ -8,6 +8,7 @@
 
 #include "keyboard.hpp"
 #include "player.hpp"
+#include "random.hpp"
 #include "world.hpp"
 
 const int TILESET_CHAR_SIZE = 8;
@@ -53,6 +54,8 @@ int main(int argc, char* argv[]) {
 	// TODO: parse these
 	(void)argc;
 	(void)argv;
+
+	setup_random();
 
 	tcod::Console con;
 	tcod::Context context;
