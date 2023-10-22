@@ -86,7 +86,7 @@ Level::Level(int width, int height) {
 }
 
 void Level::update() {
-	for (size_t i = 0; i < width * height; ++i) {
+	for (size_t i = 0; i < (size_t)width * height; ++i) {
 		tiles[i]->update(*this);
 	}
 
@@ -96,9 +96,9 @@ void Level::update() {
 }
 
 void Level::draw(tcod::Console& con) {
-	for (size_t y = 0; y < height; ++y) {
-		for (size_t x = 0; x < width; ++x) {
-			tiles[y * width + x]->draw(con, x, y);
+	for (int y = 0; y < height; ++y) {
+		for (int x = 0; x < width; ++x) {
+			tiles[(size_t)y * width + x]->draw(con, x, y);
 		}
 	}
 
