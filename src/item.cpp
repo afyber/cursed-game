@@ -3,6 +3,8 @@
 
 #include <vector>
 
+using std::size_t;
+
 // class Item
 
 Item::Item(int uid) : uid(uid) {}
