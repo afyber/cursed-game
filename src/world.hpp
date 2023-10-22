@@ -52,8 +52,7 @@ public:
 
 class Living_Entity : public Entity {
 protected:
-	int health;
-	unsigned int max_health;
+	int health, max_health;
 	Resistances resistances;
 
 	Item_List inventory;
@@ -79,7 +78,7 @@ public:
 
 class Level {
 private:
-	unsigned int width, height;
+	int width, height;
 	std::vector<Tile*> tiles;
 	std::vector<Entity*> entities;
 public:

@@ -20,9 +20,9 @@ private:
 public:
 	void add_item(Item* item);
 
-	Item* pop_item(int uid);
+	Item* pop_item(unsigned int uid);
 
-	Item* get_item(int uid);
+	Item* get_item(unsigned int uid);
 };
 
 #endif
