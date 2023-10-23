@@ -26,6 +26,8 @@ public:
 
 	virtual void draw(tcod::Console& con) = 0;
 
+	virtual bool is_alive() = 0;
+
 	int get_x();
 
 	int get_y();
@@ -52,9 +54,9 @@ public:
 
 	bool is_solid();
 
-	virtual void hurt(Attack attack);
+	bool is_alive();
 
-	virtual bool is_alive();
+	virtual void hurt(Attack attack);
 
 	void give_item(Item* item);
 };
@@ -62,6 +64,7 @@ public:
 class Item_Entity : public Entity {
 private:
 	Item* item_ref;
+	bool picked_up;
 
 public:
 	Item_Entity(int x, int y, Item* item_ref);

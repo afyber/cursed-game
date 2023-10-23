@@ -30,7 +30,16 @@ void Level::update() {
 	bool turn = player->update(*this);
 
 	for (size_t i = 0; i < entities.size(); ++i) {
-		entities[i]->update(*this, turn);
+		if (entities[i]->is_alive()) {
+			entities[i]->update(*this, turn);
+		}
+		else {
+			remove_entity(entities[i]);
+		}
+	}
+
+	if (!player->is_alive()) {
+		// gameover code
 	}
 }
 
@@ -90,6 +99,17 @@ std::vector<Entity*> Level::entities_at(int x, int y) {
 
 void Level::add_entity(Entity* entity) {
 	entities.push_back(entity);
+}
+
+bool Level::remove_entity(Entity* entity) {
+	for (size_t i = 0; i < entities.size(); ++i) {
+		if (entities[i] == entity) {
+			entities.erase(entities.begin() + i);
+			return true;
+		}
+	}
+
+	return false;
 }
 
 Tile* Level::get_tile(int x, int y) {

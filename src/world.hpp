@@ -36,6 +36,8 @@ public:
 
 	void add_entity(Entity* entity);
 
+	bool remove_entity(Entity* entity);
+
 	Tile* get_tile(int x, int y);
 
 	void set_tile(Tile* tile, int x, int y);
