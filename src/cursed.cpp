@@ -8,6 +8,7 @@
 
 #include "keyboard.hpp"
 #include "player.hpp"
+#include "random.hpp"
 #include "world.hpp"
 
 const int TILESET_CHAR_SIZE = 8;
@@ -54,6 +55,8 @@ int main(int argc, char* argv[]) {
 	(void)argc;
 	(void)argv;
 
+	setup_random();
+
 	tcod::Console con;
 	tcod::Context context;
 	setup_tcod(con, context);
@@ -64,9 +67,9 @@ int main(int argc, char* argv[]) {
 
 	sdl_set_window_size(context, 2);
 
-	Level floor(45, 45);
-	floor.add_entity(new Player(5, 5));
+	Level floor(45, 45, new Player(5, 5));
 	floor.add_entity(new Item_Entity(5, 4, new Item(0)));
+	floor.add_entity(new Worm_Entity(10, 10));
 
 	bool running = true;
 	while (running) {

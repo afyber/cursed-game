@@ -17,7 +17,7 @@ find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
 find_package(libtcod CONFIG REQUIRED)
 
-file(GLOB SOURCES "src/cursed.cpp" "src/draw.cpp" "src/entity.cpp" "src/item.cpp" "src/keyboard.cpp" "src/player.cpp" "src/tile.cpp" "src/world.cpp")
+file(GLOB SOURCES "src/ai.cpp" "src/cursed.cpp" "src/draw.cpp" "src/entity.cpp" "src/item.cpp" "src/keyboard.cpp" "src/player.cpp" "src/random.cpp" "src/tile.cpp" "src/world.cpp")
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)

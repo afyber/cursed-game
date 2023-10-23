@@ -7,6 +7,13 @@
 #include "draw.hpp"
 #include "world.hpp"
 
+class Tile : public Object {
+public:
+	virtual void update(Level& level) = 0;
+
+	virtual void draw(tcod::Console& con, int x, int y) = 0;
+};
+
 class Const_Tile : public Tile {
 private:
 	bool solid;

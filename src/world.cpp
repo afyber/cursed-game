@@ -5,86 +5,21 @@
 #include <optional>
 #include <vector>
 
+#include "entity.hpp"
 #include "item.hpp"
+#include "player.hpp"
 #include "tile.hpp"
-
-// class Entity
-
-int Entity::get_x() {
-	return x;
-}
-
-int Entity::get_y() {
-	return y;
-}
-
-// class Living_Entity
-
-void Living_Entity::move(Level& level, int new_x, int new_y) {
-	bool can_move = level.can_walk(new_x, new_y);
-
-	Tile* tile = level.get_tile(new_x, new_y);
-	if (tile) {
-		tile->interact(this);
-	}
-
-	std::vector<Entity*> entities = level.entities_at(new_x, new_y);
-	for (size_t i = 0; i < entities.size(); ++i) {
-		entities[i]->interact(this);
-	}
-
-	if (can_move) {
-		x = new_x;
-		y = new_y;
-	}
-}
-
-Living_Entity::Living_Entity(int x, int y, int max_health) {
-	this->x = x;
-	this->y = y;
-	this->max_health = max_health;
-	health = max_health;
-	resistances = { 0, 0, 0 };
-}
-
-void Living_Entity::update(Level& level) {
-	// TODO: trigger enemy AI from here
-	(void)level;
-}
-
-void Living_Entity::interact(Living_Entity* ent) {
-	// TODO: Calculate attacking entity's damage
-	(void)ent;
-	this->hurt({ 1, 0, 0 });
-}
-
-bool Living_Entity::is_solid() {
-	return true;
-}
-
-void Living_Entity::hurt(Attack attack) {
-	health -= (int)(attack.normal_damage * (1 - resistances.normal_resistance))
-		+ (int)(attack.magic_damage * (1 - resistances.magic_resistance))
-		+ (int)(attack.fire_damage * (1 - resistances.fire_resistance));
-}
-
-bool Living_Entity::is_alive() {
-	return health > 0;
-}
-
-void Living_Entity::give_item(Item* item) {
-	inventory.add_item(item);
-}
 
 // class Level
 
-Level::Level(int width, int height) {
+Level::Level(int width, int height, Player* player) {
 	this->width = width;
 	this->height = height;
 	tiles.resize((size_t)width * height);
 	for (size_t i = 0; i < (size_t)width * height; ++i) {
 		tiles[i] = new Const_Tile('.', COLOR_GREY, COLOR_BLANK, false);
 	}
+	this->player = player;
 }
 
 void Level::update() {
@@ -92,8 +27,10 @@ void Level::update() {
 		tiles[i]->update(*this);
 	}
 
+	bool turn = player->update(*this);
+
 	for (size_t i = 0; i < entities.size(); ++i) {
-		entities[i]->update(*this);
+		entities[i]->update(*this, turn);
 	}
 }
 
@@ -107,6 +44,8 @@ void Level::draw(tcod::Console& con) {
 	for (size_t i = 0; i < entities.size(); ++i) {
 		entities[i]->draw(con);
 	}
+
+	player->draw(con);
 }
 
 bool Level::can_walk(int x, int y) {
@@ -126,6 +65,10 @@ bool Level::can_walk(int x, int y) {
 		}
 	}
 
+	if (player->get_x() == x && player->get_y() == y) {
+		return false;
+	}
+
 	return true;
 }
 
@@ -136,6 +79,10 @@ std::vector<Entity*> Level::entities_at(int x, int y) {
 		if (ent->get_x() == x && ent->get_y() == y) {
 			ents.push_back(ent);
 		}
+	}
+
+	if (player->get_x() == x && player->get_y() == y) {
+		ents.push_back(player);
 	}
 
 	return ents;
