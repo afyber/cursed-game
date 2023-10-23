@@ -2,6 +2,7 @@
 #include <array>
 #include <iostream>
 #include "libtcod.hpp"
+#include "libtcod/timer.hpp"
 #include <SDL.h>
 #include <SDL2/SDL_image.h>
 #include <string>
@@ -11,9 +12,12 @@
 #include "random.hpp"
 #include "world.hpp"
 
+const int WINDOW_DESIRED_FPS = 60;
+
 const int TILESET_CHAR_SIZE = 8;
 const int TILESET_COLUMNS = 16;
 const int TILESET_ROWS = 16;
+
 const int CONSOLE_WIDTH = 80;
 const int CONSOLE_HEIGHT = 45;
 
@@ -71,17 +75,21 @@ int main(int argc, char* argv[]) {
 	floor.add_entity(new Item_Entity(5, 4, new Item(0)));
 	floor.add_entity(new Worm_Entity(10, 10));
 
+	auto timer = tcod::Timer();
+
 	bool running = true;
 	while (running) {
-		con.clear();
-
 		floor.update();
+
+		con.clear();
 
 		floor.draw(con);
 
 		context.present(con);
 
 		update_key_states();
+
+		timer.sync(WINDOW_DESIRED_FPS);
 
 		SDL_Event event;
 		while (SDL_PollEvent(&event)) {
