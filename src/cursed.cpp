@@ -8,6 +8,7 @@
 #include <string>
 
 #include "keyboard.hpp"
+#include "message.hpp"
 #include "player.hpp"
 #include "random.hpp"
 #include "world.hpp"
@@ -20,6 +21,11 @@ const int TILESET_ROWS = 16;
 
 const int CONSOLE_WIDTH = 80;
 const int CONSOLE_HEIGHT = 45;
+
+const int MESSAGE_BOX_X = 45;
+const int MESSAGE_BOX_Y = 0;
+const int MESSAGE_BOX_WIDTH = 35;
+const int MESSAGE_BOX_HEIGHT = 45;
 
 void setup_tcod(tcod::Console& console_out, tcod::Context& context_out) {
 	auto params = TCOD_ContextParams();
@@ -84,6 +90,8 @@ int main(int argc, char* argv[]) {
 		con.clear();
 
 		floor.draw(con);
+
+		draw_messages(con, MESSAGE_BOX_X, MESSAGE_BOX_Y, MESSAGE_BOX_WIDTH, MESSAGE_BOX_HEIGHT);
 
 		context.present(con);
 
