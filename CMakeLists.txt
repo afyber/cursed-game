@@ -17,9 +17,8 @@ find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
 find_package(libtcod CONFIG REQUIRED)
 
-file(GLOB SOURCES "src/ai.cpp" "src/cursed.cpp" "src/draw.cpp" "src/entity.cpp" "src/item.cpp" "src/keyboard.cpp" "src/player.cpp" "src/random.cpp" "src/tile.cpp" "src/world.cpp")
-
-add_executable(${PROJECT_NAME} ${SOURCES})
+add_executable(${PROJECT_NAME} "src/ai.cpp" "src/cursed.cpp" "src/draw.cpp" "src/entity.cpp"
+    "src/item.cpp" "src/keyboard.cpp" "src/player.cpp" "src/random.cpp" "src/tile.cpp" "src/world.cpp")
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 
 # Copy the resources into the binary folder after every build to ensure they're up-to-date
