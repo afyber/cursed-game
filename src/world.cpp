@@ -5,9 +5,11 @@
 #include <optional>
 #include <vector>
 
+#include "draw.hpp"
 #include "entity.hpp"
 #include "item.hpp"
 #include "player.hpp"
+#include "random.hpp"
 #include "tile.hpp"
 
 // class Level
@@ -17,7 +19,12 @@ Level::Level(int width, int height, Player* player) {
 	this->height = height;
 	tiles.resize((size_t)width * height);
 	for (size_t i = 0; i < (size_t)width * height; ++i) {
-		tiles[i] = new Const_Tile('.', COLOR_GREY, COLOR_BLANK, false);
+		if (irandom(1, 4) == 1) {
+			tiles[i] = new Const_Tile('#', COLOR_GREY, COLOR_BLANK, true);
+		}
+		else {
+			tiles[i] = new Const_Tile('.', { 1, 99, 52, 2 }, COLOR_BLANK, false);
+		}
 	}
 	this->player = player;
 }
