@@ -9,6 +9,10 @@
 
 // class Entity
 
+bool Entity::is_transparent() {
+	return true;
+}
+
 int Entity::get_x() {
 	return x;
 }

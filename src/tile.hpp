@@ -16,21 +16,23 @@ public:
 
 class Const_Tile : public Tile {
 private:
-	bool solid;
+	bool solid, transparent;
 	Console_Tile tile;
 
 public:
-	Const_Tile(Console_Tile tile, bool solid);
+	Const_Tile(Console_Tile tile, bool solid, bool transparent);
 
-	Const_Tile(char ch, Color fg, Color bg, bool solid);
-
-	void update(Level&);
-
-	void draw(tcod::Console& con, int x, int y);
+	Const_Tile(char ch, Color fg, Color bg, bool solid, bool transparent);
 
 	void interact(Living_Entity*);
 
 	bool is_solid();
+
+	bool is_transparent();
+
+	void update(Level&);
+
+	void draw(tcod::Console& con, int x, int y);
 };
 
 class Door_Tile : public Tile {
@@ -42,13 +44,15 @@ private:
 public:
 	Door_Tile(Console_Tile open_tile, Console_Tile closed_tile);
 
-	void update(Level&);
-
-	void draw(tcod::Console& con, int x, int y);
-
 	void interact(Living_Entity*);
 
 	bool is_solid();
+
+	bool is_transparent();
+
+	void update(Level&);
+
+	void draw(tcod::Console& con, int x, int y);
 };
 
 #endif
