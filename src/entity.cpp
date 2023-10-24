@@ -9,6 +9,10 @@
 
 // class Entity
 
+bool Entity::is_transparent() {
+	return true;
+}
+
 int Entity::get_x() {
 	return x;
 }
@@ -86,12 +90,15 @@ Item_Entity::Item_Entity(int x, int y, Item* item_ref) {
 	this->x = x;
 	this->y = y;
 	this->item_ref = item_ref;
+	picked_up = false;
 }
 
 void Item_Entity::update(Level&, bool) {}
 
 void Item_Entity::draw(tcod::Console& con) {
-	print_console_tile(con, { 'i', COLOR_WHITE, COLOR_BLANK }, x, y);
+	if (!picked_up) {
+		print_console_tile(con, { 'i', COLOR_WHITE, COLOR_BLANK }, x, y);
+	}
 }
 
 bool Item_Entity::is_solid() {
@@ -99,11 +106,14 @@ bool Item_Entity::is_solid() {
 }
 
 void Item_Entity::interact(Living_Entity* ent) {
-	ent->give_item(item_ref);
+	if (!picked_up) {
+		ent->give_item(item_ref);
+		picked_up = true;
+	}
 }
 
 bool Item_Entity::is_alive() {
-	return true;
+	return !picked_up;
 }
 
 Item* Item_Entity::get_item() {

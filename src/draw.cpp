@@ -5,7 +5,7 @@
 
 inline std::optional<TCOD_ColorRGB> color_to_tcod(Color c) {
 	if (c.alpha) {
-		return TCOD_ColorRGB{ c.r, c.b, c.g };
+		return TCOD_ColorRGB{ c.r, c.g, c.b };
 	}
 	
 	return std::nullopt;

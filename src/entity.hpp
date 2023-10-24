@@ -22,6 +22,10 @@ protected:
 	int x, y;
 
 public:
+	bool is_transparent();
+
+	virtual bool is_alive() = 0;
+
 	virtual void update(Level& level, bool turn) = 0;
 
 	virtual void draw(tcod::Console& con) = 0;
@@ -46,15 +50,15 @@ protected:
 public:
 	Living_Entity(int x, int y, int max_health);
 
+	bool is_solid();
+
+	bool is_alive();
+
 	void update(Level& level, bool turn);
 
 	void interact(Living_Entity* ent);
 
-	bool is_solid();
-
 	virtual void hurt(Attack attack);
-
-	virtual bool is_alive();
 
 	void give_item(Item* item);
 };
@@ -62,19 +66,20 @@ public:
 class Item_Entity : public Entity {
 private:
 	Item* item_ref;
+	bool picked_up;
 
 public:
 	Item_Entity(int x, int y, Item* item_ref);
-
-	void update(Level&, bool);
-
-	void draw(tcod::Console& con);
 
 	void interact(Living_Entity* ent);
 
 	bool is_solid();
 
 	bool is_alive();
+
+	void update(Level&, bool);
+
+	void draw(tcod::Console& con);
 
 	Item* get_item();
 };

@@ -14,6 +14,8 @@ public:
 	virtual void interact(Living_Entity* ent) = 0;
 
 	virtual bool is_solid() = 0;
+
+	virtual bool is_transparent() = 0;
 };
 
 class Level {
@@ -23,6 +25,10 @@ private:
 	std::vector<Entity*> entities;
 
 	Player* player;
+
+	TCODMap visibility_map;
+
+	void calculate_visibility(int player_x, int player_y);
 public:
 	Level(int width, int height, Player* player);
 
@@ -35,6 +41,8 @@ public:
 	std::vector<Entity*> entities_at(int x, int y);
 
 	void add_entity(Entity* entity);
+
+	bool remove_entity(Entity* entity);
 
 	Tile* get_tile(int x, int y);
 
