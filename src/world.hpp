@@ -28,7 +28,7 @@ private:
 
 	TCODMap visibility_map;
 
-	void calculate_visibility(int origin_x, int origin_y);
+	void calculate_visibility(int player_x, int player_y);
 public:
 	Level(int width, int height, Player* player);
 

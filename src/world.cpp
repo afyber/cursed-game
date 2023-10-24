@@ -14,7 +14,7 @@
 
 // class Level
 
-void Level::calculate_visibility(int origin_x, int origin_y) {
+void Level::calculate_visibility(int player_x, int player_y) {
 	for (int y = 0; y < height; ++y) {
 		for (int x = 0; x < width; ++x) {
 			Tile* tile = tiles[(size_t)y * width + x];
@@ -24,17 +24,16 @@ void Level::calculate_visibility(int origin_x, int origin_y) {
 
 	for (size_t i = 0; i < entities.size(); ++i) {
 		Entity* ent = entities[i];
-		bool tile_walkable = visibility_map.isWalkable(ent->get_x(), ent->get_y());
-		bool tile_transparent = visibility_map.isWalkable(ent->get_x(), ent->get_y());
+
 		if (!ent->is_transparent()) {
-			visibility_map.setProperties(ent->get_x(), ent->get_y(), false, tile_walkable);
+			visibility_map.setProperties(ent->get_x(), ent->get_y(), false, visibility_map.isWalkable(ent->get_x(), ent->get_y()));
 		}
 		if (ent->is_solid()) {
-			visibility_map.setProperties(ent->get_x(), ent->get_y(), tile_transparent, false);
+			visibility_map.setProperties(ent->get_x(), ent->get_y(), visibility_map.isTransparent(ent->get_x(), ent->get_y()), false);
 		}
 	}
 
-	visibility_map.computeFov(origin_x, origin_y, FOV_RESTRICTIVE);
+	visibility_map.computeFov(player_x, player_y, FOV_RESTRICTIVE);
 }
 
 Level::Level(int width, int height, Player* player) : visibility_map(width, height) {
