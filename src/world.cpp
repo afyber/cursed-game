@@ -15,28 +15,9 @@
 
 // class Level
 
-void Level::calculate_visibility(int player_x, int player_y) {
-	for (int y = 0; y < height; ++y) {
-		for (int x = 0; x < width; ++x) {
-			visibility_map.setProperties(x, y, map.is_transparent(x, y), !map.is_solid(x, y));
-		}
-	}
-
-	for (size_t i = 0; i < entities.size(); ++i) {
-		Entity* ent = entities[i];
-
-		if (!ent->is_transparent()) {
-			visibility_map.setProperties(ent->get_x(), ent->get_y(), false, visibility_map.isWalkable(ent->get_x(), ent->get_y()));
-		}
-		if (ent->is_solid()) {
-			visibility_map.setProperties(ent->get_x(), ent->get_y(), visibility_map.isTransparent(ent->get_x(), ent->get_y()), false);
-		}
-	}
-
-	visibility_map.computeFov(player_x, player_y, FOV_RESTRICTIVE);
+Level::Level(int width, int height, Player* player) : width(width), height(height), player(player), map(width, height) {
+	map.calculate_visibility(entities, player->get_x(), player->get_y());
 }
-
-Level::Level(int width, int height, Player* player) : width(width), height(height), player(player), visibility_map(width, height), map(width, height) {}
 
 void Level::update() {
 	map.update(*this);
@@ -52,19 +33,21 @@ void Level::update() {
 		}
 	}
 
+	if (turn) {
+		map.calculate_visibility(entities, player->get_x(), player->get_y());
+	}
+
 	if (!player->is_alive()) {
 		// gameover code
 	}
 }
 
 void Level::draw(tcod::Console& con) {
-	calculate_visibility(player->get_x(), player->get_y());
-
 	map.draw(con);
 
 	for (size_t i = 0; i < entities.size(); ++i) {
 		Entity* ent = entities[i];
-		if (visibility_map.isInFov(ent->get_x(), ent->get_y())) {
+		if (map.is_visible(ent->get_x(), ent->get_y())) {
 			ent->draw(con);
 		}
 	}

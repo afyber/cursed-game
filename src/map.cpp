@@ -1,6 +1,9 @@
 // map.cpp
 #include "map.hpp"
 
+#include "libtcod.hpp"
+#include <vector>
+
 #include "entity.hpp"
 #include "tile.hpp"
 #include "random.hpp"
@@ -30,7 +33,7 @@ void Map::update(Level& level) {
 void Map::draw(tcod::Console& con) {
 	for (int y = 0; y < height; ++y) {
 		for (int x = 0; x < width; ++x) {
-			if (tiles[(size_t)y * width + x].visible) {
+			if (tiles[(size_t)y * width + x].visible || tiles[(size_t)y * width + x].seen) {
 				tiles[(size_t)y * width + x].tile_ref->draw(con, x, y);
 			}
 		}
@@ -43,8 +46,41 @@ void Map::interact(int x, int y, Living_Entity* ent) {
 	}
 }
 
+void Map::calculate_visibility(std::vector<Entity*> const& entities, int player_x, int player_y) {
+	TCODMap tmp_map(width, height);
+
+	for (int y = 0; y < height; ++y) {
+		for (int x = 0; x < width; ++x) {
+			Tile* tile = tiles[(size_t)y * width + x].tile_ref;
+			tmp_map.setProperties(x, y, tile->is_transparent(), !tile->is_solid());
+		}
+	}
+
+	for (size_t i = 0; i < entities.size(); ++i) {
+		Tile* tile = tiles[(size_t)entities[i]->get_y() * width + entities[i]->get_x()].tile_ref;
+		if (entities[i]->is_solid()) {
+			tmp_map.setProperties(entities[i]->get_x(), entities[i]->get_y(), tmp_map.isTransparent(entities[i]->get_x(), entities[i]->get_y()), false);
+		}
+		if (!entities[i]->is_transparent()) {
+			tmp_map.setProperties(entities[i]->get_x(), entities[i]->get_y(), false, tmp_map.isWalkable(entities[i]->get_x(), entities[i]->get_y()));
+		}
+	}
+
+	tmp_map.computeFov(player_x, player_y, FOV_RESTRICTIVE);
+
+	for (int y = 0; y < height; ++y) {
+		for (int x = 0; x < width; ++x) {
+			bool visible = tmp_map.isInFov(x, y);
+			tiles[(size_t)y * width + x].visible = visible;
+			if (visible) {
+				tiles[(size_t)y * width + x].seen = true;
+			}
+		}
+	}
+}
+
 bool Map::is_solid(int x, int y) {
-	if (x > 0 && x < width && y > 0 && y < height) {
+	if (x >= 0 && x < width && y >= 0 && y < height) {
 		return tiles[(size_t)y * width + x].tile_ref->is_solid();
 	}
 
@@ -52,7 +88,7 @@ bool Map::is_solid(int x, int y) {
 }
 
 bool Map::is_transparent(int x, int y) {
-	if (x > 0 && x < width && y > 0 && y < height) {
+	if (x >= 0 && x < width && y >= 0 && y < height) {
 		return tiles[(size_t)y * width + x].tile_ref->is_transparent();
 	}
 
@@ -60,7 +96,7 @@ bool Map::is_transparent(int x, int y) {
 }
 
 bool Map::is_visible(int x, int y) {
-	if (x > 0 && x < width && y > 0 && y < height) {
+	if (x >= 0 && x < width && y >= 0 && y < height) {
 		return tiles[(size_t)y * width + x].visible;
 	}
 
@@ -68,7 +104,7 @@ bool Map::is_visible(int x, int y) {
 }
 
 bool Map::seen(int x, int y) {
-	if (x > 0 && x < width && y > 0 && y < height) {
+	if (x >= 0 && x < width && y >= 0 && y < height) {
 		return tiles[(size_t)y * width + x].seen;
 	}
 

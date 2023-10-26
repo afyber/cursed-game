@@ -24,12 +24,10 @@ class Level {
 private:
 	int width, height;
 	Map map;
-	TCODMap visibility_map;
 
 	std::vector<Entity*> entities;
 	Player* player;
 
-	void calculate_visibility(int player_x, int player_y);
 public:
 	Level(int width, int height, Player* player);
 

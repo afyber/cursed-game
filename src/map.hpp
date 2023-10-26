@@ -2,7 +2,9 @@
 #ifndef CURSED_MAP_HPP_
 #define CURSED_MAP_HPP_
 #include "libtcod.hpp"
+#include <vector>
 
+class Entity;
 class Living_Entity;
 class Level;
 class Tile;
@@ -25,6 +27,8 @@ public:
 	void draw(tcod::Console& con);
 
 	void interact(int x, int y, Living_Entity* ent);
+
+	void calculate_visibility(std::vector<Entity*> const& entities, int player_x, int player_y);
 
 	bool is_solid(int x, int y);
 
