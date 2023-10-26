@@ -23,9 +23,9 @@ int Entity::get_y() {
 
 // class Living_Entity
 
-void Living_Entity::move(Level& level, int new_x, int new_y) {
+bool Living_Entity::move(Level& level, int new_x, int new_y) {
 	if (x == new_x && y == new_y) {
-		return;
+		return true;
 	}
 
 	bool can_move = level.can_walk(new_x, new_y);
@@ -41,6 +41,8 @@ void Living_Entity::move(Level& level, int new_x, int new_y) {
 		x = new_x;
 		y = new_y;
 	}
+
+	return can_move;
 }
 
 Living_Entity::Living_Entity(int x, int y, int max_health) {

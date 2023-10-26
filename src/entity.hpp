@@ -45,7 +45,7 @@ protected:
 	Item_List inventory;
 	std::vector<unsigned int> equipped_uids;
 
-	void move(Level& level, int x, int y);
+	bool move(Level& level, int x, int y);
 
 public:
 	Living_Entity(int x, int y, int max_health);
