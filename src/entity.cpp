@@ -30,10 +30,7 @@ void Living_Entity::move(Level& level, int new_x, int new_y) {
 
 	bool can_move = level.can_walk(new_x, new_y);
 
-	Tile* tile = level.get_tile(new_x, new_y);
-	if (tile) {
-		tile->interact(this);
-	}
+	level.interact(new_x, new_y, this);
 
 	std::vector<Entity*> entities = level.entities_at(new_x, new_y);
 	for (size_t i = 0; i < entities.size(); ++i) {
