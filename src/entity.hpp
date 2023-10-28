@@ -22,6 +22,8 @@ protected:
 	int x, y;
 
 public:
+	Entity(int x, int y);
+
 	bool is_transparent();
 
 	virtual bool is_alive() = 0;

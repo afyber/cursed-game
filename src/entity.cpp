@@ -9,6 +9,8 @@
 
 // class Entity
 
+Entity::Entity(int x, int y) : x(x), y(y) {}
+
 bool Entity::is_transparent() {
 	return true;
 }
@@ -45,13 +47,7 @@ bool Living_Entity::move(Level& level, int new_x, int new_y) {
 	return can_move;
 }
 
-Living_Entity::Living_Entity(int x, int y, int max_health) {
-	this->x = x;
-	this->y = y;
-	this->max_health = max_health;
-	health = max_health;
-	resistances = { 0, 0, 0 };
-}
+Living_Entity::Living_Entity(int x, int y, int max_health) : Entity(x, y), max_health(max_health), health(max_health), resistances({ 0, 0, 0 }) {}
 
 void Living_Entity::update(Level& level, bool turn) {
 	if (turn) {
@@ -85,12 +81,7 @@ void Living_Entity::give_item(Item* item) {
 
 // class Item_Entity
 
-Item_Entity::Item_Entity(int x, int y, Item* item_ref) {
-	this->x = x;
-	this->y = y;
-	this->item_ref = item_ref;
-	picked_up = false;
-}
+Item_Entity::Item_Entity(int x, int y, Item* item_ref) : Entity(x, y), item_ref(item_ref), picked_up(false) {}
 
 void Item_Entity::update(Level&, bool) {}
 
