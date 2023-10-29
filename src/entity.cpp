@@ -9,6 +9,8 @@
 
 // class Entity
 
+Entity::Entity(int x, int y) : x(x), y(y) {}
+
 bool Entity::is_transparent() {
 	return true;
 }
@@ -23,17 +25,14 @@ int Entity::get_y() {
 
 // class Living_Entity
 
-void Living_Entity::move(Level& level, int new_x, int new_y) {
+bool Living_Entity::move(Level& level, int new_x, int new_y) {
 	if (x == new_x && y == new_y) {
-		return;
+		return true;
 	}
 
 	bool can_move = level.can_walk(new_x, new_y);
 
-	Tile* tile = level.get_tile(new_x, new_y);
-	if (tile) {
-		tile->interact(this);
-	}
+	level.interact(new_x, new_y, this);
 
 	std::vector<Entity*> entities = level.entities_at(new_x, new_y);
 	for (size_t i = 0; i < entities.size(); ++i) {
@@ -44,15 +43,11 @@ void Living_Entity::move(Level& level, int new_x, int new_y) {
 		x = new_x;
 		y = new_y;
 	}
+
+	return can_move;
 }
 
-Living_Entity::Living_Entity(int x, int y, int max_health) {
-	this->x = x;
-	this->y = y;
-	this->max_health = max_health;
-	health = max_health;
-	resistances = { 0, 0, 0 };
-}
+Living_Entity::Living_Entity(int x, int y, int max_health) : Entity(x, y), max_health(max_health), health(max_health), resistances({ 0, 0, 0 }) {}
 
 void Living_Entity::update(Level& level, bool turn) {
 	if (turn) {
@@ -86,12 +81,7 @@ void Living_Entity::give_item(Item* item) {
 
 // class Item_Entity
 
-Item_Entity::Item_Entity(int x, int y, Item* item_ref) {
-	this->x = x;
-	this->y = y;
-	this->item_ref = item_ref;
-	picked_up = false;
-}
+Item_Entity::Item_Entity(int x, int y, Item* item_ref) : Entity(x, y), item_ref(item_ref), picked_up(false) {}
 
 void Item_Entity::update(Level&, bool) {}
 

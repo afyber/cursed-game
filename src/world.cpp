@@ -8,53 +8,19 @@
 #include "draw.hpp"
 #include "entity.hpp"
 #include "item.hpp"
+#include "map.hpp"
 #include "player.hpp"
 #include "random.hpp"
 #include "tile.hpp"
 
 // class Level
 
-void Level::calculate_visibility(int player_x, int player_y) {
-	for (int y = 0; y < height; ++y) {
-		for (int x = 0; x < width; ++x) {
-			Tile* tile = tiles[(size_t)y * width + x];
-			visibility_map.setProperties(x, y, tile->is_transparent(), !tile->is_solid());
-		}
-	}
-
-	for (size_t i = 0; i < entities.size(); ++i) {
-		Entity* ent = entities[i];
-
-		if (!ent->is_transparent()) {
-			visibility_map.setProperties(ent->get_x(), ent->get_y(), false, visibility_map.isWalkable(ent->get_x(), ent->get_y()));
-		}
-		if (ent->is_solid()) {
-			visibility_map.setProperties(ent->get_x(), ent->get_y(), visibility_map.isTransparent(ent->get_x(), ent->get_y()), false);
-		}
-	}
-
-	visibility_map.computeFov(player_x, player_y, FOV_RESTRICTIVE);
-}
-
-Level::Level(int width, int height, Player* player) : visibility_map(width, height) {
-	this->width = width;
-	this->height = height;
-	tiles.resize((size_t)width * height);
-	for (size_t i = 0; i < (size_t)width * height; ++i) {
-		if (irandom(1, 4) == 1) {
-			tiles[i] = new Const_Tile('#', COLOR_GREY, COLOR_BLANK, true, false);
-		}
-		else {
-			tiles[i] = new Const_Tile('.', { 1, 99, 52, 2 }, COLOR_BLANK, false, true);
-		}
-	}
-	this->player = player;
+Level::Level(int width, int height, Player* player) : width(width), height(height), player(player), map(width, height) {
+	map.calculate_visibility(entities, player->get_x(), player->get_y());
 }
 
 void Level::update() {
-	for (size_t i = 0; i < (size_t)width * height; ++i) {
-		tiles[i]->update(*this);
-	}
+	map.update(*this);
 
 	bool turn = player->update(*this);
 
@@ -67,25 +33,21 @@ void Level::update() {
 		}
 	}
 
+	if (turn) {
+		map.calculate_visibility(entities, player->get_x(), player->get_y());
+	}
+
 	if (!player->is_alive()) {
 		// gameover code
 	}
 }
 
 void Level::draw(tcod::Console& con) {
-	calculate_visibility(player->get_x(), player->get_y());
-
-	for (int y = 0; y < height; ++y) {
-		for (int x = 0; x < width; ++x) {
-			if (visibility_map.isInFov(x, y)) {
-				tiles[(size_t)y * width + x]->draw(con, x, y);
-			}
-		}
-	}
+	map.draw(con);
 
 	for (size_t i = 0; i < entities.size(); ++i) {
 		Entity* ent = entities[i];
-		if (visibility_map.isInFov(ent->get_x(), ent->get_y())) {
+		if (map.is_visible(ent->get_x(), ent->get_y())) {
 			ent->draw(con);
 		}
 	}
@@ -93,13 +55,12 @@ void Level::draw(tcod::Console& con) {
 	player->draw(con);
 }
 
-bool Level::can_walk(int x, int y) {
-	Tile* tile = get_tile(x, y);
-	if (!tile) {
-		return false;
-	}
+void Level::interact(int x, int y, Living_Entity* ent) {
+	map.interact(x, y, ent);
+}
 
-	if (tile->is_solid()) {
+bool Level::can_walk(int x, int y) {
+	if (map.is_solid(x, y)) {
 		return false;
 	}
 
@@ -118,7 +79,7 @@ bool Level::can_walk(int x, int y) {
 }
 
 std::vector<Entity*> Level::entities_at(int x, int y) {
-	std::vector<Entity*> ents = {};
+	std::vector<Entity*> ents;
 	for (size_t i = 0; i < entities.size(); ++i) {
 		Entity* ent = entities[i];
 		if (ent->get_x() == x && ent->get_y() == y) {
@@ -146,18 +107,6 @@ bool Level::remove_entity(Entity* entity) {
 	}
 
 	return false;
-}
-
-Tile* Level::get_tile(int x, int y) {
-	if (x < width && y < height && x >= 0 && y >= 0) {
-		return tiles[(size_t)y * width + x];
-	}
-
-	return nullptr;
-}
-
-void Level::set_tile(Tile* tile, int x, int y) {
-	tiles[(size_t)y * width + x] = tile;
 }
 
 int Level::get_width() {

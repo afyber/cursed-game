@@ -4,6 +4,8 @@
 #include "libtcod.hpp"
 #include <vector>
 
+#include "map.hpp"
+
 class Entity;
 class Living_Entity;
 class Player;
@@ -21,20 +23,19 @@ public:
 class Level {
 private:
 	int width, height;
-	std::vector<Tile*> tiles;
-	std::vector<Entity*> entities;
+	Map map;
 
+	std::vector<Entity*> entities;
 	Player* player;
 
-	TCODMap visibility_map;
-
-	void calculate_visibility(int player_x, int player_y);
 public:
 	Level(int width, int height, Player* player);
 
 	void update();
 
 	void draw(tcod::Console& con);
+
+	void interact(int x, int y, Living_Entity* ent);
 
 	bool can_walk(int x, int y);
 
@@ -43,10 +44,6 @@ public:
 	void add_entity(Entity* entity);
 
 	bool remove_entity(Entity* entity);
-
-	Tile* get_tile(int x, int y);
-
-	void set_tile(Tile* tile, int x, int y);
 
 	int get_width();
 

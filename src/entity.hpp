@@ -22,6 +22,8 @@ protected:
 	int x, y;
 
 public:
+	Entity(int x, int y);
+
 	bool is_transparent();
 
 	virtual bool is_alive() = 0;
@@ -45,7 +47,7 @@ protected:
 	Item_List inventory;
 	std::vector<unsigned int> equipped_uids;
 
-	void move(Level& level, int x, int y);
+	bool move(Level& level, int x, int y);
 
 public:
 	Living_Entity(int x, int y, int max_health);

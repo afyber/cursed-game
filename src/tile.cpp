@@ -9,17 +9,9 @@
 
 // class Const_Tile
 
-Const_Tile::Const_Tile(Console_Tile tile, bool solid, bool transparent) {
-	this->solid = solid;
-	this->tile = tile;
-	this->transparent = transparent;
-}
+Const_Tile::Const_Tile(Console_Tile tile, bool solid, bool transparent) : tile(tile), solid(solid), transparent(transparent) {}
 
-Const_Tile::Const_Tile(char ch, Color fg, Color bg, bool solid, bool transparent) {
-	this->solid = solid;
-	this->transparent = transparent;
-	tile = { ch, fg, bg };
-}
+Const_Tile::Const_Tile(char ch, Color fg, Color bg, bool solid, bool transparent) : tile({ ch, fg, bg }), solid(solid), transparent(transparent) {}
 
 void Const_Tile::interact(Living_Entity*) {}
 
@@ -39,11 +31,7 @@ void Const_Tile::draw(tcod::Console& con, int x, int y) {
 
 // class Door_Tile
 
-Door_Tile::Door_Tile(Console_Tile open_tile, Console_Tile closed_tile) {
-	this->open = false;
-	this->open_tile = open_tile;
-	this->closed_tile = closed_tile;
-}
+Door_Tile::Door_Tile(Console_Tile open_tile, Console_Tile closed_tile) : open_tile(open_tile), closed_tile(closed_tile), open(false) {}
 
 void Door_Tile::interact(Living_Entity*) {
 	if (!open) {

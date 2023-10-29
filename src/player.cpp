@@ -13,34 +13,33 @@ bool Player::update(Level& level) {
 	bool took_turn = false;
 
 	if (key_pressed(SDL_SCANCODE_LEFT)) {
-		move(level, x - 1, y);
+		if (move(level, x - 1, y)) {
+			send_message("Player moved left", COLOR_WHITE);
+		}
 		took_turn = true;
-
-		send_message("Player moved left", COLOR_WHITE);
 	}
 	else if (key_pressed(SDL_SCANCODE_RIGHT)) {
-		move(level, x + 1, y);
+		if (move(level, x + 1, y)) {
+			send_message("Player moved right", COLOR_WHITE);
+		}
 		took_turn = true;
-
-		send_message("Player moved right", COLOR_WHITE);
 	}
 	else if (key_pressed(SDL_SCANCODE_UP)) {
-		move(level, x, y - 1);
+		if (move(level, x, y - 1)) {
+			send_message("Player moved up", COLOR_WHITE);
+		}
 		took_turn = true;
-
-		send_message("Player moved up", COLOR_WHITE);
 	}
 	else if (key_pressed(SDL_SCANCODE_DOWN)) {
-		move(level, x, y + 1);
+		if (move(level, x, y + 1)) {
+			send_message("Player moved down", COLOR_WHITE);
+		}
 		took_turn = true;
-
-		send_message("Player moved down", COLOR_WHITE);
 	}
 	else if (key_pressed(SDL_SCANCODE_PERIOD)) {
 		move(level, x, y);
+		send_message("Player stood still", COLOR_WHITE);
 		took_turn = true;
-
-		send_message("Player stood still, lol why are you standing still dummy, are you lost? What on earth could you possibly want to do.", COLOR_WHITE);
 	}
 
 	return took_turn;
