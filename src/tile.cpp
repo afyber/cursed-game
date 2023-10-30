@@ -34,9 +34,7 @@ Console_Tile Const_Tile::get_tile() {
 Door_Tile::Door_Tile(Console_Tile open_tile, Console_Tile closed_tile) : open_tile(open_tile), closed_tile(closed_tile), open(false) {}
 
 void Door_Tile::interact(Living_Entity*) {
-	if (!open) {
-		open = true;
-	}
+	open = true;
 }
 
 bool Door_Tile::is_solid() {

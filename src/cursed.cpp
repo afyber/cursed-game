@@ -15,12 +15,12 @@
 
 const int WINDOW_DESIRED_FPS = 60;
 
+const int CONSOLE_WIDTH = 80;
+const int CONSOLE_HEIGHT = 45;
+
 const int TILESET_CHAR_SIZE = 8;
 const int TILESET_COLUMNS = 16;
 const int TILESET_ROWS = 16;
-
-const int CONSOLE_WIDTH = 80;
-const int CONSOLE_HEIGHT = 45;
 
 const int MESSAGE_BOX_X = 45;
 const int MESSAGE_BOX_Y = 0;
@@ -34,7 +34,7 @@ void setup_tcod(tcod::Console& console_out, tcod::Context& context_out) {
 	params.vsync = 1;
 	params.window_title = "Cursed";
 
-	tcod::Tileset tileset = tcod::load_tilesheet<>("data/tileset.png", { TILESET_COLUMNS, TILESET_ROWS }, tcod::CHARMAP_CP437);
+	tcod::Tileset tileset = tcod::load_tilesheet("data/tileset.png", { TILESET_COLUMNS, TILESET_ROWS }, tcod::CHARMAP_CP437);
 	params.tileset = tileset.get();
 
 	console_out = tcod::Console(CONSOLE_WIDTH, CONSOLE_HEIGHT);
