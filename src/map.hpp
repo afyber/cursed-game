@@ -4,6 +4,8 @@
 #include "libtcod.hpp"
 #include <vector>
 
+#include "draw.hpp"
+
 class Entity;
 class Living_Entity;
 class Level;
@@ -12,6 +14,7 @@ class Tile;
 struct Map_Tile {
 	Tile* tile_ref;
 	bool visible, seen;
+	Console_Tile seen_tile;
 };
 
 class Map {

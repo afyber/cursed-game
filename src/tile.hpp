@@ -11,7 +11,7 @@ class Tile : public Object {
 public:
 	virtual void update(Level& level) = 0;
 
-	virtual void draw(tcod::Console& con, int x, int y) = 0;
+	virtual Console_Tile get_tile() = 0;
 };
 
 class Const_Tile : public Tile {
@@ -32,7 +32,7 @@ public:
 
 	void update(Level&);
 
-	void draw(tcod::Console& con, int x, int y);
+	Console_Tile get_tile();
 };
 
 class Door_Tile : public Tile {
@@ -52,7 +52,7 @@ public:
 
 	void update(Level&);
 
-	void draw(tcod::Console& con, int x, int y);
+	Console_Tile get_tile();
 };
 
 #endif

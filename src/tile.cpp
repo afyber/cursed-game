@@ -25,8 +25,8 @@ bool Const_Tile::is_transparent() {
 
 void Const_Tile::update(Level&) {}
 
-void Const_Tile::draw(tcod::Console& con, int x, int y) {
-	print_console_tile(con, tile, x, y);
+Console_Tile Const_Tile::get_tile() {
+	return tile;
 }
 
 // class Door_Tile
@@ -49,11 +49,11 @@ bool Door_Tile::is_transparent() {
 
 void Door_Tile::update(Level&) {}
 
-void Door_Tile::draw(tcod::Console& con, int x, int y) {
+Console_Tile Door_Tile::get_tile() {
 	if (open) {
-		print_console_tile(con, open_tile, x, y);
+		return open_tile;
 	}
 	else {
-		print_console_tile(con, closed_tile, x, y);
+		return closed_tile;
 	}
 }
