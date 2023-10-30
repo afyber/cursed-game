@@ -48,10 +48,5 @@ bool Door_Tile::is_transparent() {
 void Door_Tile::update(Level&) {}
 
 Console_Tile Door_Tile::get_tile() {
-	if (open) {
-		return open_tile;
-	}
-	else {
-		return closed_tile;
-	}
+	return open ? open_tile : closed_tile;
 }

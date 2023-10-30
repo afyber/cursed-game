@@ -29,7 +29,8 @@ void Level::update() {
 			entities[i]->update(*this, turn);
 		}
 		else {
-			remove_entity(entities[i]);
+			entities.erase(entities.begin() + i);
+			i--;
 		}
 	}
 

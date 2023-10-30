@@ -20,16 +20,15 @@ void Item_List::add_item(Item* item) {
 }
 
 Item* Item_List::pop_item(unsigned int uid) {
-	Item* item = nullptr;
-
 	for (size_t i = 0; i < items.size(); ++i) {
 		if (items[i]->get_uid() == uid) {
-			item = items[i];
+			Item* item = items[i];
 			items.erase(items.begin() + i);
+			return item;
 		}
 	}
 
-	return item;
+	return nullptr;
 }
 
 Item* Item_List::get_item(unsigned int uid) {
