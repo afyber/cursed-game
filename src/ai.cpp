@@ -1,6 +1,7 @@
 // ai.cpp
 #include "ai.hpp"
 
+#include <algorithm>
 #include <cmath>
 
 #include "entity.hpp"
@@ -20,8 +21,8 @@ void AI::move_random(Level& level, Living_Entity* ent) {
 
 void AI::move_towards_player(Level& level, Living_Entity* ent) {
 	if (ent->seen_player) {
-		int xoffs = ent->last_player_x < ent->get_x() ? -1 : 1;
-		int yoffs = ent->last_player_y < ent->get_y() ? -1 : 1;
+		int xoffs = std::clamp(ent->last_player_x - ent->get_x(), -1, 1);
+		int yoffs = std::clamp(ent->last_player_y - ent->get_y(), -1, 1);
 
 		// calculate the manhattan distance to the player, this will be equal to 1 ONLY when we are on a tile adjacent to where we're trying to go
 		int xdist = std::abs(ent->last_player_x - ent->get_x());
