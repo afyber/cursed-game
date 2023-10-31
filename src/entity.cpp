@@ -4,6 +4,7 @@
 #include "ai.hpp"
 #include "draw.hpp"
 #include "item.hpp"
+#include "player.hpp"
 #include "tile.hpp"
 #include "world.hpp"
 
@@ -47,7 +48,15 @@ bool Living_Entity::move(Level& level, int new_x, int new_y) {
 	return can_move;
 }
 
-Living_Entity::Living_Entity(int x, int y, int max_health) : Entity(x, y), max_health(max_health), health(max_health), resistances({ 0, 0, 0 }) {}
+void Living_Entity::look_for_player(Level& level) {
+	if (level.get_map().is_visible(x, y)) {
+		last_player_x = level.get_player()->get_x();
+		last_player_y = level.get_player()->get_y();
+		seen_player = true;
+	}
+}
+
+Living_Entity::Living_Entity(int x, int y, int max_health) : Entity(x, y), max_health(max_health), health(max_health), resistances({ 0, 0, 0 }), seen_player(false) {}
 
 void Living_Entity::update(Level& level, bool turn) {
 	if (turn) {
@@ -116,4 +125,19 @@ Worm_Entity::Worm_Entity(int x, int y) : Living_Entity(x, y, 1) {}
 
 void Worm_Entity::draw(tcod::Console& con) {
 	print_console_tile(con, { '~', { 1, 255, 200, 200 }, COLOR_BLANK }, x, y);
+}
+
+// class Goblin_Entity
+
+Goblin_Entity::Goblin_Entity(int x, int y) : Living_Entity(x, y, 5) {}
+
+void Goblin_Entity::update(Level& level, bool turn) {
+	if (turn) {
+		look_for_player(level);
+		AI::attack_or_wander(level, this);
+	}
+}
+
+void Goblin_Entity::draw(tcod::Console& con) {
+	print_console_tile(con, { 'g', { 1, 10, 100, 0 }, COLOR_BLANK }, x, y);
 }

@@ -45,6 +45,10 @@ public:
 
 	bool remove_entity(Entity* entity);
 
+	Player* get_player();
+
+	Map& get_map();
+
 	int get_width();
 
 	int get_height();

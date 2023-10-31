@@ -110,6 +110,14 @@ bool Level::remove_entity(Entity* entity) {
 	return false;
 }
 
+Player* Level::get_player() {
+	return player;
+}
+
+Map& Level::get_map() {
+	return map;
+}
+
 int Level::get_width() {
 	return width;
 }

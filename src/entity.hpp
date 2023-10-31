@@ -47,7 +47,12 @@ protected:
 	Item_List inventory;
 	std::vector<unsigned int> equipped_uids;
 
+	int last_player_x, last_player_y;
+	bool seen_player;
+
 	bool move(Level& level, int x, int y);
+
+	void look_for_player(Level& level);
 
 public:
 	Living_Entity(int x, int y, int max_health);
@@ -89,6 +94,15 @@ public:
 class Worm_Entity : public Living_Entity {
 public:
 	Worm_Entity(int x, int y);
+
+	void draw(tcod::Console& con);
+};
+
+class Goblin_Entity : public Living_Entity {
+public:
+	Goblin_Entity(int x, int y);
+
+	void update(Level& level, bool turn);
 
 	void draw(tcod::Console& con);
 };
