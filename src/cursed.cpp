@@ -99,11 +99,11 @@ int main(int argc, char* argv[]) {
 
 		level_con.clear();
 		floor.draw(level_con);
-		TCOD_console_blit(level_con.get(), 0, 0, LEVEL_WIDTH, LEVEL_HEIGHT, con.get(), LEVEL_X, LEVEL_Y, 1, 1);
+		full_console_blit(level_con, LEVEL_WIDTH, LEVEL_HEIGHT, con, LEVEL_X, LEVEL_Y);
 
 		message_con.clear();
 		draw_messages(message_con, MESSAGE_BOX_WIDTH, MESSAGE_BOX_HEIGHT);
-		TCOD_console_blit(message_con.get(), 0, 0, MESSAGE_BOX_WIDTH, MESSAGE_BOX_HEIGHT, con.get(), MESSAGE_BOX_X, MESSAGE_BOX_Y, 1, 1);
+		full_console_blit(message_con, MESSAGE_BOX_WIDTH, MESSAGE_BOX_HEIGHT, con, MESSAGE_BOX_X, MESSAGE_BOX_Y);
 
 		context.present(con);
 
