@@ -10,6 +10,6 @@ struct Message {
 
 void send_message(const char* str, Color color);
 
-void draw_messages(tcod::Console& con, int x, int y, int width, int height);
+void draw_messages(tcod::Console& con, int width, int height);
 
 #endif

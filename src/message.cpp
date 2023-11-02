@@ -25,11 +25,11 @@ void send_message(const char* str, Color color) {
 	messages[0] = { str, color };
 }
 
-void draw_messages(tcod::Console& con, int x, int y, int width, int height) {
-	int current_y = y + height;
+void draw_messages(tcod::Console& con, int width, int height) {
+	int current_y = 0 + height;
 	for (int i = 0; i < messagec; ++i) {
 		int message_height = tcod::get_height_rect(width, messages[i].str);
-		tcod::print_rect(con, { x, current_y - message_height, width, message_height }, messages[i].str, color_to_tcod(messages[i].color), std::nullopt);
+		tcod::print_rect(con, { 0, current_y - message_height, width, message_height }, messages[i].str, color_to_tcod(messages[i].color), std::nullopt);
 		
 		current_y -= message_height + 1;
 		if (current_y < 0) {
