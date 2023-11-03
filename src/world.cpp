@@ -29,7 +29,8 @@ void Level::update() {
 			entities[i]->update(*this, turn);
 		}
 		else {
-			remove_entity(entities[i]);
+			entities.erase(entities.begin() + i);
+			i--;
 		}
 	}
 
@@ -107,6 +108,14 @@ bool Level::remove_entity(Entity* entity) {
 	}
 
 	return false;
+}
+
+Player* Level::get_player() {
+	return player;
+}
+
+Map& Level::get_map() {
+	return map;
 }
 
 int Level::get_width() {

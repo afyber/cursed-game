@@ -25,4 +25,6 @@ inline std::optional<TCOD_ColorRGB> color_to_tcod(Color c);
 
 void print_console_tile(tcod::Console& con, Console_Tile tile, int x, int y);
 
+void full_console_blit(tcod::Console& src, int src_w, int src_h, tcod::Console& dst, int dst_x, int dst_y);
+
 #endif

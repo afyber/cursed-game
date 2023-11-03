@@ -25,8 +25,8 @@ bool Const_Tile::is_transparent() {
 
 void Const_Tile::update(Level&) {}
 
-void Const_Tile::draw(tcod::Console& con, int x, int y) {
-	print_console_tile(con, tile, x, y);
+Console_Tile Const_Tile::get_tile() {
+	return tile;
 }
 
 // class Door_Tile
@@ -34,9 +34,7 @@ void Const_Tile::draw(tcod::Console& con, int x, int y) {
 Door_Tile::Door_Tile(Console_Tile open_tile, Console_Tile closed_tile) : open_tile(open_tile), closed_tile(closed_tile), open(false) {}
 
 void Door_Tile::interact(Living_Entity*) {
-	if (!open) {
-		open = true;
-	}
+	open = true;
 }
 
 bool Door_Tile::is_solid() {
@@ -49,11 +47,6 @@ bool Door_Tile::is_transparent() {
 
 void Door_Tile::update(Level&) {}
 
-void Door_Tile::draw(tcod::Console& con, int x, int y) {
-	if (open) {
-		print_console_tile(con, open_tile, x, y);
-	}
-	else {
-		print_console_tile(con, closed_tile, x, y);
-	}
+Console_Tile Door_Tile::get_tile() {
+	return open ? open_tile : closed_tile;
 }

@@ -15,12 +15,17 @@
 
 const int WINDOW_DESIRED_FPS = 60;
 
+const int CONSOLE_WIDTH = 80;
+const int CONSOLE_HEIGHT = 45;
+
 const int TILESET_CHAR_SIZE = 8;
 const int TILESET_COLUMNS = 16;
 const int TILESET_ROWS = 16;
 
-const int CONSOLE_WIDTH = 80;
-const int CONSOLE_HEIGHT = 45;
+const int LEVEL_X = 0;
+const int LEVEL_Y = 0;
+const int LEVEL_WIDTH = 45;
+const int LEVEL_HEIGHT = 45;
 
 const int MESSAGE_BOX_X = 45;
 const int MESSAGE_BOX_Y = 0;
@@ -34,7 +39,7 @@ void setup_tcod(tcod::Console& console_out, tcod::Context& context_out) {
 	params.vsync = 1;
 	params.window_title = "Cursed";
 
-	tcod::Tileset tileset = tcod::load_tilesheet<>("data/tileset.png", { TILESET_COLUMNS, TILESET_ROWS }, tcod::CHARMAP_CP437);
+	tcod::Tileset tileset = tcod::load_tilesheet("data/tileset.png", { TILESET_COLUMNS, TILESET_ROWS }, tcod::CHARMAP_CP437);
 	params.tileset = tileset.get();
 
 	console_out = tcod::Console(CONSOLE_WIDTH, CONSOLE_HEIGHT);
@@ -77,9 +82,12 @@ int main(int argc, char* argv[]) {
 
 	sdl_set_window_size(context, 2);
 
-	Level floor(45, 45, new Player(5, 5));
+	tcod::Console message_con = tcod::Console(MESSAGE_BOX_WIDTH, MESSAGE_BOX_HEIGHT);
+	tcod::Console level_con = tcod::Console(LEVEL_WIDTH, LEVEL_HEIGHT);
+
+	Level floor(LEVEL_WIDTH, LEVEL_HEIGHT, new Player(5, 5));
 	floor.add_entity(new Item_Entity(5, 4, new Item(0)));
-	floor.add_entity(new Worm_Entity(10, 10));
+	floor.add_entity(new Goblin_Entity(10, 10));
 
 	auto timer = tcod::Timer();
 
@@ -89,9 +97,13 @@ int main(int argc, char* argv[]) {
 
 		con.clear();
 
-		floor.draw(con);
+		level_con.clear();
+		floor.draw(level_con);
+		full_console_blit(level_con, LEVEL_WIDTH, LEVEL_HEIGHT, con, LEVEL_X, LEVEL_Y);
 
-		draw_messages(con, MESSAGE_BOX_X, MESSAGE_BOX_Y, MESSAGE_BOX_WIDTH, MESSAGE_BOX_HEIGHT);
+		message_con.clear();
+		draw_messages(message_con, MESSAGE_BOX_WIDTH, MESSAGE_BOX_HEIGHT);
+		full_console_blit(message_con, MESSAGE_BOX_WIDTH, MESSAGE_BOX_HEIGHT, con, MESSAGE_BOX_X, MESSAGE_BOX_Y);
 
 		context.present(con);
 

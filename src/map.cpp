@@ -4,6 +4,7 @@
 #include "libtcod.hpp"
 #include <vector>
 
+#include "draw.hpp"
 #include "entity.hpp"
 #include "tile.hpp"
 #include "random.hpp"
@@ -33,8 +34,11 @@ void Map::update(Level& level) {
 void Map::draw(tcod::Console& con) {
 	for (int y = 0; y < height; ++y) {
 		for (int x = 0; x < width; ++x) {
-			if (tiles[(size_t)y * width + x].visible || tiles[(size_t)y * width + x].seen) {
-				tiles[(size_t)y * width + x].tile_ref->draw(con, x, y);
+			if (tiles[(size_t)y * width + x].visible) {
+				print_console_tile(con, tiles[(size_t)y * width + x].tile_ref->get_tile(), x, y);
+			}
+			else if (tiles[(size_t)y * width + x].seen) {
+				print_console_tile(con, tiles[(size_t)y * width + x].seen_tile, x, y);
 			}
 		}
 	}
@@ -74,6 +78,10 @@ void Map::calculate_visibility(std::vector<Entity*> const& entities, int player_
 			tiles[(size_t)y * width + x].visible = visible;
 			if (visible) {
 				tiles[(size_t)y * width + x].seen = true;
+				Console_Tile t = tiles[(size_t)y * width + x].tile_ref->get_tile();
+				t.fg = { 1, 65, 65, 65 };
+				t.bg = { 1, 0, 0, 0 };
+				tiles[(size_t)y * width + x].seen_tile = t;
 			}
 		}
 	}
