@@ -10,7 +10,7 @@
  * RE_TYPED: The key has been typed again, but is still being held down (because holding down a key types it again repeatedly)
  * KEY_DOWN: The key is being held down
  */
-enum KEY_STATE {
+enum class KEY_STATE {
 	JUST_RELEASED = -1,
 	KEY_UP = 0,
 	JUST_PRESSED = 1,
@@ -18,45 +18,45 @@ enum KEY_STATE {
 	KEY_DOWN = 3
 };
 
-KEY_STATE KEYS[SDL_NUM_SCANCODES] = { KEY_UP };
+KEY_STATE KEYS[SDL_NUM_SCANCODES] = { KEY_STATE::KEY_UP };
 
 bool key_down(SDL_Scancode scancode) {
-	return KEYS[scancode] > 0;
+	return (int)KEYS[scancode] > 0;
 }
 
 bool key_pressed(SDL_Scancode scancode) {
-	return KEYS[scancode] == JUST_PRESSED;
+	return KEYS[scancode] == KEY_STATE::JUST_PRESSED;
 }
 
 bool key_typed(SDL_Scancode scancode) {
-	return KEYS[scancode] == JUST_PRESSED || KEYS[scancode] == RE_TYPED;
+	return KEYS[scancode] == KEY_STATE::JUST_PRESSED || KEYS[scancode] == KEY_STATE::RE_TYPED;
 }
 
 bool key_released(SDL_Scancode scancode) {
-	return KEYS[scancode] == JUST_RELEASED;
+	return KEYS[scancode] == KEY_STATE::JUST_RELEASED;
 }
 
 void update_key_states() {
 	for (int i = 0; i < SDL_NUM_SCANCODES; i++) {
-		if (KEYS[i] == JUST_PRESSED || KEYS[i] == RE_TYPED) {
-			KEYS[i] = KEY_DOWN;
+		if (KEYS[i] == KEY_STATE::JUST_PRESSED || KEYS[i] == KEY_STATE::RE_TYPED) {
+			KEYS[i] = KEY_STATE::KEY_DOWN;
 		}
-		else if (KEYS[i] == JUST_RELEASED) {
-			KEYS[i] = KEY_UP;
+		else if (KEYS[i] == KEY_STATE::JUST_RELEASED) {
+			KEYS[i] = KEY_STATE::KEY_UP;
 		}
 	}
 }
 
 void handle_key_event(SDL_KeyboardEvent event) {
 	if (event.type == SDL_KEYDOWN) {
-		if (KEYS[event.keysym.scancode] <= 0) {
-			KEYS[event.keysym.scancode] = JUST_PRESSED;
+		if ((int)KEYS[event.keysym.scancode] <= 0) {
+			KEYS[event.keysym.scancode] = KEY_STATE::JUST_PRESSED;
 		}
 		else {
-			KEYS[event.keysym.scancode] = RE_TYPED;
+			KEYS[event.keysym.scancode] = KEY_STATE::RE_TYPED;
 		}
 	}
 	else if (event.type == SDL_KEYUP) {
-		KEYS[event.keysym.scancode] = JUST_RELEASED;
+		KEYS[event.keysym.scancode] = KEY_STATE::JUST_RELEASED;
 	}
 }
