@@ -95,6 +95,8 @@ int main(int argc, char* argv[]) {
 	while (running) {
 		floor.update();
 
+		update_messages();
+
 		con.clear();
 
 		level_con.clear();
