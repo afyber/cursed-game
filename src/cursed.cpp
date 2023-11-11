@@ -7,6 +7,7 @@
 #include <SDL2/SDL_image.h>
 #include <string>
 
+#include "draw.hpp"
 #include "keyboard.hpp"
 #include "message.hpp"
 #include "player.hpp"
@@ -62,11 +63,12 @@ int setup_sdl(tcod::Context& context) {
 
 	SDL_DisplayMode mode;
 	if (SDL_GetDesktopDisplayMode(0, &mode) != 0) {
-		return -1;
+		sdl_set_window_size(context, 1);
 	}
-
-	// set the scaling multiplier to the largest integer which makes the window smaller than the screen, and also never allows a multiplier of < 1
-	sdl_set_window_size(context, std::max(1, (int)std::ceil(mode.w / (TILESET_CHAR_SIZE * CONSOLE_WIDTH)) - 1));
+	else {
+		// set the scaling multiplier to the largest integer which makes the window smaller than the screen, and also never allows a multiplier of < 1
+		sdl_set_window_size(context, std::max(1, (int)std::ceil(mode.w / (TILESET_CHAR_SIZE * CONSOLE_WIDTH)) - 1));
+	}
 
 	return 0;
 }
