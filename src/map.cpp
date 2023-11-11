@@ -61,7 +61,6 @@ void Map::calculate_visibility(std::vector<Entity*> const& entities, int player_
 	}
 
 	for (size_t i = 0; i < entities.size(); ++i) {
-		Tile* tile = tiles[(size_t)entities[i]->get_y() * width + entities[i]->get_x()].tile_ref;
 		if (entities[i]->is_solid()) {
 			tmp_map.setProperties(entities[i]->get_x(), entities[i]->get_y(), tmp_map.isTransparent(entities[i]->get_x(), entities[i]->get_y()), false);
 		}
