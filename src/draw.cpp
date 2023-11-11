@@ -4,11 +4,7 @@
 #include "libtcod.hpp"
 
 inline std::optional<TCOD_ColorRGB> color_to_tcod(Color c) {
-	if (c.alpha) {
-		return TCOD_ColorRGB{ c.r, c.g, c.b };
-	}
-	
-	return std::nullopt;
+	return c.alpha ? std::optional(TCOD_ColorRGB{ c.r, c.g, c.b }) : std::nullopt;
 }
 
 void print_console_tile(tcod::Console& con, Console_Tile tile, int x, int y) {
