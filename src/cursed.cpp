@@ -7,6 +7,7 @@
 #include <SDL2/SDL_image.h>
 #include <string>
 
+#include "draw.hpp"
 #include "keyboard.hpp"
 #include "message.hpp"
 #include "player.hpp"
@@ -48,17 +49,28 @@ void setup_tcod(tcod::Console& console_out, tcod::Context& context_out) {
 	context_out = tcod::Context(params);
 }
 
+void sdl_set_window_size(tcod::Context& context, int multiplier) {
+	SDL_SetWindowSize(context.get_sdl_window(), TILESET_CHAR_SIZE * CONSOLE_WIDTH * multiplier, TILESET_CHAR_SIZE * CONSOLE_HEIGHT * multiplier);
+	SDL_SetWindowPosition(context.get_sdl_window(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+}
+
 int setup_sdl(tcod::Context& context) {
 	if ((IMG_Init(IMG_InitFlags::IMG_INIT_PNG) & IMG_INIT_PNG) == 0) {
 		return -1;
 	}
 
 	SDL_SetWindowIcon(context.get_sdl_window(), IMG_Load("data/icon.png"));
-	return 0;
-}
 
-void sdl_set_window_size(tcod::Context& context, int multiplier) {
-	SDL_SetWindowSize(context.get_sdl_window(), TILESET_CHAR_SIZE * CONSOLE_WIDTH * multiplier, TILESET_CHAR_SIZE * CONSOLE_HEIGHT * multiplier);
+	SDL_DisplayMode mode;
+	if (SDL_GetDesktopDisplayMode(0, &mode) != 0) {
+		sdl_set_window_size(context, 1);
+	}
+	else {
+		// set the scaling multiplier to the largest integer which makes the window smaller than the screen, and also never allows a multiplier of < 1
+		sdl_set_window_size(context, std::max(1, (int)std::ceil(mode.w / (TILESET_CHAR_SIZE * CONSOLE_WIDTH)) - 1));
+	}
+
+	return 0;
 }
 
 void quit_sdl() {
@@ -80,8 +92,6 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
-	sdl_set_window_size(context, 2);
-
 	tcod::Console message_con = tcod::Console(MESSAGE_BOX_WIDTH, MESSAGE_BOX_HEIGHT);
 	tcod::Console level_con = tcod::Console(LEVEL_WIDTH, LEVEL_HEIGHT);
 
@@ -94,6 +104,8 @@ int main(int argc, char* argv[]) {
 	bool running = true;
 	while (running) {
 		floor.update();
+
+		update_messages();
 
 		con.clear();
 
