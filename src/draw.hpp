@@ -21,7 +21,13 @@ struct Console_Tile {
 	Color bg;
 };
 
-inline std::optional<TCOD_ColorRGB> color_to_tcod(Color c);
+Color color_add(Color c1, Color c2);
+
+Color color_subtract(Color c1, Color c2);
+
+Color color_multiply(Color c, double fac);
+
+std::optional<TCOD_ColorRGB> color_to_tcod(Color c);
 
 void print_console_tile(tcod::Console& con, Console_Tile tile, int x, int y);
 
