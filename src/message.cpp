@@ -22,7 +22,7 @@ void shift_messages() {
 
 void send_message(const char* str, Color color) {
 	shift_messages();
-	messages[0] = Message{ str, color, 360 };
+	messages[0] = Message{ str, color, 1200 };
 }
 
 void update_messages() {
