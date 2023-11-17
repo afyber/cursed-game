@@ -56,7 +56,7 @@ void Living_Entity::look_for_player(Level& level) {
 	}
 }
 
-Living_Entity::Living_Entity(int x, int y, int max_health) : Entity(x, y), max_health(max_health), health(max_health), resistances({ 0, 0, 0 }), seen_player(false) {}
+Living_Entity::Living_Entity(int x, int y, int max_health) : Entity(x, y), health(max_health), max_health(max_health), resistances(Resistances{ 0, 0, 0 }), seen_player(false) {}
 
 void Living_Entity::update(Level& level, bool turn) {
 	if (turn) {
@@ -67,7 +67,7 @@ void Living_Entity::update(Level& level, bool turn) {
 void Living_Entity::interact(Living_Entity* ent) {
 	// TODO: Calculate attacking entity's damage
 	(void)ent;
-	this->hurt({ 1, 0, 0 });
+	this->hurt(Attack{ 1, 0, 0 });
 }
 
 bool Living_Entity::is_solid() {
@@ -96,7 +96,7 @@ void Item_Entity::update(Level&, bool) {}
 
 void Item_Entity::draw(tcod::Console& con) {
 	if (!picked_up) {
-		print_console_tile(con, { 'i', COLOR_WHITE, COLOR_BLANK }, x, y);
+		print_console_tile(con, Console_Tile{ 'i', COLOR_WHITE, COLOR_BLANK }, x, y);
 	}
 }
 
@@ -124,7 +124,7 @@ Item* Item_Entity::get_item() {
 Worm_Entity::Worm_Entity(int x, int y) : Living_Entity(x, y, 1) {}
 
 void Worm_Entity::draw(tcod::Console& con) {
-	print_console_tile(con, { '~', { 1, 255, 200, 200 }, COLOR_BLANK }, x, y);
+	print_console_tile(con, Console_Tile{ '~', Color{ 1, 255, 200, 200 }, COLOR_BLANK }, x, y);
 }
 
 // class Goblin_Entity
@@ -139,5 +139,5 @@ void Goblin_Entity::update(Level& level, bool turn) {
 }
 
 void Goblin_Entity::draw(tcod::Console& con) {
-	print_console_tile(con, { 'g', { 1, 10, 100, 0 }, COLOR_BLANK }, x, y);
+	print_console_tile(con, Console_Tile{ 'g', Color{ 1, 10, 100, 0 }, COLOR_BLANK }, x, y);
 }

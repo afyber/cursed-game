@@ -16,8 +16,8 @@ public:
 
 class Const_Tile : public Tile {
 private:
-	bool solid, transparent;
 	Console_Tile tile;
+	bool solid, transparent;
 
 public:
 	Const_Tile(Console_Tile tile, bool solid, bool transparent);
@@ -37,9 +37,9 @@ public:
 
 class Door_Tile : public Tile {
 private:
-	bool open;
 	Console_Tile open_tile;
 	Console_Tile closed_tile;
+	bool open;
 
 public:
 	Door_Tile(Console_Tile open_tile, Console_Tile closed_tile);

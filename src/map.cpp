@@ -17,10 +17,10 @@ Map::Map(int width, int height) : width(width), height(height) {
 
 	for (size_t i = 0; i < tiles.size(); ++i) {
 		if (irandom(1, 4) == 1) {
-			tiles[i] = { new Const_Tile('#', COLOR_GREY, COLOR_BLANK, true, false), true, false };
+			tiles[i] = Map_Tile{ new Const_Tile('#', COLOR_GREY, COLOR_BLANK, true, false), true, false /* seen_tile intentionally not initialized, since it doesn't exist yet */};
 		}
 		else {
-			tiles[i] = { new Const_Tile('.', { 1, 99, 52, 2 }, COLOR_BLANK, false, true), true, false };
+			tiles[i] = Map_Tile{ new Const_Tile('.', Color{ 1, 99, 52, 2 }, COLOR_BLANK, false, true), true, false /* same as above */};
 		}
 	}
 }
@@ -78,8 +78,8 @@ void Map::calculate_visibility(std::vector<Entity*> const& entities, int player_
 			if (visible) {
 				tiles[(size_t)y * width + x].seen = true;
 				Console_Tile t = tiles[(size_t)y * width + x].tile_ref->get_tile();
-				t.fg = { 1, 65, 65, 65 };
-				t.bg = { 1, 0, 0, 0 };
+				t.fg = Color{ 1, 65, 65, 65 };
+				t.bg = Color{ 1, 0, 0, 0 };
 				tiles[(size_t)y * width + x].seen_tile = t;
 			}
 		}

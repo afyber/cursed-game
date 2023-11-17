@@ -11,7 +11,7 @@
 
 Const_Tile::Const_Tile(Console_Tile tile, bool solid, bool transparent) : tile(tile), solid(solid), transparent(transparent) {}
 
-Const_Tile::Const_Tile(char ch, Color fg, Color bg, bool solid, bool transparent) : tile({ ch, fg, bg }), solid(solid), transparent(transparent) {}
+Const_Tile::Const_Tile(char ch, Color fg, Color bg, bool solid, bool transparent) : tile(Console_Tile{ ch, fg, bg }), solid(solid), transparent(transparent) {}
 
 void Const_Tile::interact(Living_Entity*) {}
 

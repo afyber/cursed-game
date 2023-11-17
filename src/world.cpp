@@ -15,7 +15,7 @@
 
 // class Level
 
-Level::Level(int width, int height, Player* player) : width(width), height(height), player(player), map(width, height) {
+Level::Level(int width, int height, Player* player) : width(width), height(height), map(width, height), player(player) {
 	map.calculate_visibility(entities, player->get_x(), player->get_y());
 }
 
@@ -39,7 +39,7 @@ void Level::update() {
 	}
 
 	if (!player->is_alive()) {
-		// gameover code
+		// TODO: gameover code
 	}
 }
 
