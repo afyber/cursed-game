@@ -17,10 +17,10 @@ Map::Map(int width, int height) : width(width), height(height) {
 
 	for (size_t i = 0; i < tiles.size(); ++i) {
 		if (irandom(1, 4) == 1) {
-			tiles[i] = { new Const_Tile('#', COLOR_GREY, COLOR_BLANK, true, false), true, false };
+			tiles[i] = { new Const_Tile('#', COLOR_GREY, COLOR_BLANK, true, false), true, false /* seen_tile intentionally not initialized, since it doesn't exist yet */};
 		}
 		else {
-			tiles[i] = { new Const_Tile('.', { 1, 99, 52, 2 }, COLOR_BLANK, false, true), true, false };
+			tiles[i] = { new Const_Tile('.', { 1, 99, 52, 2 }, COLOR_BLANK, false, true), true, false /* same as above */};
 		}
 	}
 }

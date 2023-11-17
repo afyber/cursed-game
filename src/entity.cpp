@@ -56,7 +56,7 @@ void Living_Entity::look_for_player(Level& level) {
 	}
 }
 
-Living_Entity::Living_Entity(int x, int y, int max_health) : Entity(x, y), max_health(max_health), health(max_health), resistances({ 0, 0, 0 }), seen_player(false) {}
+Living_Entity::Living_Entity(int x, int y, int max_health) : Entity(x, y), health(max_health), max_health(max_health), resistances({ 0, 0, 0 }), seen_player(false) {}
 
 void Living_Entity::update(Level& level, bool turn) {
 	if (turn) {
