@@ -2,29 +2,18 @@
 #ifndef CURSED_MENU_HPP_
 #define CURSED_MENU_HPP_
 #include "libtcod.hpp"
-#include <string>
-#include <vector>
 
-class Option_Item {
-private:
-	const std::string name;
-
+class Menu {
 public:
-	Option_Item(std::string name);
-
-	const std::string& get_name();
-
-	virtual int get_value() = 0;
-
 	virtual void update() = 0;
 
-	virtual void draw(tcod::Console& con, int x , int y) = 0;
+	virtual void draw(tcod::Console& con) = 0;
 };
 
-class Option_Menu {
+class List_Menu {
 private:
 	size_t selected;
-	std::vector<Option_Item*> items;
+	// std::vector<List_Item*> items;
 
 public:
 	void update();
