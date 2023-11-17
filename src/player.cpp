@@ -46,5 +46,5 @@ bool Player::update(Level& level) {
 }
 
 void Player::draw(tcod::Console& con) {
-	print_console_tile(con, { '@', COLOR_WHITE, COLOR_BLANK }, x, y);
+	print_console_tile(con, Console_Tile{ '@', COLOR_WHITE, COLOR_BLANK }, x, y);
 }
