@@ -38,7 +38,7 @@ bool Player::update(Level& level) {
 	}
 	else if (key_pressed(SDL_SCANCODE_PERIOD)) {
 		move(level, x, y);
-		send_message("Player stood still", COLOR_WHITE);
+		send_message("Player stood still.\nBut why though?", COLOR_WHITE);
 		took_turn = true;
 	}
 

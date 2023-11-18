@@ -15,7 +15,7 @@ void shift_messages() {
 		messages[i + 1] = messages[i];
 	}
 
-	if (messagec != MESSAGE_BUFFER_SIZE - 1) {
+	if (messagec < MESSAGE_BUFFER_SIZE - 1) {
 		++messagec;
 	}
 }
@@ -40,9 +40,10 @@ void draw_messages(tcod::Console& con, int width, int height) {
 		int message_height = tcod::get_height_rect(width, messages[i].str);
 		tcod::print_rect(con, { 0, current_y - message_height, width, message_height }, messages[i].str, color_to_tcod(color_multiply(messages[i].color, std::clamp(messages[i].frames_left / 120.0, 0.0, 1.0))), std::nullopt);
 		
-		current_y -= message_height + 1;
+		current_y--;
 		if (current_y < 0) {
 			break;
 		}
+		current_y -= message_height;
 	}
 }
