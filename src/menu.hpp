@@ -10,8 +10,8 @@ union Menu_Value {
 	const char* str;
 };
 
-enum Menu_Type {
-	YES_NO
+enum class Menu_Type {
+	CHOICE
 };
 
 class Menu {
@@ -19,6 +19,8 @@ public:
 	virtual void update() = 0;
 
 	virtual void draw(tcod::Console& con) = 0;
+
+	virtual Menu_Type get_type() = 0;
 };
 
 void menu_return(Menu_Value v);
@@ -47,6 +49,8 @@ public:
 	void update();
 
 	void draw(tcod::Console& con);
+
+	Menu_Type get_type();
 };
 
 #endif

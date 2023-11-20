@@ -69,3 +69,7 @@ void Choice_Menu::draw(tcod::Console& con) {
 	tcod::print(con, { 35, 23 }, "Yes", TCOD_ColorRGB{ 255, 255, 255 }, selected ? std::optional(TCOD_ColorRGB{ 200, 0, 0 }) : std::nullopt);
 	tcod::print(con, { 43, 23 }, "No", TCOD_ColorRGB{ 255, 255, 255 }, !selected ? std::optional(TCOD_ColorRGB{ 200, 0, 0 }) : std::nullopt);
 }
+
+Menu_Type Choice_Menu::get_type() {
+	return Menu_Type::CHOICE;
+}
