@@ -16,8 +16,8 @@ public:
 
 class Const_Tile : public Tile {
 private:
-	Console_Tile tile;
-	bool solid, transparent;
+	const Console_Tile tile;
+	const bool solid, transparent;
 
 public:
 	Const_Tile(Console_Tile tile, bool solid, bool transparent);
