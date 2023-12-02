@@ -8,7 +8,7 @@ class Player : public Living_Entity {
 public:
 	Player(int x, int y);
 
-	bool update(Level& level);
+	int update(Level& level);
 
 	void draw(tcod::Console& con);
 };

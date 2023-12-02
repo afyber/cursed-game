@@ -9,40 +9,40 @@
 
 Player::Player(int x, int y) : Living_Entity(x, y, 1) {}
 
-bool Player::update(Level& level) {
-	bool took_turn = false;
+int Player::update(Level& level) {
+	int actions = 0;
 
 	if (key_pressed(SDL_SCANCODE_LEFT)) {
 		if (move(level, x - 1, y)) {
 			send_message("Player moved left", COLOR_WHITE);
 		}
-		took_turn = true;
+		actions = 100;
 	}
 	else if (key_pressed(SDL_SCANCODE_RIGHT)) {
 		if (move(level, x + 1, y)) {
 			send_message("Player moved right", COLOR_WHITE);
 		}
-		took_turn = true;
+		actions = 100;
 	}
 	else if (key_pressed(SDL_SCANCODE_UP)) {
 		if (move(level, x, y - 1)) {
 			send_message("Player moved up", COLOR_WHITE);
 		}
-		took_turn = true;
+		actions = 100;
 	}
 	else if (key_pressed(SDL_SCANCODE_DOWN)) {
 		if (move(level, x, y + 1)) {
 			send_message("Player moved down", COLOR_WHITE);
 		}
-		took_turn = true;
+		actions = 100;
 	}
 	else if (key_pressed(SDL_SCANCODE_PERIOD)) {
 		move(level, x, y);
 		send_message("Player stood still", COLOR_WHITE);
-		took_turn = true;
+		actions = 100;
 	}
 
-	return took_turn;
+	return actions;
 }
 
 void Player::draw(tcod::Console& con) {
