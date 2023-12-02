@@ -11,12 +11,6 @@ struct Attack {
 	int fire_damage;
 };
 
-struct Resistances {
-	double normal_resistance;
-	double magic_resistance;
-	double fire_resistance;
-};
-
 enum class ENTITY_ACTION {
 	WANDER,
 	ATTACK_PLAYER
@@ -47,7 +41,6 @@ class Living_Entity : public Entity {
 
 protected:
 	int health, max_health;
-	Resistances resistances;
 
 	Item_List inventory;
 	std::vector<unsigned int> equipped_uids;

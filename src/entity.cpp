@@ -85,9 +85,7 @@ bool Living_Entity::is_solid() {
 }
 
 void Living_Entity::hurt(Attack attack) {
-	health -= (int)(attack.normal_damage * (1 - resistances.normal_resistance))
-		+ (int)(attack.magic_damage * (1 - resistances.magic_resistance))
-		+ (int)(attack.fire_damage * (1 - resistances.fire_resistance));
+	health -= attack.normal_damage + attack.magic_damage + attack.fire_damage;
 }
 
 bool Living_Entity::is_alive() {
