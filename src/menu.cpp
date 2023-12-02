@@ -64,10 +64,10 @@ void Choice_Menu::update() {
 }
 
 void Choice_Menu::draw(tcod::Console& con) {
-	tcod::print_frame(con, { 32, 20 - lines, 16, 6 + lines }, "Choose", new TCOD_ColorRGB{ 200, 0, 0 }, new TCOD_ColorRGB{ 0, 0, 0 });
-	tcod::print_rect(con, { 33, 21 - lines, 14, lines }, message, TCOD_ColorRGB{ 200, 0, 0 }, std::nullopt);
-	tcod::print(con, { 35, 23 }, "Yes", TCOD_ColorRGB{ 255, 255, 255 }, selected ? std::optional(TCOD_ColorRGB{ 200, 0, 0 }) : std::nullopt);
-	tcod::print(con, { 43, 23 }, "No", TCOD_ColorRGB{ 255, 255, 255 }, !selected ? std::optional(TCOD_ColorRGB{ 200, 0, 0 }) : std::nullopt);
+	tcod::print_frame(con, { 32, 20 - lines, 16, 6 + lines }, "Choose", new TCOD_ColorRGB{ 160, 10, 10 }, new TCOD_ColorRGB{ 0, 0, 0 });
+	tcod::print_rect(con, { 33, 21 - lines, 14, lines }, message, TCOD_ColorRGB{ 160, 10, 10 }, std::nullopt);
+	tcod::print(con, { 35, 23 }, "Yes", TCOD_ColorRGB{ 255, 255, 255 }, selected ? std::optional(TCOD_ColorRGB{ 160, 10, 10 }) : std::nullopt);
+	tcod::print(con, { 43, 23 }, "No", TCOD_ColorRGB{ 255, 255, 255 }, !selected ? std::optional(TCOD_ColorRGB{ 160, 10, 10 }) : std::nullopt);
 }
 
 Menu_Type Choice_Menu::get_type() {
