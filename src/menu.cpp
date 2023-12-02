@@ -58,7 +58,7 @@ void Choice_Menu::update() {
 	if (key_typed(SDL_SCANCODE_LEFT) || key_typed(SDL_SCANCODE_RIGHT)) {
 		selected = selected ^ true;
 	}
-	if (key_pressed(SDL_SCANCODE_KP_ENTER)) {
+	if (key_enter_pressed()) {
 		menu_return(Menu_Value{ selected });
 	}
 }
