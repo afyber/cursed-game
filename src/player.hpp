@@ -5,6 +5,9 @@
 #include "world.hpp"
 
 class Player : public Living_Entity {
+protected:
+	int move_actions();
+
 public:
 	Player(int x, int y);
 

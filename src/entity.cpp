@@ -27,7 +27,7 @@ int Entity::get_y() {
 // class Living_Entity
 
 int Living_Entity::move_actions() {
-	return 50;
+	return 120;
 }
 
 bool Living_Entity::move(Level& level, int new_x, int new_y) {
