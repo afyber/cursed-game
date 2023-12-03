@@ -9,6 +9,7 @@
 
 #include "draw.hpp"
 #include "keyboard.hpp"
+#include "menu.hpp"
 #include "message.hpp"
 #include "player.hpp"
 #include "random.hpp"
@@ -99,13 +100,18 @@ int main(int argc, char* argv[]) {
 	floor.add_entity(new Item_Entity(5, 4, new Item(0)));
 	floor.add_entity(new Goblin_Entity(10, 10));
 
+	menu_push(new Choice_Menu("Will you yeild?"));
+
 	auto timer = tcod::Timer();
 
 	bool running = true;
 	while (running) {
-		floor.update();
+		if (!menu_open()) {
+			floor.update();
+			update_messages();
+		}
 
-		update_messages();
+		update_menus();
 
 		con.clear();
 
@@ -116,6 +122,8 @@ int main(int argc, char* argv[]) {
 		message_con.clear();
 		draw_messages(message_con, MESSAGE_BOX_WIDTH, MESSAGE_BOX_HEIGHT);
 		full_console_blit(message_con, MESSAGE_BOX_WIDTH, MESSAGE_BOX_HEIGHT, con, MESSAGE_BOX_X, MESSAGE_BOX_Y);
+
+		draw_menus(con);
 
 		context.present(con);
 

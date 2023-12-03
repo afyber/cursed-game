@@ -36,6 +36,10 @@ bool key_released(SDL_Scancode scancode) {
 	return KEYS[scancode] == KEY_STATE::JUST_RELEASED;
 }
 
+bool key_enter_pressed() {
+	return key_pressed(SDL_SCANCODE_RETURN) || key_pressed(SDL_SCANCODE_RETURN2) || key_pressed(SDL_SCANCODE_KP_ENTER);
+}
+
 void update_key_states() {
 	for (int i = 0; i < SDL_NUM_SCANCODES; i++) {
 		if (KEYS[i] == KEY_STATE::JUST_PRESSED || KEYS[i] == KEY_STATE::RE_TYPED) {

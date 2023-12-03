@@ -11,10 +11,9 @@ struct Attack {
 	int fire_damage;
 };
 
-struct Resistances {
-	double normal_resistance;
-	double magic_resistance;
-	double fire_resistance;
+enum class ENTITY_ACTION {
+	WANDER,
+	ATTACK_PLAYER
 };
 
 class Entity : public Object {
@@ -28,7 +27,7 @@ public:
 
 	virtual bool is_alive() = 0;
 
-	virtual void update(Level& level, bool turn) = 0;
+	virtual void update(Level& level, int actions) = 0;
 
 	virtual void draw(tcod::Console& con) = 0;
 
@@ -42,13 +41,17 @@ class Living_Entity : public Entity {
 
 protected:
 	int health, max_health;
-	Resistances resistances;
 
 	Item_List inventory;
 	std::vector<unsigned int> equipped_uids;
 
+	ENTITY_ACTION act;
+	int needed_actions;
+
 	int last_player_x, last_player_y;
 	bool seen_player;
+
+	int move_actions();
 
 	bool move(Level& level, int x, int y);
 
@@ -61,7 +64,7 @@ public:
 
 	bool is_alive();
 
-	void update(Level& level, bool turn);
+	void update(Level& level, int actions);
 
 	void interact(Living_Entity* ent);
 
@@ -84,7 +87,7 @@ public:
 
 	bool is_alive();
 
-	void update(Level&, bool);
+	void update(Level&, int);
 
 	void draw(tcod::Console& con);
 
@@ -102,7 +105,7 @@ class Goblin_Entity : public Living_Entity {
 public:
 	Goblin_Entity(int x, int y);
 
-	void update(Level& level, bool turn);
+	void update(Level& level, int actions);
 
 	void draw(tcod::Console& con);
 };

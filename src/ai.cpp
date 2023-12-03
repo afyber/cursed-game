@@ -50,11 +50,3 @@ void AI::move_towards_player(Level& level, Living_Entity* ent) {
 	}
 }
 
-void AI::attack_or_wander(Level& level, Living_Entity* ent) {
-	if (ent->seen_player) {
-		move_towards_player(level, ent);
-	}
-	else {
-		move_random(level, ent);
-	}
-}

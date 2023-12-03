@@ -20,6 +20,8 @@ bool key_typed(SDL_Scancode scancode);
  */
 bool key_released(SDL_Scancode scancode);
 
+bool key_enter_pressed();
+
 void update_key_states();
 
 void handle_key_event(SDL_KeyboardEvent event);

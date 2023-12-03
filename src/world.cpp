@@ -22,11 +22,11 @@ Level::Level(int width, int height, Player* player) : width(width), height(heigh
 void Level::update() {
 	map.update(*this);
 
-	bool turn = player->update(*this);
+	int actions = player->update(*this);
 
 	for (size_t i = 0; i < entities.size(); ++i) {
 		if (entities[i]->is_alive()) {
-			entities[i]->update(*this, turn);
+			entities[i]->update(*this, actions);
 		}
 		else {
 			entities.erase(entities.begin() + i);
@@ -34,7 +34,7 @@ void Level::update() {
 		}
 	}
 
-	if (turn) {
+	if (actions > 0) {
 		map.calculate_visibility(entities, player->get_x(), player->get_y());
 	}
 

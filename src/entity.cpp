@@ -26,6 +26,10 @@ int Entity::get_y() {
 
 // class Living_Entity
 
+int Living_Entity::move_actions() {
+	return 120;
+}
+
 bool Living_Entity::move(Level& level, int new_x, int new_y) {
 	if (x == new_x && y == new_y) {
 		return true;
@@ -56,12 +60,18 @@ void Living_Entity::look_for_player(Level& level) {
 	}
 }
 
-Living_Entity::Living_Entity(int x, int y, int max_health) : Entity(x, y), health(max_health), max_health(max_health), resistances(Resistances{ 0, 0, 0 }), seen_player(false) {}
+Living_Entity::Living_Entity(int x, int y, int max_health) : Entity(x, y), health(max_health), max_health(max_health), act(ENTITY_ACTION::WANDER), needed_actions(move_actions()), seen_player(false) {}
 
-void Living_Entity::update(Level& level, bool turn) {
-	if (turn) {
-		AI::move_random(level, this);
+void Living_Entity::update(Level& level, int actions) {
+	while (needed_actions < actions) {
+		switch (act) {
+		case ENTITY_ACTION::WANDER:
+			AI::move_random(level, this);
+			needed_actions = move_actions();
+		}
+		actions -= needed_actions;
 	}
+	needed_actions -= actions;
 }
 
 void Living_Entity::interact(Living_Entity* ent) {
@@ -75,9 +85,7 @@ bool Living_Entity::is_solid() {
 }
 
 void Living_Entity::hurt(Attack attack) {
-	health -= (int)(attack.normal_damage * (1 - resistances.normal_resistance))
-		+ (int)(attack.magic_damage * (1 - resistances.magic_resistance))
-		+ (int)(attack.fire_damage * (1 - resistances.fire_resistance));
+	health -= attack.normal_damage + attack.magic_damage + attack.fire_damage;
 }
 
 bool Living_Entity::is_alive() {
@@ -92,7 +100,7 @@ void Living_Entity::give_item(Item* item) {
 
 Item_Entity::Item_Entity(int x, int y, Item* item_ref) : Entity(x, y), item_ref(item_ref), picked_up(false) {}
 
-void Item_Entity::update(Level&, bool) {}
+void Item_Entity::update(Level&, int) {}
 
 void Item_Entity::draw(tcod::Console& con) {
 	if (!picked_up) {
@@ -131,11 +139,30 @@ void Worm_Entity::draw(tcod::Console& con) {
 
 Goblin_Entity::Goblin_Entity(int x, int y) : Living_Entity(x, y, 5) {}
 
-void Goblin_Entity::update(Level& level, bool turn) {
-	if (turn) {
+void Goblin_Entity::update(Level& level, int actions) {
+	while (needed_actions < actions) {
+		// take an action
+		switch (act) {
+		case ENTITY_ACTION::WANDER:
+			AI::move_random(level, this);
+			break;
+		case ENTITY_ACTION::ATTACK_PLAYER:
+			AI::move_towards_player(level, this);
+			break;
+		}
+		actions -= needed_actions;
+
+		// decide what the next action should be
 		look_for_player(level);
-		AI::attack_or_wander(level, this);
+		if (seen_player) {
+			act = ENTITY_ACTION::ATTACK_PLAYER;
+		}
+		else {
+			act = ENTITY_ACTION::WANDER;
+		}
+		needed_actions = move_actions();
 	}
+	needed_actions -= actions;
 }
 
 void Goblin_Entity::draw(tcod::Console& con) {
