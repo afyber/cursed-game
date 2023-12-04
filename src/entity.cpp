@@ -60,18 +60,18 @@ void Living_Entity::look_for_player(Level& level) {
 	}
 }
 
-Living_Entity::Living_Entity(int x, int y, int max_health) : Entity(x, y), health(max_health), max_health(max_health), act(ENTITY_ACTION::WANDER), needed_actions(move_actions()), seen_player(false) {}
+Living_Entity::Living_Entity(int x, int y, int max_health) : Entity(x, y), health(max_health), max_health(max_health), act(Action{ ENTITY_ACTION::WANDER, move_actions() }), seen_player(false) {}
 
 void Living_Entity::update(Level& level, int actions) {
-	while (needed_actions < actions) {
-		switch (act) {
+	while (act.actions_needed < actions) {
+		actions -= act.actions_needed;
+		switch (act.intent) {
 		case ENTITY_ACTION::WANDER:
 			AI::move_random(level, this);
-			needed_actions = move_actions();
+			act = Action{ ENTITY_ACTION::WANDER, move_actions() };
 		}
-		actions -= needed_actions;
 	}
-	needed_actions -= actions;
+	act.actions_needed -= actions;
 }
 
 void Living_Entity::interact(Living_Entity* ent) {
@@ -140,9 +140,11 @@ void Worm_Entity::draw(tcod::Console& con) {
 Goblin_Entity::Goblin_Entity(int x, int y) : Living_Entity(x, y, 5) {}
 
 void Goblin_Entity::update(Level& level, int actions) {
-	while (needed_actions < actions) {
+	while (act.actions_needed < actions) {
+		actions -= act.actions_needed;
+
 		// take an action
-		switch (act) {
+		switch (act.intent) {
 		case ENTITY_ACTION::WANDER:
 			AI::move_random(level, this);
 			break;
@@ -150,19 +152,17 @@ void Goblin_Entity::update(Level& level, int actions) {
 			AI::move_towards_player(level, this);
 			break;
 		}
-		actions -= needed_actions;
 
 		// decide what the next action should be
 		look_for_player(level);
 		if (seen_player) {
-			act = ENTITY_ACTION::ATTACK_PLAYER;
+			act = Action{ ENTITY_ACTION::ATTACK_PLAYER, move_actions() };
 		}
 		else {
-			act = ENTITY_ACTION::WANDER;
+			act = Action{ ENTITY_ACTION::WANDER, move_actions() };
 		}
-		needed_actions = move_actions();
 	}
-	needed_actions -= actions;
+	act.actions_needed -= actions;
 }
 
 void Goblin_Entity::draw(tcod::Console& con) {
