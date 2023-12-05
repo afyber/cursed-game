@@ -25,6 +25,8 @@ private:
 public:
 	Map(int width, int height);
 
+	~Map();
+
 	void update(Level& level);
 
 	void draw(tcod::Console& con);

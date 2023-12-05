@@ -31,6 +31,8 @@ private:
 public:
 	Level(int width, int height, Player* player);
 
+	~Level();
+
 	void update();
 
 	void draw(tcod::Console& con);

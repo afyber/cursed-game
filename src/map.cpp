@@ -25,6 +25,12 @@ Map::Map(int width, int height) : width(width), height(height) {
 	}
 }
 
+Map::~Map() {
+	for (Map_Tile t : tiles) {
+		delete t.tile_ref;
+	}
+}
+
 void Map::update(Level& level) {
 	for (size_t i = 0; i < tiles.size(); ++i) {
 		tiles[i].tile_ref->update(level);

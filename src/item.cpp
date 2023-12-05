@@ -15,6 +15,12 @@ unsigned int Item::get_uid() {
 
 // class Item_List
 
+Item_List::~Item_List() {
+	for (Item* p : items) {
+		delete p;
+	}
+}
+
 void Item_List::add_item(Item* item) {
 	items.push_back(item);
 }

@@ -19,6 +19,12 @@ Level::Level(int width, int height, Player* player) : width(width), height(heigh
 	map.calculate_visibility(entities, player->get_x(), player->get_y());
 }
 
+Level::~Level() {
+	for (Entity* p : entities) {
+		delete p;
+	}
+}
+
 void Level::update() {
 	map.update(*this);
 
