@@ -20,8 +20,6 @@ private:
 	std::vector<Item*> items;
 
 public:
-	~Item_List();
-
 	void add_item(Item* item);
 
 	Item* pop_item(IUID iuid);
