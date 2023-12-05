@@ -35,8 +35,9 @@ void Level::update() {
 			entities[i]->update(*this, actions);
 		}
 		else {
+			// handle entity death logic
+			delete entities[i];
 			entities.erase(entities.begin() + i);
-			i--;
 		}
 	}
 
