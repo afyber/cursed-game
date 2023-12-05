@@ -30,19 +30,19 @@ void Level::update() {
 
 	int actions = player->update(*this);
 
+	if (actions > 0) {
+		map.calculate_visibility(entities, player->get_x(), player->get_y());
+	}
+
 	for (size_t i = 0; i < entities.size(); ++i) {
 		if (entities[i]->is_alive()) {
 			entities[i]->update(*this, actions);
 		}
 		else {
-			// handle entity death logic
+			// TODO: handle entity death logic
 			delete entities[i];
 			entities.erase(entities.begin() + i);
 		}
-	}
-
-	if (actions > 0) {
-		map.calculate_visibility(entities, player->get_x(), player->get_y());
 	}
 
 	if (!player->is_alive()) {
