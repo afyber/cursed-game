@@ -85,6 +85,8 @@ private:
 public:
 	Item_Entity(int x, int y, Item* item_ref);
 
+	~Item_Entity();
+
 	void interact(Living_Entity* ent);
 
 	bool is_solid();

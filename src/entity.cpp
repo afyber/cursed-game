@@ -100,6 +100,13 @@ void Living_Entity::give_item(Item* item) {
 
 Item_Entity::Item_Entity(int x, int y, Item* item_ref) : Entity(x, y), item_ref(item_ref), picked_up(false) {}
 
+Item_Entity::~Item_Entity() {
+	// This will only free the Item* if the Item_Entity is deleted in a level change, and not if it was picked up by an Entity
+	if (!picked_up) {
+		delete item_ref;
+	}
+}
+
 void Item_Entity::update(Level&, int) {}
 
 void Item_Entity::draw(tcod::Console& con) {
