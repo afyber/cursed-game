@@ -16,6 +16,8 @@ enum class Menu_Type {
 
 class Menu {
 public:
+	virtual ~Menu();
+
 	virtual void update() = 0;
 
 	virtual void draw(tcod::Console& con) = 0;

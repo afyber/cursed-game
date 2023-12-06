@@ -11,6 +11,10 @@ std::vector<Menu*> menu_stack;
 Menu_Value return_value;
 bool return_handled = true;
 
+// class Menu
+
+Menu::~Menu() {}
+
 void menu_return(Menu_Value v) {
 	if (!return_handled) {
 		throw std::runtime_error("Menu system attempted to return before handling previous return");
