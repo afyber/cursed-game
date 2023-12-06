@@ -3,12 +3,14 @@
 #define CURSED_ITEM_HPP_
 #include <vector>
 
+typedef unsigned long long int IUID;
+
 class Item {
 private:
-	const unsigned int uid;
+	const IUID iuid;
 
 public:
-	Item(unsigned int uid);
+	Item(IUID iuid);
 
 	unsigned int get_uid();
 };
@@ -20,9 +22,9 @@ private:
 public:
 	void add_item(Item* item);
 
-	Item* pop_item(unsigned int uid);
+	Item* pop_item(IUID iuid);
 
-	Item* get_item(unsigned int uid);
+	Item* get_item(IUID iuid);
 };
 
 #endif

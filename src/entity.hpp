@@ -16,6 +16,11 @@ enum class ENTITY_ACTION {
 	ATTACK_PLAYER
 };
 
+struct Action {
+	ENTITY_ACTION intent;
+	int actions_needed;
+};
+
 class Entity : public Object {
 protected:
 	int x, y;
@@ -43,10 +48,9 @@ protected:
 	int health, max_health;
 
 	Item_List inventory;
-	std::vector<unsigned int> equipped_uids;
+	std::vector<IUID> equipped_uids;
 
-	ENTITY_ACTION act;
-	int needed_actions;
+	Action act;
 
 	int last_player_x, last_player_y;
 	bool seen_player;
@@ -80,6 +84,8 @@ private:
 
 public:
 	Item_Entity(int x, int y, Item* item_ref);
+
+	~Item_Entity();
 
 	void interact(Living_Entity* ent);
 
