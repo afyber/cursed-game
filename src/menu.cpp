@@ -17,7 +17,8 @@ void menu_return(Menu_Value v) {
 	}
 	return_handled = false;
 	return_value = v;
-	menu_stack.erase(menu_stack.end() - 1);
+	delete menu_stack[menu_stack.size() - 1];
+	menu_stack.resize(menu_stack.size() - 1);
 }
 
 bool menu_returned() {
@@ -33,7 +34,9 @@ Menu_Value menu_recieve() {
 }
 
 void menu_push(Menu* m) {
-	menu_stack.push_back(m);
+	if (m != nullptr) {
+		menu_stack.push_back(m);
+	}
 }
 
 bool menu_open() {
@@ -48,7 +51,7 @@ void update_menus() {
 
 void draw_menus(tcod::Console& con) {
 	for (int i = 0; i < menu_stack.size(); ++i) {
-		menu_stack[menu_stack.size() - 1]->draw(con);
+		menu_stack[i]->draw(con);
 	}
 }
 
