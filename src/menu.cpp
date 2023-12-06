@@ -55,6 +55,8 @@ void draw_menus(tcod::Console& con) {
 	}
 }
 
+// class Choice_Menu
+
 Choice_Menu::Choice_Menu(const char* message) : message(message), lines(tcod::get_height_rect(14, message)), selected(true) {}
 
 void Choice_Menu::update() {

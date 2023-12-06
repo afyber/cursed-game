@@ -28,6 +28,8 @@ protected:
 public:
 	Entity(int x, int y);
 
+	virtual ~Entity();
+
 	bool is_transparent();
 
 	virtual bool is_alive() = 0;

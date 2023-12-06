@@ -12,6 +12,8 @@
 
 Entity::Entity(int x, int y) : x(x), y(y) {}
 
+Entity::~Entity() {}
+
 bool Entity::is_transparent() {
 	return true;
 }
