@@ -96,7 +96,8 @@ int main(int argc, char* argv[]) {
 	tcod::Console message_con = tcod::Console(MESSAGE_BOX_WIDTH, MESSAGE_BOX_HEIGHT);
 	tcod::Console level_con = tcod::Console(LEVEL_WIDTH, LEVEL_HEIGHT);
 
-	Level floor(LEVEL_WIDTH, LEVEL_HEIGHT, new Player(5, 5));
+	Player* player = new Player(5, 5);
+	Level floor(LEVEL_WIDTH, LEVEL_HEIGHT, player);
 	floor.add_entity(new Item_Entity(5, 4, new Item(0)));
 	floor.add_entity(new Goblin_Entity(10, 10));
 
@@ -144,6 +145,8 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
+
+	delete player;
 
 	quit_sdl();
 
