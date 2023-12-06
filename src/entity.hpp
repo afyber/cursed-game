@@ -32,6 +32,8 @@ public:
 
 	virtual bool is_alive() = 0;
 
+	virtual void kill(Level& level) = 0;
+
 	virtual void update(Level& level, int actions) = 0;
 
 	virtual void draw(tcod::Console& con) = 0;
@@ -68,6 +70,8 @@ public:
 
 	bool is_alive();
 
+	void kill(Level& level);
+
 	void update(Level& level, int actions);
 
 	void interact(Living_Entity* ent);
@@ -92,6 +96,8 @@ public:
 	bool is_solid();
 
 	bool is_alive();
+
+	void kill(Level&);
 
 	void update(Level&, int);
 

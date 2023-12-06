@@ -40,3 +40,11 @@ Item* Item_List::get_item(IUID uid) {
 
 	return nullptr;
 }
+
+Item* Item_List::at(int index) {
+	return items.at(index);
+}
+
+int Item_List::size() {
+	return items.size();
+}

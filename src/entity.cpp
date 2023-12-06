@@ -88,6 +88,12 @@ void Living_Entity::hurt(Attack attack) {
 	health -= attack.normal_damage + attack.magic_damage + attack.fire_damage;
 }
 
+void Living_Entity::kill(Level& level) {
+	for (int i = 0; i < inventory.size(); ++i) {
+		level.add_entity(new Item_Entity(x, y, inventory.at(i)));
+	}
+}
+
 bool Living_Entity::is_alive() {
 	return health > 0;
 }
@@ -129,6 +135,8 @@ void Item_Entity::interact(Living_Entity* ent) {
 bool Item_Entity::is_alive() {
 	return !picked_up;
 }
+
+void Item_Entity::kill(Level&) {}
 
 Item* Item_Entity::get_item() {
 	return item_ref;

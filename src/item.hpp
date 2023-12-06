@@ -25,6 +25,10 @@ public:
 	Item* pop_item(IUID iuid);
 
 	Item* get_item(IUID iuid);
+
+	Item* at(int index);
+
+	int size();
 };
 
 #endif
