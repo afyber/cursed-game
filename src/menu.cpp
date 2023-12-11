@@ -11,6 +11,10 @@ std::vector<Menu*> menu_stack;
 Menu_Value return_value;
 bool return_handled = true;
 
+// class Menu
+
+Menu::~Menu() {}
+
 void menu_return(Menu_Value v) {
 	if (!return_handled) {
 		throw std::runtime_error("Menu system attempted to return before handling previous return");
@@ -50,10 +54,12 @@ void update_menus() {
 }
 
 void draw_menus(tcod::Console& con) {
-	for (int i = 0; i < menu_stack.size(); ++i) {
-		menu_stack[i]->draw(con);
+	for (Menu* menu : menu_stack) {
+		menu->draw(con);
 	}
 }
+
+// class Choice_Menu
 
 Choice_Menu::Choice_Menu(const char* message) : message(message), lines(tcod::get_height_rect(14, message)), selected(true) {}
 

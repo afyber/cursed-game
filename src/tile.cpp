@@ -7,6 +7,10 @@
 #include "draw.hpp"
 #include "world.hpp"
 
+// class Tile
+
+Tile::~Tile() {}
+
 // class Const_Tile
 
 Const_Tile::Const_Tile(Console_Tile tile, bool solid, bool transparent) : tile(tile), solid(solid), transparent(transparent) {}

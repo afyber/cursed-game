@@ -9,6 +9,8 @@
 
 class Tile : public Object {
 public:
+	virtual ~Tile();
+
 	virtual void update(Level& level) = 0;
 
 	virtual Console_Tile get_tile() = 0;

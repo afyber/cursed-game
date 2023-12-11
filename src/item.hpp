@@ -3,6 +3,8 @@
 #define CURSED_ITEM_HPP_
 #include <vector>
 
+using std::size_t;
+
 typedef unsigned long long int IUID;
 
 class Item {
@@ -12,7 +14,7 @@ private:
 public:
 	Item(IUID iuid);
 
-	unsigned int get_uid();
+	IUID get_uid();
 };
 
 class Item_List {
@@ -25,6 +27,14 @@ public:
 	Item* pop_item(IUID iuid);
 
 	Item* get_item(IUID iuid);
+
+	Item* at(int index);
+
+	std::vector<Item*>::iterator begin();
+
+	std::vector<Item*>::iterator end();
+
+	size_t size();
 };
 
 #endif
