@@ -71,7 +71,7 @@ double Entity_Status::get_effect(EFFECT_TYPE effect) {
 	double total;
 
 	// REMEMBER: every EFFECT_TYPE MUST have a case in this switch statement
-	// There are three types of effect:
+	// There are three overall types of effect:
 	switch (effect) {
 	case EFFECT_TYPE::DAMAGE_OFFSET:
 	case EFFECT_TYPE::HEALTH_OFFSET:
