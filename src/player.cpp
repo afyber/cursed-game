@@ -7,13 +7,16 @@
 #include "message.hpp"
 #include "world.hpp"
 
-Player::Player(int x, int y) : Living_Entity(x, y, 1) {}
+Player::Player(int x, int y) : Living_Entity(x, y, 10) {
+	status.add_permanent_status(Status(STATUS_TYPE::CURSE_ONE_HEALTH));
+}
 
 int Player::move_actions() {
 	return 100;
 }
 
 int Player::update(Level& level) {
+
 	int actions = 0;
 
 	if (key_pressed(SDL_SCANCODE_LEFT)) {
@@ -45,6 +48,8 @@ int Player::update(Level& level) {
 		send_message("Player stood still", COLOR_WHITE);
 		actions = move_actions();
 	}
+
+	update_status(actions);
 
 	return actions;
 }

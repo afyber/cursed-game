@@ -54,6 +54,17 @@ bool Living_Entity::move(Level& level, int new_x, int new_y) {
 	return can_move;
 }
 
+void Living_Entity::update_status(int actions) {
+	health += status.get_effect(EFFECT_TYPE::HEALTH_REGENERATION);
+	if (health > max_health) {
+		health = max_health;
+	}
+	if (health > status.get_effect(EFFECT_TYPE::HEALTH_LIMITER)) {
+		health = status.get_effect(EFFECT_TYPE::HEALTH_LIMITER);
+	}
+	status.update(actions);
+}
+
 void Living_Entity::look_for_player(Level& level) {
 	if (level.get_map().is_visible(x, y)) {
 		last_player_x = level.get_player()->get_x();
@@ -65,6 +76,8 @@ void Living_Entity::look_for_player(Level& level) {
 Living_Entity::Living_Entity(int x, int y, int max_health) : Entity(x, y), health(max_health), max_health(max_health), act(Action{ ENTITY_ACTION::WANDER, move_actions() }), seen_player(false) {}
 
 void Living_Entity::update(Level& level, int actions) {
+	update_status(actions);
+
 	while (act.actions_needed < actions) {
 		actions -= act.actions_needed;
 		switch (act.intent) {
@@ -77,9 +90,8 @@ void Living_Entity::update(Level& level, int actions) {
 }
 
 void Living_Entity::interact(Living_Entity* ent) {
-	// TODO: Calculate attacking entity's damage
-	(void)ent;
-	this->hurt(Attack{ 1, 0, 0 });
+	// TODO: calculate defense
+	this->hurt(ent->get_attack());
 }
 
 bool Living_Entity::is_solid() {
@@ -102,6 +114,25 @@ bool Living_Entity::is_alive() {
 
 void Living_Entity::give_item(Item* item) {
 	inventory.add_item(item);
+}
+
+Attack Living_Entity::get_attack() {
+	// TODO: calculate based on equipped items
+	Attack a = Attack{ 1, 0, 0 };
+	double value = status.get_effect(EFFECT_TYPE::DAMAGE_OFFSET);
+	a.normal_damage += value;
+	a.magic_damage += value;
+	a.fire_damage += value;
+	value = status.get_effect(EFFECT_TYPE::DAMAGE_MULTIPLIER);
+	a.normal_damage *= value;
+	a.magic_damage *= value;
+	a.fire_damage *= value;
+	if ((value = status.get_effect(EFFECT_TYPE::DAMAGE_LIMITER)) >= 0) {
+		a.normal_damage = std::min(a.normal_damage, (int)value);
+		a.magic_damage = std::min(a.magic_damage, (int)value);
+		a.fire_damage = std::min(a.fire_damage, (int)value);
+	}
+	return a;
 }
 
 // class Item_Entity
@@ -157,6 +188,8 @@ void Worm_Entity::draw(tcod::Console& con) {
 Goblin_Entity::Goblin_Entity(int x, int y) : Living_Entity(x, y, 5) {}
 
 void Goblin_Entity::update(Level& level, int actions) {
+	update_status(actions);
+
 	while (act.actions_needed < actions) {
 		actions -= act.actions_needed;
 

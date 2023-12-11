@@ -21,6 +21,12 @@ Status::Status(STATUS_TYPE type) {
 	case STATUS_TYPE::CURSE_ONE_HEALTH:
 		effects[EFFECT_TYPE::HEALTH_LIMITER] = 1;
 		break;
+	case STATUS_TYPE::TEMPORARY_REGENERATION_WEAK:
+		effects[EFFECT_TYPE::HEALTH_REGENERATION] = 0.005;
+		break;
+	case STATUS_TYPE::TEMPORARY_STRENGTH_WEAK:
+		effects[EFFECT_TYPE::DAMAGE_OFFSET] = 2;
+		break;
 	}
 }
 
@@ -52,6 +58,14 @@ void Entity_Status::update(int actions) {
 	}
 }
 
+void Entity_Status::add_permanent_status(Status status) {
+	permanent_status.push_back(status);
+}
+
+void Entity_Status::add_temporary_status(Temporary_Status status) {
+	temporary_status.push_back(status);
+}
+
 double Entity_Status::get_effect(EFFECT_TYPE effect) {
 	double total;
 
@@ -60,6 +74,7 @@ double Entity_Status::get_effect(EFFECT_TYPE effect) {
 	switch (effect) {
 	case EFFECT_TYPE::DAMAGE_OFFSET:
 	case EFFECT_TYPE::HEALTH_OFFSET:
+	case EFFECT_TYPE::HEALTH_REGENERATION:
 		// additive
 		total = 0;
 		for (Temporary_Status s : temporary_status) {

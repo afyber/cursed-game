@@ -3,6 +3,7 @@
 #define CURSED_ENTITY_HPP_
 #include "ai.hpp"
 #include "item.hpp"
+#include "status.hpp"
 #include "world.hpp"
 
 struct Attack {
@@ -49,7 +50,10 @@ class Living_Entity : public Entity {
 	friend class AI;
 
 protected:
-	int health, max_health;
+	double health;
+	int max_health;
+
+	Entity_Status status;
 
 	Item_List inventory;
 	std::vector<IUID> equipped_uids;
@@ -62,6 +66,8 @@ protected:
 	int move_actions();
 
 	bool move(Level& level, int x, int y);
+
+	void update_status(int actions);
 
 	void look_for_player(Level& level);
 
@@ -81,6 +87,8 @@ public:
 	virtual void hurt(Attack attack);
 
 	void give_item(Item* item);
+
+	Attack get_attack();
 };
 
 class Item_Entity : public Entity {

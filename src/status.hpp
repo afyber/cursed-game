@@ -7,14 +7,17 @@
 // REMEMBER: if you add an effect it also needs to be added to the switch statement in Entity_Status::get_effect(EFFECT_TYPE)
 enum class EFFECT_TYPE {
 	DAMAGE_OFFSET,
-	DAMAGE_MULTIPLIER,
 	DAMAGE_LIMITER,
+	DAMAGE_MULTIPLIER,
 	HEALTH_OFFSET,
-	HEALTH_LIMITER
+	HEALTH_LIMITER,
+	HEALTH_REGENERATION
 };
 
 enum class STATUS_TYPE {
-	CURSE_ONE_HEALTH
+	CURSE_ONE_HEALTH,
+	TEMPORARY_REGENERATION_WEAK,
+	TEMPORARY_STRENGTH_WEAK
 };
 
 class Status {
@@ -51,6 +54,10 @@ private:
 
 public:
 	void update(int actions);
+
+	void add_permanent_status(Status status);
+
+	void add_temporary_status(Temporary_Status status);
 
 	double get_effect(EFFECT_TYPE effect);
 };
