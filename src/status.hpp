@@ -4,6 +4,8 @@
 #include <unordered_map>
 #include <vector>
 
+using std::size_t;
+
 // REMEMBER: if you add an effect it also needs to be added to the switch statement in Entity_Status::get_effect(EFFECT_TYPE)
 enum class EFFECT_TYPE {
 	DAMAGE_OFFSET,
