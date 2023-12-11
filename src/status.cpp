@@ -9,6 +9,7 @@ void Status::set_defaults() {
 	set_effect(EFFECT_TYPE::DAMAGE_LIMITER, -1);
 	set_effect(EFFECT_TYPE::HEALTH_OFFSET, 0);
 	set_effect(EFFECT_TYPE::HEALTH_LIMITER, -1);
+	set_effect(EFFECT_TYPE::HEALTH_REGENERATION, 0);
 }
 
 void Status::set_effect(EFFECT_TYPE effect, double strength) {

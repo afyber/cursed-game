@@ -54,8 +54,8 @@ void update_menus() {
 }
 
 void draw_menus(tcod::Console& con) {
-	for (int i = 0; i < menu_stack.size(); ++i) {
-		menu_stack[i]->draw(con);
+	for (Menu* menu : menu_stack) {
+		menu->draw(con);
 	}
 }
 

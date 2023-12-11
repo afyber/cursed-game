@@ -15,25 +15,25 @@
 Map::Map(int width, int height) : width(width), height(height) {
 	tiles.resize((size_t)width * height);
 
-	for (size_t i = 0; i < tiles.size(); ++i) {
+	for (Map_Tile& tile : tiles) {
 		if (irandom(1, 4) == 1) {
-			tiles[i] = Map_Tile{ new Const_Tile('#', COLOR_GREY, COLOR_BLANK, true, false), true, false /* seen_tile intentionally not initialized, since it doesn't exist yet */};
+			tile = Map_Tile{ new Const_Tile('#', COLOR_GREY, COLOR_BLANK, true, false), true, false /* seen_tile intentionally not initialized, since it doesn't exist yet */};
 		}
 		else {
-			tiles[i] = Map_Tile{ new Const_Tile('.', Color{ 1, 99, 52, 2 }, COLOR_BLANK, false, true), true, false /* same as above */};
+			tile = Map_Tile{ new Const_Tile('.', Color{ 1, 99, 52, 2 }, COLOR_BLANK, false, true), true, false /* same as above */};
 		}
 	}
 }
 
 Map::~Map() {
-	for (Map_Tile t : tiles) {
-		delete t.tile_ref;
+	for (Map_Tile& tile : tiles) {
+		delete tile.tile_ref;
 	}
 }
 
 void Map::update(Level& level) {
-	for (size_t i = 0; i < tiles.size(); ++i) {
-		tiles[i].tile_ref->update(level);
+	for (Map_Tile& tile : tiles) {
+		tile.tile_ref->update(level);
 	}
 }
 

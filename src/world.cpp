@@ -53,10 +53,9 @@ void Level::update() {
 void Level::draw(tcod::Console& con) {
 	map.draw(con);
 
-	for (size_t i = 0; i < entities.size(); ++i) {
-		Entity* ent = entities[i];
-		if (map.is_visible(ent->get_x(), ent->get_y())) {
-			ent->draw(con);
+	for (Entity* e : entities) {
+		if (map.is_visible(e->get_x(), e->get_y())) {
+			e->draw(con);
 		}
 	}
 

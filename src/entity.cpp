@@ -41,9 +41,8 @@ bool Living_Entity::move(Level& level, int new_x, int new_y) {
 
 	level.interact(new_x, new_y, this);
 
-	std::vector<Entity*> entities = level.entities_at(new_x, new_y);
-	for (size_t i = 0; i < entities.size(); ++i) {
-		entities[i]->interact(this);
+	for (Entity* e : level.entities_at(new_x, new_y)) {
+		e->interact(this);
 	}
 
 	if (can_move) {
@@ -59,8 +58,8 @@ void Living_Entity::update_status(int actions) {
 	if (health > max_health) {
 		health = max_health;
 	}
-	if (health > status.get_effect(EFFECT_TYPE::HEALTH_LIMITER)) {
-		health = status.get_effect(EFFECT_TYPE::HEALTH_LIMITER);
+	if (status.get_effect(EFFECT_TYPE::HEALTH_LIMITER) >= 0) {
+		health = std::min(health, status.get_effect(EFFECT_TYPE::HEALTH_LIMITER));
 	}
 	status.update(actions);
 }
@@ -103,8 +102,8 @@ void Living_Entity::hurt(Attack attack) {
 }
 
 void Living_Entity::kill(Level& level) {
-	for (int i = 0; i < inventory.size(); ++i) {
-		level.add_entity(new Item_Entity(x, y, inventory.at(i)));
+	for (Item* item : inventory) {
+		level.add_entity(new Item_Entity(x, y, item));
 	}
 }
 
@@ -120,13 +119,13 @@ Attack Living_Entity::get_attack() {
 	// TODO: calculate based on equipped items
 	Attack a = Attack{ 1, 0, 0 };
 	double value = status.get_effect(EFFECT_TYPE::DAMAGE_OFFSET);
-	a.normal_damage += value;
-	a.magic_damage += value;
-	a.fire_damage += value;
+	a.normal_damage += (int)value;
+	a.magic_damage += (int)value;
+	a.fire_damage += (int)value;
 	value = status.get_effect(EFFECT_TYPE::DAMAGE_MULTIPLIER);
-	a.normal_damage *= value;
-	a.magic_damage *= value;
-	a.fire_damage *= value;
+	a.normal_damage = (int)(a.normal_damage * value);
+	a.magic_damage = (int)(a.magic_damage * value);
+	a.fire_damage = (int)(a.fire_damage * value);
 	if ((value = status.get_effect(EFFECT_TYPE::DAMAGE_LIMITER)) >= 0) {
 		a.normal_damage = std::min(a.normal_damage, (int)value);
 		a.magic_damage = std::min(a.magic_damage, (int)value);

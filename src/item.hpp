@@ -12,7 +12,7 @@ private:
 public:
 	Item(IUID iuid);
 
-	unsigned int get_uid();
+	IUID get_uid();
 };
 
 class Item_List {
@@ -28,7 +28,11 @@ public:
 
 	Item* at(int index);
 
-	int size();
+	std::vector<Item*>::iterator begin();
+
+	std::vector<Item*>::iterator end();
+
+	size_t size();
 };
 
 #endif
