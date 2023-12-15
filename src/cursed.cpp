@@ -55,13 +55,7 @@ void sdl_set_window_size(tcod::Context& context, int multiplier) {
 	SDL_SetWindowPosition(context.get_sdl_window(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 }
 
-int setup_sdl(tcod::Context& context) {
-	if ((IMG_Init(IMG_InitFlags::IMG_INIT_PNG) & IMG_INIT_PNG) == 0) {
-		return -1;
-	}
-
-	SDL_SetWindowIcon(context.get_sdl_window(), IMG_Load("data/icon.png"));
-
+void sdl_set_initial_window_size(tcod::Context& context) {
 	SDL_DisplayMode mode;
 	if (SDL_GetDesktopDisplayMode(0, &mode) != 0) {
 		sdl_set_window_size(context, 1);
@@ -70,6 +64,16 @@ int setup_sdl(tcod::Context& context) {
 		// set the scaling multiplier to the largest integer which makes the window smaller than the screen, and also never allows a multiplier of < 1
 		sdl_set_window_size(context, std::max(1, (int)std::ceil(mode.w / (TILESET_CHAR_SIZE * CONSOLE_WIDTH)) - 1));
 	}
+}
+
+int setup_sdl(tcod::Context& context) {
+	if ((IMG_Init(IMG_InitFlags::IMG_INIT_PNG) & IMG_INIT_PNG) == 0) {
+		return -1;
+	}
+
+	SDL_SetWindowIcon(context.get_sdl_window(), IMG_Load("data/icon.png"));
+
+	sdl_set_initial_window_size(context);
 
 	return 0;
 }
