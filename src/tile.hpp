@@ -7,6 +7,8 @@
 #include "draw.hpp"
 #include "world.hpp"
 
+#include "definitions.hpp"
+
 class Tile : public Object {
 public:
 	virtual ~Tile();

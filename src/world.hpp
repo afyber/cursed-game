@@ -6,10 +6,7 @@
 
 #include "map.hpp"
 
-class Entity;
-class Living_Entity;
-class Player;
-class Tile;
+#include "definitions.hpp"
 
 class Object {
 public:

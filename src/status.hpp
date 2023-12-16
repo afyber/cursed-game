@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <vector>
 
-using std::size_t;
+#include "definitions.hpp"
 
 // REMEMBER: if you add an effect it also needs to be added to the switch statement in Entity_Status::get_effect(EFFECT_TYPE)
 // AND to Status::set_defaults()

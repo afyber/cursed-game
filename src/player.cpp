@@ -2,10 +2,8 @@
 #include "player.hpp"
 
 #include "draw.hpp"
-#include "entity.hpp"
 #include "keyboard.hpp"
 #include "message.hpp"
-#include "world.hpp"
 
 Player::Player(int x, int y) : Living_Entity(x, y, 10) {
 	status.add_permanent_status(Status(STATUS_TYPE::CURSE_ONE_HEALTH));

@@ -1,10 +1,6 @@
 // item.cpp
 #include "item.hpp"
 
-#include <vector>
-
-using std::size_t;
-
 // class Item
 
 Item::Item(IUID iuid) : iuid(iuid) {}

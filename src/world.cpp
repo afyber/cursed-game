@@ -1,14 +1,11 @@
 // world.cpp, holds the state of the level and all its entities
 #include "world.hpp"
 
-#include "libtcod.hpp"
 #include <optional>
-#include <vector>
 
 #include "draw.hpp"
 #include "entity.hpp"
 #include "item.hpp"
-#include "map.hpp"
 #include "player.hpp"
 #include "random.hpp"
 #include "tile.hpp"

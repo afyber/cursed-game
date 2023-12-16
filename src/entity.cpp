@@ -1,12 +1,9 @@
 // entity.cpp
 #include "entity.hpp"
 
-#include "ai.hpp"
 #include "draw.hpp"
-#include "item.hpp"
 #include "player.hpp"
 #include "tile.hpp"
-#include "world.hpp"
 
 // class Entity
 

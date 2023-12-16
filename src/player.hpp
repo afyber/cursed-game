@@ -4,6 +4,8 @@
 #include "entity.hpp"
 #include "world.hpp"
 
+#include "definitions.hpp"
+
 class Player : public Living_Entity {
 protected:
 	int move_actions();

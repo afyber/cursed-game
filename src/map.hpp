@@ -6,10 +6,7 @@
 
 #include "draw.hpp"
 
-class Entity;
-class Living_Entity;
-class Level;
-class Tile;
+#include "definitions.hpp"
 
 struct Map_Tile {
 	Tile* tile_ref;

@@ -1,7 +1,6 @@
 // menu.cpp
 #include "menu.hpp"
 
-#include "libtcod.hpp"
 #include <stdexcept>
 #include <vector>
 
