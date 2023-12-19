@@ -1,6 +1,6 @@
 # Stuff That Needs Doing
 
-## Bugs and Breaking issues
+## Bugs and Breaking Issues
 
 - [ ] Write frame-drawing functions to replace `tcod::print_frame`
 

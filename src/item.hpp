@@ -2,6 +2,7 @@
 #ifndef CURSED_ITEM_HPP_
 #define CURSED_ITEM_HPP_
 #include <vector>
+
 #include "definitions.hpp"
 
 typedef unsigned long long int IUID;
