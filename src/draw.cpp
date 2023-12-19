@@ -1,8 +1,6 @@
 // draw.cpp, contains utility functions to draw to the TCOD console
 #include "draw.hpp"
 
-#include "libtcod.hpp"
-
 Color color_add(Color c1, Color c2) {
 	return Color{ c1.alpha && c2.alpha, (uint8_t)std::clamp(c1.r + c2.r, 0, 255), (uint8_t)std::clamp(c1.g + c2.g, 0, 255), (uint8_t)std::clamp(c1.b + c2.b, 0, 255) };
 }

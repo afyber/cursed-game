@@ -2,9 +2,7 @@
 #include "map.hpp"
 
 #include "libtcod.hpp"
-#include <vector>
 
-#include "draw.hpp"
 #include "entity.hpp"
 #include "tile.hpp"
 #include "random.hpp"

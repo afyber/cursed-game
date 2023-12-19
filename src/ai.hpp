@@ -1,9 +1,7 @@
 // ai.hpp
 #ifndef CURSED_AI_HPP_
 #define CURSED_AI_HPP_
-
-class Level;
-class Living_Entity;
+#include "definitions.hpp"
 
 class AI {
 public:

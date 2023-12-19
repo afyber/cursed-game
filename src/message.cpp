@@ -3,8 +3,6 @@
 
 #include "libtcod.hpp"
 
-#include "draw.hpp"
-
 const int MESSAGE_BUFFER_SIZE = 25;
 
 int messagec = 0;

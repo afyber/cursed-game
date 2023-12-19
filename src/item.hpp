@@ -3,7 +3,7 @@
 #define CURSED_ITEM_HPP_
 #include <vector>
 
-using std::size_t;
+#include "definitions.hpp"
 
 typedef unsigned long long int IUID;
 
