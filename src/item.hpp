@@ -5,16 +5,14 @@
 
 #include "definitions.hpp"
 
-typedef unsigned long long int IUID;
-
 class Item {
 private:
-	const IUID iuid;
+	const char* name;
 
 public:
-	Item(IUID iuid);
+	Item(const char* name);
 
-	IUID get_uid();
+	const char* get_name();
 };
 
 class Item_List {
@@ -24,11 +22,9 @@ private:
 public:
 	void add_item(Item* item);
 
-	Item* pop_item(IUID iuid);
-
-	Item* get_item(IUID iuid);
-
 	Item* at(int index);
+
+	Item* pop(int index);
 
 	std::vector<Item*>::iterator begin();
 

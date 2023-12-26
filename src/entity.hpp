@@ -56,7 +56,6 @@ protected:
 	Entity_Status status;
 
 	Item_List inventory;
-	std::vector<IUID> equipped_uids;
 
 	Action act;
 
