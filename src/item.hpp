@@ -1,6 +1,7 @@
 // item.hpp
 #ifndef CURSED_ITEM_HPP_
 #define CURSED_ITEM_HPP_
+#include <memory>
 #include <vector>
 
 #include "definitions.hpp"
@@ -17,18 +18,18 @@ public:
 
 class Item_List {
 private:
-	std::vector<Item*> items;
+	std::vector<std::shared_ptr<Item>> items;
 
 public:
-	void add_item(Item* item);
+	void add_item(std::shared_ptr<Item>);
 
-	Item* at(int index);
+	std::shared_ptr<Item> at(int index);
 
-	Item* pop(int index);
+	std::shared_ptr<Item> pop(int index);
 
-	std::vector<Item*>::iterator begin();
+	std::vector<std::shared_ptr<Item>>::iterator begin();
 
-	std::vector<Item*>::iterator end();
+	std::vector<std::shared_ptr<Item>>::iterator end();
 
 	size_t size();
 };

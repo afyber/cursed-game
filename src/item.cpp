@@ -11,25 +11,25 @@ const char* Item::get_name() {
 
 // class Item_List
 
-void Item_List::add_item(Item* item) {
+void Item_List::add_item(std::shared_ptr<Item> item) {
 	items.push_back(item);
 }
 
-Item* Item_List::at(int index) {
+std::shared_ptr<Item> Item_List::at(int index) {
 	return items.at(index);
 }
 
-Item* Item_List::pop(int index) {
-	Item* item = items.at(index);
+std::shared_ptr<Item> Item_List::pop(int index) {
+	std::shared_ptr<Item> item = items.at(index);
 	items.erase(items.begin() + index);
 	return item;
 }
 
-std::vector<Item*>::iterator Item_List::begin() {
+std::vector<std::shared_ptr<Item>>::iterator Item_List::begin() {
 	return items.begin();
 }
 
-std::vector<Item*>::iterator Item_List::end() {
+std::vector<std::shared_ptr<Item>>::iterator Item_List::end() {
 	return items.end();
 }
 

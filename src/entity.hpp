@@ -1,6 +1,8 @@
 // entity.hpp
 #ifndef CURSED_ENTITY_HPP_
 #define CURSED_ENTITY_HPP_
+#include <memory>
+
 #include "ai.hpp"
 #include "item.hpp"
 #include "status.hpp"
@@ -85,20 +87,18 @@ public:
 
 	virtual void hurt(Attack attack);
 
-	void give_item(Item* item);
+	void give_item(std::shared_ptr<Item> item);
 
 	Attack get_attack();
 };
 
 class Item_Entity : public Entity {
 private:
-	Item* item_ref;
+	std::shared_ptr<Item> item_ref;
 	bool picked_up;
 
 public:
-	Item_Entity(int x, int y, Item* item_ref);
-
-	~Item_Entity();
+	Item_Entity(int x, int y, std::shared_ptr<Item> item_ref);
 
 	void interact(Living_Entity* ent);
 
@@ -112,7 +112,7 @@ public:
 
 	void draw(tcod::Console& con);
 
-	Item* get_item();
+	std::shared_ptr<Item> get_item();
 };
 
 class Worm_Entity : public Living_Entity {

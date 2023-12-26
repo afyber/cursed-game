@@ -3,6 +3,7 @@
 #include <iostream>
 #include "libtcod.hpp"
 #include "libtcod/timer.hpp"
+#include <memory>
 #include <SDL.h>
 #include <SDL2/SDL_image.h>
 #include <string>
@@ -102,7 +103,7 @@ int main(int argc, char* argv[]) {
 
 	Player* player = new Player(5, 5);
 	Level floor(LEVEL_WIDTH, LEVEL_HEIGHT, player);
-	floor.add_entity(new Item_Entity(5, 4, new Item(0)));
+	floor.add_entity(new Item_Entity(5, 4, std::shared_ptr<Item>(new Item(0))));
 	floor.add_entity(new Goblin_Entity(10, 10));
 
 	menu_push(new Choice_Menu("Will you yeild?"));

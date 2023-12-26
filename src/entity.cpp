@@ -99,7 +99,7 @@ void Living_Entity::hurt(Attack attack) {
 }
 
 void Living_Entity::kill(Level& level) {
-	for (Item* item : inventory) {
+	for (std::shared_ptr<Item> item : inventory) {
 		level.add_entity(new Item_Entity(x, y, item));
 	}
 }
@@ -108,7 +108,7 @@ bool Living_Entity::is_alive() {
 	return health > 0;
 }
 
-void Living_Entity::give_item(Item* item) {
+void Living_Entity::give_item(std::shared_ptr<Item> item) {
 	inventory.add_item(item);
 }
 
@@ -133,14 +133,7 @@ Attack Living_Entity::get_attack() {
 
 // class Item_Entity
 
-Item_Entity::Item_Entity(int x, int y, Item* item_ref) : Entity(x, y), item_ref(item_ref), picked_up(false) {}
-
-Item_Entity::~Item_Entity() {
-	// This will only free the Item* if the Item_Entity is deleted in a level change, and not if it was picked up by an Entity
-	if (!picked_up) {
-		delete item_ref;
-	}
-}
+Item_Entity::Item_Entity(int x, int y, std::shared_ptr<Item> item_ref) : Entity(x, y), item_ref(item_ref), picked_up(false) {}
 
 void Item_Entity::update(Level&, int) {}
 
@@ -167,7 +160,7 @@ bool Item_Entity::is_alive() {
 
 void Item_Entity::kill(Level&) {}
 
-Item* Item_Entity::get_item() {
+std::shared_ptr<Item> Item_Entity::get_item() {
 	return item_ref;
 }
 
