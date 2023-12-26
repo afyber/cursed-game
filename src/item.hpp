@@ -13,7 +13,11 @@ private:
 public:
 	Item(const char* name);
 
+	virtual ~Item();
+
 	const char* get_name();
+
+	virtual bool can_wield();
 };
 
 class Item_List {

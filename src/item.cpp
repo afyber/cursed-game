@@ -5,8 +5,14 @@
 
 Item::Item(const char* name) : name(name) {}
 
+Item::~Item() {}
+
 const char* Item::get_name() {
 	return name;
+}
+
+bool Item::can_wield() {
+	return false;
 }
 
 // class Item_List
