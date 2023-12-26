@@ -100,7 +100,7 @@ void Living_Entity::hurt(Attack attack) {
 
 void Living_Entity::kill(Level& level) {
 	for (std::shared_ptr<Item> item : inventory) {
-		level.add_entity(new Item_Entity(x, y, item));
+		level.add_entity(new Item_Entity(x, y, std::move(item)));
 	}
 }
 
