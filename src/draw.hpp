@@ -8,6 +8,10 @@ struct Color {
 	uint8_t r;
 	uint8_t g;
 	uint8_t b;
+
+	operator std::optional<TCOD_ColorRGB>() {
+		return alpha ? std::optional(TCOD_ColorRGB{ r, g, b }) : std::nullopt;
+	}
 };
 
 const Color COLOR_WHITE = { 1, 255, 255, 255 };
@@ -26,8 +30,6 @@ Color color_add(Color c1, Color c2);
 Color color_subtract(Color c1, Color c2);
 
 Color color_multiply(Color c, double fac);
-
-std::optional<TCOD_ColorRGB> color_to_tcod(Color c);
 
 void print_console_tile(tcod::Console& con, Console_Tile tile, int x, int y);
 

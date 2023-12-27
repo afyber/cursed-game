@@ -13,12 +13,8 @@ Color color_multiply(Color c, double fac) {
 	return Color{ c.alpha, (uint8_t)std::clamp(c.r * fac, 0.0, 255.0), (uint8_t)std::clamp(c.g * fac, 0.0, 255.0), (uint8_t)std::clamp(c.b * fac, 0.0, 255.0) };
 }
 
-std::optional<TCOD_ColorRGB> color_to_tcod(Color c) {
-	return c.alpha ? std::optional(TCOD_ColorRGB{ c.r, c.g, c.b }) : std::nullopt;
-}
-
 void print_console_tile(tcod::Console& con, Console_Tile tile, int x, int y) {
-	tcod::print(con, { x, y }, std::string(1, tile.ch), color_to_tcod(tile.fg), color_to_tcod(tile.bg));
+	tcod::print(con, { x, y }, std::string(1, tile.ch), tile.fg, tile.bg);
 }
 
 void full_console_blit(tcod::Console& src, int src_w, int src_h, tcod::Console& dst, int dst_x, int dst_y) {
