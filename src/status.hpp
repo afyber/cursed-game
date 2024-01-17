@@ -6,7 +6,7 @@
 
 #include "definitions.hpp"
 
-// REMEMBER: if you add an effect it also needs to be added to the switch statement in Entity_Status::get_effect(EFFECT_TYPE)
+// REMEMBER: if you add an effect it also needs to be added to the switch statement in Living_Entity::get_status_effect(EFFECT_TYPE)
 // AND to Status::set_defaults()
 enum class EFFECT_TYPE {
 	DAMAGE_OFFSET,
@@ -62,7 +62,9 @@ public:
 
 	void add_temporary_status(Temporary_Status status);
 
-	double get_effect(EFFECT_TYPE effect);
+	std::vector<Status>& get_permanent_status();
+
+	std::vector<Temporary_Status>& get_temporary_status();
 };
 
 #endif

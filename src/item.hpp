@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "definitions.hpp"
+#include "status.hpp"
 
 class Item {
 private:
@@ -18,6 +19,20 @@ public:
 	const char* get_name();
 
 	virtual bool can_wield();
+
+	virtual Status wield_status();
+};
+
+class Weapon : public Item {
+private:
+	Status status;
+
+public:
+	Weapon(const char* name, Status status);
+
+	virtual bool can_wield();
+
+	virtual Status wield_status();
 };
 
 class Item_List {

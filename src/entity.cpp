@@ -50,13 +50,78 @@ bool Living_Entity::move(Level& level, int new_x, int new_y) {
 	return can_move;
 }
 
+double Living_Entity::get_status_effect(EFFECT_TYPE effect) {
+	double total;
+
+	if (effect == EFFECT_TYPE::DAMAGE_OFFSET) {
+		effect = EFFECT_TYPE::DAMAGE_OFFSET;
+	}
+
+	// REMEMBER: every EFFECT_TYPE MUST have a case in this switch statement
+	// There are three overall types of effect:
+	switch (effect) {
+	case EFFECT_TYPE::DAMAGE_OFFSET:
+	case EFFECT_TYPE::HEALTH_OFFSET:
+	case EFFECT_TYPE::HEALTH_REGENERATION:
+		// additive
+		total = 0;
+		for (Temporary_Status s : status.get_temporary_status()) {
+			total += s.get_effect(effect);
+		}
+		for (Status s : status.get_permanent_status()) {
+			total += s.get_effect(effect);
+		}
+		for (std::shared_ptr<Item> i : wielded_items) {
+			total += i->wield_status().get_effect(effect);
+		}
+		break;
+	case EFFECT_TYPE::DAMAGE_MULTIPLIER:
+		// multiplicative
+		total = 1;
+		for (Temporary_Status s : status.get_temporary_status()) {
+			total *= s.get_effect(effect);
+		}
+		for (Status s : status.get_permanent_status()) {
+			total *= s.get_effect(effect);
+		}
+		for (std::shared_ptr<Item> i : wielded_items) {
+			total *= i->wield_status().get_effect(effect);
+		}
+		break;
+	case EFFECT_TYPE::DAMAGE_LIMITER:
+	case EFFECT_TYPE::HEALTH_LIMITER:
+		// and limiting
+		total = -1;
+		double limit;
+		for (Temporary_Status s : status.get_temporary_status()) {
+			if ((limit = s.get_effect(effect)) != -1 && (limit < total || total == -1)) {
+				total = limit;
+			}
+		}
+		for (Status s : status.get_permanent_status()) {
+			if ((limit = s.get_effect(effect)) != -1 && (limit < total || total == -1)) {
+				total = limit;
+			}
+		}
+		for (std::shared_ptr<Item> i : wielded_items) {
+			if ((limit = i->wield_status().get_effect(effect)) != -1 && (limit < total || total == -1)) {
+				total = limit;
+			}
+		}
+		break;
+	}
+
+	// if the above switch statement is written correctly there are no paths where total is uninitialized
+	return total;
+}
+
 void Living_Entity::update_status(int actions) {
-	health += status.get_effect(EFFECT_TYPE::HEALTH_REGENERATION);
+	health += get_status_effect(EFFECT_TYPE::HEALTH_REGENERATION);
 	if (health > max_health) {
 		health = max_health;
 	}
-	if (status.get_effect(EFFECT_TYPE::HEALTH_LIMITER) >= 0) {
-		health = std::min(health, status.get_effect(EFFECT_TYPE::HEALTH_LIMITER));
+	if (get_status_effect(EFFECT_TYPE::HEALTH_LIMITER) >= 0) {
+		health = std::min(health, get_status_effect(EFFECT_TYPE::HEALTH_LIMITER));
 	}
 	status.update(actions);
 }
@@ -115,18 +180,18 @@ void Living_Entity::give_item(std::shared_ptr<Item> item) {
 Attack Living_Entity::get_attack() {
 	// TODO: calculate based on equipped items
 	Attack a = Attack{ 1, 0, 0 };
-	double value = status.get_effect(EFFECT_TYPE::DAMAGE_OFFSET);
+	double value = get_status_effect(EFFECT_TYPE::DAMAGE_OFFSET);
 	a.normal_damage += (int)value;
-	a.magic_damage += (int)value;
-	a.fire_damage += (int)value;
-	value = status.get_effect(EFFECT_TYPE::DAMAGE_MULTIPLIER);
+	//a.magic_damage += (int)value;
+	//a.fire_damage += (int)value;
+	value = get_status_effect(EFFECT_TYPE::DAMAGE_MULTIPLIER);
 	a.normal_damage = (int)(a.normal_damage * value);
-	a.magic_damage = (int)(a.magic_damage * value);
-	a.fire_damage = (int)(a.fire_damage * value);
-	if ((value = status.get_effect(EFFECT_TYPE::DAMAGE_LIMITER)) >= 0) {
+	//a.magic_damage = (int)(a.magic_damage * value);
+	//a.fire_damage = (int)(a.fire_damage * value);
+	if ((value = get_status_effect(EFFECT_TYPE::DAMAGE_LIMITER)) >= 0) {
 		a.normal_damage = std::min(a.normal_damage, (int)value);
-		a.magic_damage = std::min(a.magic_damage, (int)value);
-		a.fire_damage = std::min(a.fire_damage, (int)value);
+		//a.magic_damage = std::min(a.magic_damage, (int)value);
+		//a.fire_damage = std::min(a.fire_damage, (int)value);
 	}
 	return a;
 }

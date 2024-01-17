@@ -67,52 +67,10 @@ void Entity_Status::add_temporary_status(Temporary_Status status) {
 	temporary_status.push_back(status);
 }
 
-double Entity_Status::get_effect(EFFECT_TYPE effect) {
-	double total;
+std::vector<Status>& Entity_Status::get_permanent_status() {
+	return permanent_status;
+}
 
-	// REMEMBER: every EFFECT_TYPE MUST have a case in this switch statement
-	// There are three overall types of effect:
-	switch (effect) {
-	case EFFECT_TYPE::DAMAGE_OFFSET:
-	case EFFECT_TYPE::HEALTH_OFFSET:
-	case EFFECT_TYPE::HEALTH_REGENERATION:
-		// additive
-		total = 0;
-		for (Temporary_Status s : temporary_status) {
-			total += s.get_effect(effect);
-		}
-		for (Status s : permanent_status) {
-			total += s.get_effect(effect);
-		}
-		break;
-	case EFFECT_TYPE::DAMAGE_MULTIPLIER:
-		// multiplicative
-		total = 1;
-		for (Temporary_Status s : temporary_status) {
-			total *= s.get_effect(effect);
-		}
-		for (Status s : permanent_status) {
-			total *= s.get_effect(effect);
-		}
-		break;
-	case EFFECT_TYPE::DAMAGE_LIMITER:
-	case EFFECT_TYPE::HEALTH_LIMITER:
-		// and limiting
-		total = -1;
-		double limit;
-		for (Temporary_Status s : temporary_status) {
-			if ((limit = s.get_effect(effect)) < total || total == -1) {
-				total = limit;
-			}
-		}
-		for (Status s : permanent_status) {
-			if ((limit = s.get_effect(effect)) < total || total == -1) {
-				total = limit;
-			}
-		}
-		break;
-	}
-
-	// if the above switch statement is written correctly there are no paths where total is uninitialized
-	return total;
+std::vector<Temporary_Status>& Entity_Status::get_temporary_status() {
+	return temporary_status;
 }

@@ -2,6 +2,7 @@
 #ifndef CURSED_DEFINITIONS_HPP_
 #define CURSED_DEFINITIONS_HPP_
 #include <cstddef>
+#include <stdexcept>
 
 class Level;
 class Tile;

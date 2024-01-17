@@ -7,6 +7,8 @@
 
 Player::Player(int x, int y) : Living_Entity(x, y, 10) {
 	status.add_permanent_status(Status(STATUS_TYPE::CURSE_ONE_HEALTH));
+
+	wielded_items.add_item(std::shared_ptr<Item>(new Weapon("The Throngler", Status(STATUS_TYPE::TEMPORARY_STRENGTH_WEAK))));
 }
 
 int Player::move_actions() {

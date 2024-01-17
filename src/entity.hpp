@@ -58,6 +58,7 @@ protected:
 	Entity_Status status;
 
 	Item_List inventory;
+	Item_List wielded_items;
 
 	Action act;
 
@@ -67,6 +68,8 @@ protected:
 	int move_actions();
 
 	bool move(Level& level, int x, int y);
+
+	double get_status_effect(EFFECT_TYPE effect);
 
 	void update_status(int actions);
 
