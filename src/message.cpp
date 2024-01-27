@@ -20,14 +20,13 @@ void shift_messages() {
 
 void send_message(const char* str, Color color) {
 	shift_messages();
-	messages[0] = Message{ str, color, 1200 };
+	messages[0] = Message{ str, color, 840 };
 }
 
 void update_messages() {
 	for (int i = messagec - 1; i >= 0; --i) {
-		--messages[i].frames_left;
-		if (messages[i].frames_left < 0) {
-			--messagec;
+		if (messages[i].frames_left > 0) {
+			--messages[i].frames_left;
 		}
 	}
 }
@@ -36,7 +35,7 @@ void draw_messages(tcod::Console& con, int width, int height) {
 	int current_y = height;
 	for (int i = 0; i < messagec; ++i) {
 		int message_height = std::min(5, tcod::get_height_rect(width, messages[i].str));
-		tcod::print_rect(con, { 0, current_y - message_height, width, message_height }, messages[i].str, color_to_tcod(color_multiply(messages[i].color, std::clamp(messages[i].frames_left / 120.0, 0.0, 1.0))), std::nullopt);
+		tcod::print_rect(con, { 0, current_y - message_height, width, message_height }, messages[i].str, color_to_tcod(color_multiply(messages[i].color, std::clamp((messages[i].frames_left + 36) / 120.0, 0.3, 1.0))), std::nullopt);
 		
 		current_y--;
 		if (current_y < 0) {
